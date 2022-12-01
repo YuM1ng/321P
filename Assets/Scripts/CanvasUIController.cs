@@ -15,6 +15,8 @@ public class CanvasUIController : MonoBehaviour
     private bool m_bFiltersPanelIsOpen = false;
     private Animator m_animator;
 
+    private bool m_sortPanelIsOpen = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,11 +25,16 @@ public class CanvasUIController : MonoBehaviour
 
         m_animator = GetComponent<Animator>();
 
+        //add EventTrigger component
         EventTrigger m_ETtrigger = gameObject.AddComponent<EventTrigger>();
-        EventTrigger.Entry entry = new EventTrigger.Entry();
-        entry.eventID = EventTriggerType.PointerClick;
-        entry.callback.AddListener((data)=> { ClickOutsideCheck((PointerEventData)data); });
-        m_ETtrigger.triggers.Add(entry);
+        //create Entry object to specify event specification
+        EventTrigger.Entry COCevent = new EventTrigger.Entry();
+        //set event to listen to PointerClick event
+        COCevent.eventID = EventTriggerType.PointerClick;
+        //add function to be triggered by event
+        COCevent.callback.AddListener((data)=> { ClickOutsideCheck((PointerEventData)data); });
+        //add event to EventTrigger component
+        m_ETtrigger.triggers.Add(COCevent);
     }
 
     // Update is called once per frame
@@ -36,6 +43,7 @@ public class CanvasUIController : MonoBehaviour
         
     }
     /* Function to check if the pointer click event is within the panels of interest
+     * Calls FindChildRecursive()
      */
     public void ClickOutsideCheck(PointerEventData _ped)
     {
@@ -45,8 +53,14 @@ public class CanvasUIController : MonoBehaviour
             //if pressing models panel's child objects, exit function
             if (FindChildRecursive(m_ModelsPanelGO.transform, pointerRaycast.gameObject.name))
                 return;
+            //close sort panel if is open
+            if(m_sortPanelIsOpen)
+            {
+                m_animator.SetTrigger("SPclose");
+                m_sortPanelIsOpen = false;
+            }
             //else close the panel
-            m_bModelsPanelIsOpen=false;
+            m_bModelsPanelIsOpen =false;
             m_animator.SetTrigger("MPclose");
         }
         else if (m_bFiltersPanelIsOpen)
@@ -63,6 +77,7 @@ public class CanvasUIController : MonoBehaviour
      *      Parameters:
      *          - _theParent: transform of the parent to be searched on
      *          - _childName: the name of the child being searched for
+     * Called by ClickOutsideCheck()
      */
     private bool FindChildRecursive(Transform _theParent, string _childName)
     {
@@ -137,6 +152,21 @@ public class CanvasUIController : MonoBehaviour
             m_bFiltersPanelIsOpen = false;
             //trigger animation
             m_animator.SetTrigger("FPclose");
+        }
+    }
+    /* To trigger sorting panel animation
+     */
+    public void SortPanelTrigger()
+    {
+        if (!m_sortPanelIsOpen)
+        {
+            m_animator.SetTrigger("SPopen");
+            m_sortPanelIsOpen = true;
+        }
+        else
+        {
+            m_animator.SetTrigger("SPclose");
+            m_sortPanelIsOpen = false;
         }
     }
 }
