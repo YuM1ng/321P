@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ScenePortrait.unity
     guid: d5ce763e0a79c7d469e7f1f74aec6862
+  - enabled: 1
+    path: Assets/Scenes/SceneAR.unity
+    guid: 0049c32336f00154cb21d064b97d4a30
   m_configObjects: {}
