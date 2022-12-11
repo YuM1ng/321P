@@ -10807,7 +10807,7 @@ MonoBehaviour:
   - {fileID: 3571009850300690566}
   - {fileID: 1600517620}
   - {fileID: 370232032}
-  m_startScreen: 0
+  m_startScreen: 4
   m_BottomBar: {fileID: 1429872269}
   m_transitionSpeed: 500
 --- !u!1 &1567221793
