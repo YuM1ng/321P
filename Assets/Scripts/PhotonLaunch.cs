@@ -5,9 +5,15 @@ using Photon.Pun;
 
 public class PHotonLaunch : MonoBehaviourPunCallbacks
 {
+    [SerializeField]
+    Transform m_PunLogMsgContentTransform;
+    [SerializeField]
+    GameObject m_PunLogMsgPrefab;
+
     // Start is called before the first frame update
     void Start()
     {
+        PhotonNetwork.GameVersion = "0.0.1";
         PhotonNetwork.ConnectUsingSettings();
     }
 

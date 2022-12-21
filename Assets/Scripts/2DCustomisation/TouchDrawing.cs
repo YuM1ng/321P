@@ -12,10 +12,13 @@ public class TouchDrawing : MonoBehaviour
 
     LineRenderer _currLine;
     Vector2 _lastPos;
+    Vector2 _aspectRatio;
+
+
     // Start is called before the first frame update
     void Start()
     {
-
+        _aspectRatio = new Vector2(Camera.main.aspect, 1 / Camera.main.aspect);
     }
     // Update is called once per frame
     void Update()
@@ -25,7 +28,7 @@ public class TouchDrawing : MonoBehaviour
             //get first touch instance
             Touch touch = Input.GetTouch(0);
             Vector2 newPos = touch.position;
-            newPos = (newPos * 2) - new Vector2(Screen.width, Screen.height);
+            //newPos = (newPos - new Vector2(0.5f *Screen.width, 0.5f * Screen.height)) ;
             //if touch is at 'start' phase
             if (touch.phase == TouchPhase.Began)
             {
@@ -48,10 +51,10 @@ public class TouchDrawing : MonoBehaviour
                 //If distance to last position is less than specified m_SampleRate, dont add new point to the line
                 if (distSqr < m_SampleRate * m_SampleRate)
                     return;
-                //if it is more, set the last position to the line to the current touch position
-                _currLine.SetPosition(_currLine.positionCount - 1, newPos);
                 //increment number of position for line
                 _currLine.positionCount += 1;
+                //if it is more, set the last position to the line to the current touch position
+                _currLine.SetPosition(_currLine.positionCount - 1, newPos);
                 //Debug.Log("Pos " + (_currLine.positionCount -1) + ": " + newPos);
                 //set last position to new position
                 _lastPos = newPos;
