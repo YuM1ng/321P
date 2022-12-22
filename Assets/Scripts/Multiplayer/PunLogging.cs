@@ -10,6 +10,7 @@ public class PunLogging : MonoBehaviour
     [SerializeField]
     GameObject m_MsgPrefab;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,8 +25,8 @@ public class PunLogging : MonoBehaviour
 
     public void AddLogMsg(string _msg)
     {
-        GameObject go = Instantiate(m_MsgPrefab, m_PunLogMsgContentTransform);
-        TextMeshProUGUI tmp = go.GetComponent<TextMeshProUGUI>();
+        
+        TextMeshProUGUI tmp = Instantiate(m_MsgPrefab, m_PunLogMsgContentTransform).GetComponent<TextMeshProUGUI>();
         tmp.text = _msg;
     }
 }
