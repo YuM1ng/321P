@@ -23,20 +23,27 @@ public class PhotonLaunch : MonoBehaviourPunCallbacks
     [SerializeField]
     GameObject m_PlayerPanel;
 
+    [SerializeField]
+    TextMeshProUGUI m_TMPPlayerName;
+
     // Start is called before the first frame update
     void Start()
     {
         PhotonNetwork.GameVersion = "0.0.1";
         m_PunLogger.AddLogMsg("Connecting to Photon");
         PhotonNetwork.ConnectUsingSettings();
-        //Debug.Log($"{System.DateTime.Now.Millisecond}{System.DateTime.Now.Millisecond}");
-        PhotonNetwork.NickName = "Player "+PhotonNetwork.CountOfPlayersOnMaster.ToString();
     }
     #region Connecting to photon
     public override void OnConnectedToMaster()
     {
         m_PunLogger.AddLogMsg("Connected to Photon");
         m_PunLogger.AddLogMsg("Joining lobby");
+        //Debug.Log($"{System.DateTime.Now.Millisecond}{System.DateTime.Now.Millisecond}");
+        if(PhotonNetwork.NickName == ""){
+            PhotonNetwork.NickName = "Player " + PhotonNetwork.CountOfPlayersOnMaster.ToString();
+            //m_PunLogger.AddLogMsg($"Player name set: {PhotonNetwork.NickName}");
+            m_TMPPlayerName.text = PhotonNetwork.NickName;
+        }
         PhotonNetwork.JoinLobby();
     }
     public override void OnDisconnected(DisconnectCause cause)
@@ -67,6 +74,7 @@ public class PhotonLaunch : MonoBehaviourPunCallbacks
     {
         m_PunLogger.AddLogMsg($"Joined room: {PhotonNetwork.CurrentRoom.Name}");
         //StartCoroutine(m_RoomListing.ClearAllChildObjects());
+        m_RoomListing.ClearAll();
         foreach(Player player in PhotonNetwork.PlayerList)
         {
             m_PlayerListing.AddPlayer(player);
@@ -107,10 +115,12 @@ public class PhotonLaunch : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         m_PunLogger.AddLogMsg($"New player ({newPlayer.NickName}) entered the room");
+        m_PlayerListing.AddPlayer(newPlayer);
     }
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         m_PunLogger.AddLogMsg($"Player ({otherPlayer.NickName}) left the room");
+        m_PlayerListing.RemovePlayer(otherPlayer);
 
     }
     #endregion

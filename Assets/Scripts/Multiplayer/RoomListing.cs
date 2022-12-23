@@ -22,18 +22,31 @@ public class RoomListing : MonoBehaviour
      */
     public GameObject AddRoom(RoomInfo _rmInfo)
     {
-        //instantiate prefab
-        GameObject rm = Instantiate(m_RoomButtonPrefab, m_RoomListTransform);
-        /*//set button's text to room name
-        rm.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = _rmInfo.Name;
-        //Add on click event 
-        rm.GetComponent<Button>().onClick.AddListener(() => {
-            PhotonNetwork.JoinRoom(_rmInfo.Name);
-            ClearAllChildObjects();
-        });*/
-        //add to list
-        m_rmList.Add(_rmInfo.Name, rm);
-        return rm;
+        int currSize = m_rmList.Count;
+        if (currSize == 0 || currSize == m_RoomListTransform.childCount)
+        {
+            //instantiate prefab
+            GameObject rm = Instantiate(m_RoomButtonPrefab, m_RoomListTransform);
+            /*//set button's text to room name
+            rm.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = _rmInfo.Name;
+            //Add on click event 
+            rm.GetComponent<Button>().onClick.AddListener(() => {
+                PhotonNetwork.JoinRoom(_rmInfo.Name);
+                ClearAllChildObjects();
+            });*/
+            //add to list
+            m_rmList.Add(_rmInfo.Name, rm);
+            return rm;
+        }
+        else
+        {
+            //instantiate prefab
+            GameObject rm = m_RoomListTransform.GetChild(currSize - 1).gameObject;
+            rm.SetActive(true);
+            //add to list
+            m_rmList.Add(_rmInfo.Name, rm);
+            return rm;
+        }
     }
     /* Removing room from displayed list when removed from photon list
      * Parameters:
@@ -60,6 +73,15 @@ public class RoomListing : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         //clear dictionary
+        m_rmList.Clear();
+    }
+    public void ClearAll()
+    {
+        //m_PlayerListSV.Clear();
+        for (int i = 0; i < m_RoomListTransform.childCount; ++i)
+        {
+            m_RoomListTransform.GetChild(i).gameObject.SetActive(false);
+        }
         m_rmList.Clear();
     }
 
