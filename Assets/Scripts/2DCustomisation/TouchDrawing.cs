@@ -10,6 +10,9 @@ public class TouchDrawing : MonoBehaviour
     [SerializeField]
     float m_SampleRate = 1.0f;
 
+    [SerializeField]
+    PunLogging m_logger;
+
     LineRenderer _currLine;
     Vector2 _lastPos;
     Vector2 _aspectRatio;
@@ -18,6 +21,8 @@ public class TouchDrawing : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //m_logger.AddLogMsg($"Camera deets: {Camera.main.pixelWidth} | {Camera.main.pixelHeight}");
+        m_logger.AddLogMsg($"Screen deets: {Screen.width} | {Screen.height}");
         _aspectRatio = new Vector2(Camera.main.aspect, 1 / Camera.main.aspect);
     }
     // Update is called once per frame
@@ -28,10 +33,11 @@ public class TouchDrawing : MonoBehaviour
             //get first touch instance
             Touch touch = Input.GetTouch(0);
             Vector2 newPos = touch.position;
-            //newPos = (newPos - new Vector2(0.5f *Screen.width, 0.5f * Screen.height)) ;
+            newPos = (newPos - new Vector2(0.5f *Screen.width, 0.5f * Screen.height))/* / Camera.main.orthographicSize*/;
             //if touch is at 'start' phase
             if (touch.phase == TouchPhase.Began)
             {
+                m_logger.AddLogMsg($"Start: {newPos}");
                 //instantiate line prefab
                 _currLine = Instantiate(m_LinePrefab, transform).GetComponent<LineRenderer>();
                 //set line to not use world space coordinate
@@ -65,6 +71,7 @@ public class TouchDrawing : MonoBehaviour
             {
                 //set last position to current position
                 _currLine.SetPosition(_currLine.positionCount - 1, newPos);
+                m_logger.AddLogMsg($"End: {newPos}");
             }
         }
     }
