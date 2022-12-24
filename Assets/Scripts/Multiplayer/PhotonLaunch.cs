@@ -22,6 +22,8 @@ public class PhotonLaunch : MonoBehaviourPunCallbacks
     PlayerListing m_PlayerListing;
     [SerializeField]
     GameObject m_PlayerPanel;
+    [SerializeField]
+    GameObject m_PlayerPrefabModel;
 
     [SerializeField]
     TextMeshProUGUI m_TMPPlayerName;
@@ -40,8 +42,11 @@ public class PhotonLaunch : MonoBehaviourPunCallbacks
         m_PunLogger.AddLogMsg("Joining lobby");
         //Debug.Log($"{System.DateTime.Now.Millisecond}{System.DateTime.Now.Millisecond}");
         if(PhotonNetwork.NickName == ""){
-            PhotonNetwork.NickName = "Player " + PhotonNetwork.CountOfPlayersOnMaster.ToString();
-            //m_PunLogger.AddLogMsg($"Player name set: {PhotonNetwork.NickName}");
+            /*System.DateTime dt = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
+            int val = (int)(System.DateTime.UtcNow - dt).TotalMilliseconds;*/
+            int val = (int)System.DateTime.Now.Ticks;
+            PhotonNetwork.NickName = "Player " + val.ToString();
+            m_PunLogger.AddLogMsg($"Player name set: {PhotonNetwork.NickName}");
             m_TMPPlayerName.text = PhotonNetwork.NickName;
         }
         PhotonNetwork.JoinLobby();
