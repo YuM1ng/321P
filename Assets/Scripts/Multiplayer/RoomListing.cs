@@ -23,6 +23,8 @@ public class RoomListing : MonoBehaviour
     public GameObject AddRoom(RoomInfo _rmInfo)
     {
         int currSize = m_rmList.Count;
+        if (m_rmList.ContainsKey(_rmInfo.Name))
+            return null;
         if (currSize == 0 || currSize == m_RoomListTransform.childCount)
         {
             //instantiate prefab

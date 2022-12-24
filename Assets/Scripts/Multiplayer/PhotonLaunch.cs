@@ -49,6 +49,7 @@ public class PhotonLaunch : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         m_PunLogger.AddLogMsg($"Disconnected from server: {cause}");
+        PhotonNetwork.ConnectUsingSettings();
     }
     #endregion
     
@@ -74,7 +75,9 @@ public class PhotonLaunch : MonoBehaviourPunCallbacks
     {
         m_PunLogger.AddLogMsg($"Joined room: {PhotonNetwork.CurrentRoom.Name}");
         //StartCoroutine(m_RoomListing.ClearAllChildObjects());
-        m_RoomListing.ClearAll();
+        //m_RoomListing.ClearAll();
+
+        //initialise players in the room
         foreach(Player player in PhotonNetwork.PlayerList)
         {
             m_PlayerListing.AddPlayer(player);
@@ -103,12 +106,21 @@ public class PhotonLaunch : MonoBehaviourPunCallbacks
             //At this point, room is added to list
             else
             {
+                m_PunLogger.AddLogMsg($"Adding Room: {room}");
                 GameObject rm = m_RoomListing.AddRoom(room);
-                rm.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = room.Name;
-                rm.GetComponent<Button>().onClick.AddListener(() => {
-                    m_PunLogger.AddLogMsg($"Joining room '{room.Name}'");
-                    PhotonNetwork.JoinRoom(room.Name);
-                });
+                if (rm != null)
+                {
+                    rm.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = room.Name;
+                    rm.GetComponent<Button>().onClick.AddListener(() =>
+                    {
+                        m_PunLogger.AddLogMsg($"Joining room '{room.Name}'");
+                        PhotonNetwork.JoinRoom(room.Name);
+                    });
+                }
+                else
+                {
+                    m_PunLogger.AddLogMsg($"Duplicate room({room.Name}) detected");
+                }
             }
         }
     }
