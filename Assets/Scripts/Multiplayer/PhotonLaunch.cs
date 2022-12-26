@@ -86,6 +86,11 @@ public class PhotonLaunch : MonoBehaviourPunCallbacks
         foreach(Player player in PhotonNetwork.PlayerList)
         {
             m_PlayerListing.AddPlayer(player);
+            if (player == PhotonNetwork.LocalPlayer)
+            {
+                //m_PunLogger.AddLogMsg($"It's a me {player.NickName}!");
+
+            }
         }
         m_TMPRoomName.text = PhotonNetwork.CurrentRoom.Name;
         m_RoomPanel.SetActive(false);
