@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Voice.PUN;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -13,6 +14,12 @@ public class PlayerScript : MonoBehaviour, IPunInstantiateMagicCallback
     GameObject _myCamera;
 
     GameObject _lastCamera;
+
+    [SerializeField]
+    PhotonVoiceView m_PhotonVoiceView;
+
+    [SerializeField]
+    GameObject m_speakingIndicator;
 
     PhotonView m_photonView;
     public PhotonView photonView
@@ -57,6 +64,14 @@ public class PlayerScript : MonoBehaviour, IPunInstantiateMagicCallback
     // Update is called once per frame
     void Update()
     {
-        
+        if(m_PhotonVoiceView.IsSpeaking)
+        {
+            Debug.Log($"{photonView.Owner.NickName} is speaking");
+            m_speakingIndicator.SetActive(true);
+        }
+        else
+        {
+            m_speakingIndicator.SetActive(false);
+        }
     }
 }

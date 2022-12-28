@@ -2150,10 +2150,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2051611202, guid: e70928bcaebb3d34fa7186565b11d624, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e70928bcaebb3d34fa7186565b11d624, type: 3}
 --- !u!4 &781342504 stripped
 Transform:
@@ -3197,9 +3194,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91175dcc15224463780e01a8a98b1b60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  voiceDetection: 0
-  voiceDetectionThreshold: 0.01
-  voiceDetectionDelayMs: 500
+  voiceDetection: 1
+  voiceDetectionThreshold: 0.161
+  voiceDetectionDelayMs: 100
   interestGroup: 0
   debugEchoMode: 0
   reliableMode: 0
@@ -4751,7 +4748,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a86f533fd9917dd4da8601e9eb542c96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LogLevel: 1
+  LogLevel: 3
 --- !u!4 &2100440049
 Transform:
   m_ObjectHideFlags: 0
