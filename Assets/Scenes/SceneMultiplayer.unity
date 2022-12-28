@@ -207,14 +207,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 27009149}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.3, y: 20.9, z: -6.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &50064325
 GameObject:
   m_ObjectHideFlags: 0
@@ -925,7 +925,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 743ad00e3b58d4343822c31326245645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_prefabPlayer: {fileID: 1910427654193358860, guid: e70928bcaebb3d34fa7186565b11d624, type: 3}
+  m_prefabPlayer: Prefabs/Multiplayer/Granny_player
   m_HostStage: {fileID: 1779554465}
   m_ParticipantsStage:
   - {fileID: 1935734655}
@@ -967,8 +967,8 @@ MonoBehaviour:
   m_TMPRoomName: {fileID: 245532341}
   m_PlayerListing: {fileID: 447592046}
   m_PlayerPanel: {fileID: 447592042}
-  m_PlayerPrefabModel: {fileID: 0}
   m_TMPPlayerName: {fileID: 1977905222}
+  m_SPTheScene: {fileID: 257941610}
 --- !u!4 &282958760
 Transform:
   m_ObjectHideFlags: 0
@@ -2138,6 +2138,10 @@ PrefabInstance:
     - target: {fileID: 1910427654193358860, guid: e70928bcaebb3d34fa7186565b11d624, type: 3}
       propertyPath: m_Name
       value: Granny_player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910427654193358860, guid: e70928bcaebb3d34fa7186565b11d624, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021471940520, guid: e70928bcaebb3d34fa7186565b11d624, type: 3}
       propertyPath: sceneViewId
