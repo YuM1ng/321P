@@ -2091,6 +2091,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 257941609}
     m_Modifications:
+    - target: {fileID: 2015893062, guid: e70928bcaebb3d34fa7186565b11d624, type: 3}
+      propertyPath: playDelayConfig.Low
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 2015893062, guid: e70928bcaebb3d34fa7186565b11d624, type: 3}
+      propertyPath: playDelayConfig.Max
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2015893062, guid: e70928bcaebb3d34fa7186565b11d624, type: 3}
+      propertyPath: playDelayConfig.High
+      value: 400
+      objectReference: {fileID: 0}
     - target: {fileID: 1281524202749784758, guid: e70928bcaebb3d34fa7186565b11d624, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -3175,6 +3187,7 @@ GameObject:
   - component: {fileID: 1482965065}
   - component: {fileID: 1482965064}
   - component: {fileID: 1482965063}
+  - component: {fileID: 1482965066}
   m_Layer: 0
   m_Name: VoiceManager
   m_TagString: Untagged
@@ -3242,7 +3255,7 @@ MonoBehaviour:
   statsResetInterval: 1000
   speakerPrefab: {fileID: 0}
   primaryRecorder: {fileID: 1482965063}
-  usePrimaryRecorder: 0
+  usePrimaryRecorder: 1
   Settings:
     AppIdRealtime: 
     AppIdFusion: 
@@ -3279,6 +3292,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1482965066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482965062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ddec46cf6a4c4addbf21b6be8442124, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aec: 1
+  aecHighPass: 0
+  agc: 1
+  agcCompressionGain: 26
+  agcTargetLevel: 0
+  vad: 1
+  highPass: 0
+  noiseSuppression: 1
+  reverseStreamDelayMs: 120
 --- !u!1 &1563436006
 GameObject:
   m_ObjectHideFlags: 0

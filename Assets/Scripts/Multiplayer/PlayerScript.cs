@@ -64,9 +64,9 @@ public class PlayerScript : MonoBehaviour, IPunInstantiateMagicCallback
     // Update is called once per frame
     void Update()
     {
-        if(m_PhotonVoiceView.IsSpeaking)
+        if(m_PhotonVoiceView.IsRecording)
         {
-            Debug.Log($"{photonView.Owner.NickName} is speaking");
+            //Debug.Log($"{PunVoiceClient.Instance.PrimaryRecorder.LevelMeter.CurrentAvgAmp} ");
             m_speakingIndicator.SetActive(true);
         }
         else
