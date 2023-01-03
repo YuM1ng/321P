@@ -2,16 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Vuforia;
 
 public class HTLogger : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI m_TMP;
+    private GameObject m_textPrefab;
 
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private Transform m_contentTransform;
+
+
+    void AddLogMsg(VuforiaInitError error)
     {
-        
+        AddMsg(error.ToString());
+    }
+    private void AddMsg(string _text)
+    {
+        GameObject msg = Instantiate(m_textPrefab, m_contentTransform);
+        TextMeshProUGUI tmp = msg.GetComponent<TextMeshProUGUI>();
+        tmp.text = _text;
+        //tmp.fontSize = 10;
+    }
+    // Start is called before the first frame update
+    void Awake()
+    {
+        AddMsg("HTLogger is awake!!");
+        VuforiaApplication.Instance.OnVuforiaInitialized += AddLogMsg;
     }
 
     // Update is called once per frame
