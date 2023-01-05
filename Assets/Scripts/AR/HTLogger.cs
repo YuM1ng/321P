@@ -17,7 +17,7 @@ public class HTLogger : MonoBehaviour
     {
         AddMsg(error.ToString());
     }
-    private void AddMsg(string _text)
+    public void AddMsg(string _text)
     {
         GameObject msg = Instantiate(m_textPrefab, m_contentTransform);
         TextMeshProUGUI tmp = msg.GetComponent<TextMeshProUGUI>();
@@ -34,6 +34,6 @@ public class HTLogger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //AddMsg(Camera.main.transform.eulerAngles.ToString());
     }
 }
