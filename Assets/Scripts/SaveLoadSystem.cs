@@ -37,9 +37,51 @@ public static class SaveLoadSystem
         /* A list of position, rotation and scale value of each object counted in m_CountOfEachObject
          * e.g. (based on above e.g.) the list size will be 9
          */
-        public List<PosRotScale> m_ListOfPosRotScale;
+        //public List<PosRotScale> m_ListOfPosRotScale;
+        public List<float[]> m_ListOfPosRotScale;
     }
-    public static void Save(string _fileName, SaveData _data)
+    [System.Serializable]
+    public struct PosScaRot
+    {
+        /*public float _positionX, _positionY, _positionZ;
+        public float _scaleX, _scaleY, _scaleZ;
+        public float _rotationX, _rotationY, _rotationZ;*/
+        public float[] _position;
+        public float[] _scale;
+        public float[] _rotation;
+        public PosScaRot(Vector3 _pos, Vector3 _sca, Vector3 _rot)
+        {
+            _position = new float[] { _pos.x, _pos.y, _pos.z };
+            _scale = new float[] { _sca.x, _sca.y, _sca.z };
+            _rotation = new float[] { _rot.x, _rot.y, _rot.z };
+            /*_positionX= _pos.x;
+            _positionY= _pos.y;
+            _positionZ= _pos.z;
+
+            _scaleX= _sca.x;
+            _scaleY= _sca.y;
+            _scaleZ= _sca.z;
+
+            _rotationX= _rot.x;
+            _rotationY= _rot.y;
+            _rotationZ= _rot.z;*/
+        }
+    }
+
+    public struct GOData
+    {
+        //public string m_Name;
+        public List<PosScaRot> m_PSRWine;
+        public List<PosScaRot> m_PSRFlower;
+        public GOData(/*string _name,*/ List<PosScaRot> _psrWine, List<PosScaRot> _psrFlower)
+        {
+            //m_Name = _name;
+            m_PSRWine = _psrWine;
+            m_PSRFlower = _psrFlower;
+        }
+    }
+
+    public static void SaveBin(string _fileName, SaveData _data)
     {
         Debug.Log("Save starting|||");
         BinaryFormatter formatter = new BinaryFormatter();
@@ -49,7 +91,7 @@ public static class SaveLoadSystem
         stream.Close();
         Debug.Log($"{_fileName} saved");
     }
-    public static SaveData/*void */Load(string _fileName/*, SaveData _data*/)
+    public static SaveData/*void */LoadBin(string _fileName/*, SaveData _data*/)
     {
         string path = Application.persistentDataPath + "/" + _fileName + ".gar";
         if(File.Exists(path))
@@ -67,6 +109,29 @@ public static class SaveLoadSystem
         {
             Debug.Log($"File path [{path}] not found");
             return new SaveData();
+        }
+    }
+    public static void SaveJSon(string _fileName, string _data)
+    {
+        string pathName = Application.persistentDataPath + "/" + _fileName + ".json";
+        File.WriteAllText(pathName, _data);
+    }
+    public static string LoadJSon(string _fileName)
+    {
+        string pathName = Application.persistentDataPath + "/" + _fileName + ".json";
+        if(File.Exists(pathName))
+        {
+            string loadedData = File.ReadAllText(pathName);
+            Debug.Log($"Loaded {loadedData}");
+            /*_data = JsonUtility.FromJson<GOData>(loadedData);
+            Debug.Log($"Flower: {_data.m_PSRFlower.Count} | Wine: {_data.m_PSRWine.Count}");
+            return true;*/
+            return loadedData;
+        }
+        else
+        {
+            Debug.Log("File load error");
+            return "Fail";
         }
     }
 }
