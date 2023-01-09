@@ -118,16 +118,16 @@ public class ARManager : MonoBehaviour
             if (childName == "Flower")
             {
                 FlowerPSR.Add(new SaveLoadSystem.PosScaRot(
-                                            child.position,
-                                            child.lossyScale,
-                                            child.rotation.eulerAngles));
+                                            child.localPosition,
+                                            child.localScale,
+                                            child.rotation));
             }
             else if (childName == "Wine")
             {
                 WinePSR.Add(new SaveLoadSystem.PosScaRot(
-                                            child.position,
-                                            child.lossyScale,
-                                            child.rotation.eulerAngles));
+                                            child.localPosition,
+                                            child.localScale,
+                                            child.rotation));
             }
         }
         /*SaveLoadSystem.GOData flowerDat = new SaveLoadSystem.GOData("Flower", FlowerPSR);
@@ -149,9 +149,21 @@ public class ARManager : MonoBehaviour
         }
         SaveLoadSystem.GOData data = JsonUtility.FromJson<SaveLoadSystem.GOData>(rawJson);
         //Debug.Log($"File loaded: {data.m_PSRFlower.Count} flowers, {data.m_PSRWine.Count} wine");
-        /*
-         * spawn them
-         */
+        GameObject go;
+        foreach (SaveLoadSystem.PosScaRot psr in data.m_PSRFlower)
+        {
+            go = Instantiate(m_PlaceableObjects[0], transform);
+            go.transform.localPosition = new Vector3(psr._position[0], psr._position[1], psr._position[2]);
+            go.transform.localScale = new Vector3(psr._scale[0], psr._scale[1], psr._scale[2]);
+            go.transform.rotation = new Quaternion(psr._rotation[0], psr._rotation[1], psr._rotation[2], psr._rotation[3]);
+        }
+        foreach (SaveLoadSystem.PosScaRot psr in data.m_PSRWine)
+        {
+            go = Instantiate(m_PlaceableObjects[1], transform);
+            go.transform.localPosition = new Vector3(psr._position[0], psr._position[1], psr._position[2]);
+            go.transform.localScale = new Vector3(psr._scale[0], psr._scale[1], psr._scale[2]);
+            go.transform.rotation = new Quaternion(psr._rotation[0], psr._rotation[1], psr._rotation[2], psr._rotation[3]);
+        }
     }
     // Update is called once per frame
     void Update()

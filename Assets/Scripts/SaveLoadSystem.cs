@@ -49,11 +49,11 @@ public static class SaveLoadSystem
         public float[] _position;
         public float[] _scale;
         public float[] _rotation;
-        public PosScaRot(Vector3 _pos, Vector3 _sca, Vector3 _rot)
+        public PosScaRot(Vector3 _pos, Vector3 _sca, Quaternion _rot)
         {
             _position = new float[] { _pos.x, _pos.y, _pos.z };
             _scale = new float[] { _sca.x, _sca.y, _sca.z };
-            _rotation = new float[] { _rot.x, _rot.y, _rot.z };
+            _rotation = new float[] { _rot.x, _rot.y, _rot.z, _rot.w };
             /*_positionX= _pos.x;
             _positionY= _pos.y;
             _positionZ= _pos.z;
@@ -80,7 +80,7 @@ public static class SaveLoadSystem
             m_PSRFlower = _psrFlower;
         }
     }
-
+    #region Saving in binary
     public static void SaveBin(string _fileName, SaveData _data)
     {
         Debug.Log("Save starting|||");
@@ -111,6 +111,8 @@ public static class SaveLoadSystem
             return new SaveData();
         }
     }
+    #endregion
+    #region Save in json
     public static void SaveJSon(string _fileName, string _data)
     {
         string pathName = Application.persistentDataPath + "/" + _fileName + ".json";
@@ -134,4 +136,5 @@ public static class SaveLoadSystem
             return "Fail";
         }
     }
+    #endregion
 }
