@@ -108,13 +108,20 @@ public class ARManager : MonoBehaviour
 
     public void SaveScene()
     {
-        List<SaveLoadSystem.PosScaRot> WinePSR = new List<SaveLoadSystem.PosScaRot>();
-        List<SaveLoadSystem.PosScaRot> FlowerPSR = new List<SaveLoadSystem.PosScaRot>();
+        //temporary lists to hold respective save datas
+        List<SaveLoadSystem.PosScaRot> WinePSR = new();
+        List<SaveLoadSystem.PosScaRot> FlowerPSR = new();
+        //loop through each child
         for (int i = 0; i < transform.childCount; ++i)
         {
             Transform child = transform.GetChild(i);
+            //extract child gameobject's name to check which 3d prefab model is it
             string childName = child.name;
+            /***************************************************************
+             * May change in the future when more 3d object names are done *
+             ***************************************************************/
             childName = childName.Substring(0, childName.IndexOf(" "));
+            //Add the transform information according to the asset name
             if (childName == "Flower")
             {
                 FlowerPSR.Add(new SaveLoadSystem.PosScaRot(
@@ -136,20 +143,30 @@ public class ARManager : MonoBehaviour
         Debug.Log($"Wine {JsonUtility.ToJson(wineDat.m_PSR)}");
         string dataJSon = JsonUtility.ToJson(flowerDat, true) 
                         + JsonUtility.ToJson(wineDat, true);*/
+
+        //Convert the above datas to json
         string dataJSon = JsonUtility.ToJson(new SaveLoadSystem.GOData(_psrWine: WinePSR, _psrFlower: FlowerPSR));
-        Debug.Log(dataJSon);
-        SaveLoadSystem.SaveJSon("GoData", dataJSon);
+        //Debug.Log(dataJSon);
+        //save data to a file named "GoData" (file extension is added in the function)
+        SaveLoadSystem.SaveJSon(_fileName: "GoData", dataJSon);
+        //Log success message 
+        logger.AddMsg("File Saved");
     }
     public void LoadScene()
     {
+        //retrieve the json, in string form, read from the file "GoData"
         string rawJson = SaveLoadSystem.LoadJSon("GoData");
+        //If string returned is "Fail" means file is not loaded
         if (rawJson == "Fail")
         {
             logger.AddMsg("Load Failed");
+            return;
         }
+        //Converts raw Json string to GOData struct
         SaveLoadSystem.GOData data = JsonUtility.FromJson<SaveLoadSystem.GOData>(rawJson);
         //Debug.Log($"File loaded: {data.m_PSRFlower.Count} flowers, {data.m_PSRWine.Count} wine");
         GameObject go;
+        //Iterate through each set of position scale rotation
         foreach (SaveLoadSystem.PosScaRot psr in data.m_PSRFlower)
         {
             go = Instantiate(m_PlaceableObjects[0], transform);
@@ -164,6 +181,7 @@ public class ARManager : MonoBehaviour
             go.transform.localScale = new Vector3(psr._scale[0], psr._scale[1], psr._scale[2]);
             go.transform.rotation = new Quaternion(psr._rotation[0], psr._rotation[1], psr._rotation[2], psr._rotation[3]);
         }
+        logger.AddMsg("File loaded");
     }
     // Update is called once per frame
     void Update()
