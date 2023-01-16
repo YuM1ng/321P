@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using TMPro;
+using System.Text;
 
 
 
@@ -49,8 +50,12 @@ public class Login : MonoBehaviour
         byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(userData);
 		www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
 		www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        // DownloadHandler objects are helper objects. 
+        // When attached to a UnityWebRequest, they define how to handle HTTP response body data received from a remote server. 
+        // Generally, they are used to buffer, stream and/or process response bodies
 	    www.SetRequestHeader("Content-Type", "application/json");
         yield return www.SendWebRequest();
+        //return request
 
         if (www.result != UnityWebRequest.Result.Success)
         {
@@ -59,21 +64,22 @@ public class Login : MonoBehaviour
         }
         else
         {
+        Debug.Log(www.downloadHandler.text);
         Debug.Log("POST done!");
-			StringBuilder sb = new StringBuilder();
-            foreach (System.Collections.Generic.KeyValuePair<string, string> dict in www.GetResponseHeaders())
-            {
-                sb.Append(dict.Key).Append(": \t[").Append(dict.Value).Append("]\n");
-            }
-			if(WWW.downloadHandler.text == "Loggedin")
-			{
-				User user = JsonUtility.FromJson<User>(userData);
-				Debug.Log(user.id);
-			}
-			else
-			{
-				Debug.Log(www.downloadHandler.text);
-			}
+			// StringBuilder sb = new StringBuilder();
+            // foreach (System.Collections.Generic.KeyValuePair<string, string> dict in www.GetResponseHeaders())
+            // {
+            //     sb.Append(dict.Key).Append(": \t[").Append(dict.Value).Append("]\n");
+            // }
+			// if(www.downloadHandler.text == "Loggedin")
+			// {
+			// 	User user = JsonUtility.FromJson<User>(userData);
+			// 	Debug.Log(user.id);
+			// }
+			// else
+			// {
+			// 	Debug.Log(www.downloadHandler.text); //convert the result to text
+			// }
 
         }
     }
