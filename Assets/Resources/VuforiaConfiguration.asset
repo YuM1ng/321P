@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: VuforiaConfiguration
   m_EditorClassIdentifier: 
   vuforia:
-    vuforiaLicenseKey: AVEPL8f/////AAABmTYINgpHoU/MtDrGPeUaIA5fVWBnUn5gSO7YIT7eJDFrNlzfoyAeqJD6rr+QoWb3J63uf5LySrXM6lXIr53J7nVHAe5gPF1ym+WgrMaTBoa63m/zW0sZbf9hC9NZ3r6V7olCCUpW1H+O0YMF5cvqRSjAcSOzC47TSa73/Npo1w47ALOyHS4805py7Y+81wpO/ANX9UkXytobLMw1Jz8q/TUCMUAfKmtFaF3s9mD9q4t5A8fjsmJkVlLPapRggrRzPKzMn4zkLpwBz/oqT/wutjxKUWZlLnpd6LHfAQf9rICDNqs45U/sAc9+ffh+ADA6dg9zSU6PtKMHWhDtPR2QZlXBASxNrASnmAQQBad3o5xw
-    ufoLicenseKey: QWJtODh3Ly8vLy8vQUFBQUtHNTlZZmhNb2t5QnJ0SjlodE05cG5JWjdTMENIaVNZZlcvekZFbU9zZU1WN20vQzU2ZHZkeVIybGRzUVl1NFNUclJtNVNnOXp3M3l0RGVLSjNvSmwxVHZWak5QemZOOXVlR0Nncy9VTC9xYmZ4Y01VTFd6bFJ5OHFZcW5WYVZSVFdsT3J1KzdKVExOVXg4WXdVRm9OMXk4ZFIrOEhJTXVVM3BBaE1JTlhjRXd0RThKMmVjNEQ0bFp3aE5OZUlLUGFjQUk3czJEM1pWKzFaUjQxTE1JeE9hUWxvWGVqTis5QkszTVY5QkYyQjRFdVJtUXd6NlFmOTZDT1ZEbkE2a3BGcmNMZ3NmNGJCaDR6VnlrZ3BVRHRjblJUZTN2MFVhSEhWQ29YeGhMclBMdlVnSGppSnN0Z014bHBDSjdZMCtieXhOMC9MMnhLUVQ3MmZQZEo5NFBKZjZTZDIwNFB0NitNZ0dxdGpIdnNEQmg=
+    vuforiaLicenseKey: Af40SAb/////AAABmYY55cZdPkgMvr5utoH2eMILyFgjgLPSZbRSOYtWTfwZGU2S+2O7u5N8vEbgW96Xbzs/BflLJl/uYPtAiNQl4961kcIrHGS5CTHrW+b9G82i6yXqcHx27X2iHjGvBAO1B8ZmwaBzPXy12UApoKblJLtWNpRoxYPdsqZ8j3KyMZ68Uos2yQYZmVSzEqSKS3DEiOwLuDkURs39DicpaYCJnRiLh26a36OAlZIYfCDjtjpJhtuZKYM2xCULT+kbl4Wc5MdYwv8Y7xUT6LasmTvNSTUuMHIP9IEzqJ3pZezmH7sf4s7ZOAACI4uST+y5gvENiAeqUL6TsO14j94h/QQ6XeUKOSZOHnQK8Fv+LaXOfRK0
+    ufoLicenseKey: QWVENTZ6WC8vLy8vQUFBQUtJd2pnU0YvTjBrVWo1U1FTM3l2M3ZlSWdFV055VTcweXVUSWdhdldPdHp5S2R1T05qejlzcWgyWXE0Umo5TDJLUUx0cDNud2NZaWtaSGVRTXMzay9ndUFmcHBtbnFWbDZYQ3dCcDN3NEZtaVF6WGxraExVNnVYVGFlWnpId09Ud29KbjlIY0ZoN0NnVnh5L2E1YXhOVmFGKzZRMVJ3M3pPSk5KNzZjLy9yS01XVTM4QnRlaXFzek5LaDJuSE52SEtuK00rWXcrVXJ3eG42ZEFYc01OcFRIazI5YnYzeSt5d0hrTndtQVRlcnBrRDRxeFpHaEVVUjBXblNyczNYSWZaTS9ZQTB5T1RyeVFxTS9kN3lMeTJoOGlQdGIzZ3RUVHVCcDNkS1Y1NW8yZFJGWFdQZVNMaElST3lqcStuQkgrMEc3bk9kNWdrbEhaMlJ5c25Hbko2dmRGSU00U09tclhMNDNCVGZXajM1NUE=
     delayedInitialization: 0
     cameraFocusModeSetting: 2
     cameraDeviceModeSetting: -1
@@ -23,14 +23,12 @@ MonoBehaviour:
     modelTargetRecoWhileExtendedTracked: 1
     shareRecordingsInITunes: 0
     logLevel: 0
-    version: 10.11.3
-    eulaAcceptedVersions: '{"Values":["10.10","10.11"]}'
+    version: 10.10.2
+    eulaAcceptedVersions: '{"Values":["10.10"]}'
   database:
     disableModelExtraction: 0
   shaders:
     depthMaskShader: {fileID: 4800000, guid: 1ce7eb78425fb1540838bc9d5d95857a, type: 3}
-    outlineShader: {fileID: 0}
-    unlitTransparentShader: {fileID: 0}
   videoBackground:
     numDivisions: 2
     videoBackgroundShader: {fileID: 4800000, guid: f40623b353e2f1943b1b3ba42975db7a, type: 3}
@@ -39,7 +37,7 @@ MonoBehaviour:
   deviceTracker:
     autoStartTracker: 1
     arcoreRequirement: 1
-    autoImportArcore: 0
+    autoImportArcore: 1
     thirdPartyARCoreClientDetected: 0
   playmode:
     mSequencePath: 
