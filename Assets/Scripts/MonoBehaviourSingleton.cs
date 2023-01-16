@@ -19,7 +19,7 @@ public abstract class MonoBehaviourSingleton<T> : ScriptableObject where T : Scr
                 }
                 else if(results.Length > 1)
                 {
-                    Debug.LogError($"More than 1 instance of {typeof(T)} found");
+                    Debug.LogError($"Multiple instance of {typeof(T)} found");
                     return null;
                 }
                 _instance = results[0];
