@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Assets/Scene/UserPage/UserPage.unity
     guid: 1f88c3d16c2520c4caacfc364c232e8d
+  - enabled: 1
+    path: Assets/Assets/Scene/UserProfile/UserProfile.unity
+    guid: f7b2e10dee14e48448cd539f94ce888c
   m_configObjects: {}

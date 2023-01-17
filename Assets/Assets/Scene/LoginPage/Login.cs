@@ -29,12 +29,13 @@ public class Login : MonoBehaviour
         string username = inpuptID.text;
 		string password = inputPswd.text;   
         // User contains username and password
-        User user = new User(username, password);
-        string userData = JsonUtility.ToJson(user);
+        User user = GameObject.Find("UserManager").GetComponent<User>();
+        user.setUser(username, password);
+        
 
         ActivateButtons(false);
 
-        StartCoroutine(TryLogin(userData));
+        StartCoroutine(TryLogin(user));
     }
 
     // public void OnCreateClick()
@@ -45,8 +46,9 @@ public class Login : MonoBehaviour
     //     StartCoroutine(TryCreate());
     // }
 
-    private IEnumerator TryLogin(string userData)
+    private IEnumerator TryLogin(User user)
     {
+        string userData = JsonUtility.ToJson(user);
         UnityWebRequest www = UnityWebRequest.Post(loginEndpoint, "login", "POST");
         byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(userData);
 		www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
@@ -69,7 +71,10 @@ public class Login : MonoBehaviour
         Debug.Log(www.downloadHandler.text);
         var jsonLoggedIn = JsonUtility.FromJson<LoginResponse>(www.downloadHandler.text);   
         Debug.Log("POST done!");
+        Debug.Log(jsonLoggedIn.session_id);
+        user.setSessionId(jsonLoggedIn.session_id);
         SceneManager.LoadScene("UserProfile");
+        Debug.Log(user.session_id);
 			// StringBuilder sb = new StringBuilder();
             // foreach (System.Collections.Generic.KeyValuePair<string, string> dict in www.GetResponseHeaders())
             // {
@@ -77,7 +82,7 @@ public class Login : MonoBehaviour
             // }
 			// if(www.downloadHandler.text == "Loggedin")
 			// {
-			// 	User user = JsonUtility.FromJson<U  ser>(userData);
+			// 	User user = JsonUtility.FromJson<User>(userData);
 			// 	Debug.Log(user.id);
 			// }
 			// else
