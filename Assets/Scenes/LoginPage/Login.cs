@@ -4,25 +4,36 @@ using System.Collections;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
+using TMPro;
+using System.Text;
+
+
 
 
 public class Login : MonoBehaviour
 {
     private const string PASSWORD_REGEX = "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,24})";
 
-    [SerializeField] private string loginEndpoint = "https://lunar-byte-371808.et.r.appspot.com/api/loginuser/";
+    [SerializeField] private string loginEndpoint = "https://lunar-byte-371808.et.r.appspot.com/api/userlogin/";
 
     [SerializeField] private TextMeshProUGUI alertText;
     [SerializeField] private Button loginButton;
-    [SerializeField] private TMP_InputField usernameInputField;
-    [SerializeField] private TMP_InputField passwordInputField;
+   
 
     public void OnLoginClick()
     {
-        alertText.text = "Signing in...";
+        TMP_InputField inpuptID = GameObject.Find("UserName").GetComponent(typeof(TMP_InputField)) as TMP_InputField;
+		TMP_InputField inputPswd = GameObject.Find("Password").GetComponent(typeof(TMP_InputField)) as TMP_InputField;
+        string username = inpuptID.text;
+		string password = inputPswd.text;   
+        // User contains username and password
+        User user = new User(username, password);
+        string userData = JsonUtility.ToJson(user);
+
         ActivateButtons(false);
 
-        StartCoroutine(TryLogin());
+        StartCoroutine(TryLogin(userData));
     }
 
     // public void OnCreateClick()
@@ -33,34 +44,43 @@ public class Login : MonoBehaviour
     //     StartCoroutine(TryCreate());
     // }
 
-    private IEnumerator TryLogin()
+    private IEnumerator TryLogin(string userData)
     {
-        string username = usernameInputField.text;
-        string password = passwordInputField.text;
-
-        if (username.Length < 3 || username.Length > 24)
-        {
-            alertText.text = "Invalid username";
-            ActivateButtons(true);
-            yield break;
-        }
-        
-        WWWForm form = new WWWForm();
-        form.AddField("rUsername", username);
-        form.AddField("rPassword", password);
-
-
-        UnityWebRequest www = UnityWebRequest.Post(loginEndpoint, form);
+        UnityWebRequest www = UnityWebRequest.Post(loginEndpoint, "login", "POST");
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(userData);
+		www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+		www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        // DownloadHandler objects are helper objects. 
+        // When attached to a UnityWebRequest, they define how to handle HTTP response body data received from a remote server. 
+        // Generally, they are used to buffer, stream and/or process response bodies
+	    www.SetRequestHeader("Content-Type", "application/json");
         yield return www.SendWebRequest();
+        //return request
 
         if (www.result != UnityWebRequest.Result.Success)
         {
             Debug.Log(www.error);
+            
         }
         else
         {
-            Debug.Log("Form upload complete!");
-            
+        Debug.Log(www.downloadHandler.text);
+        Debug.Log("POST done!");
+			// StringBuilder sb = new StringBuilder();
+            // foreach (System.Collections.Generic.KeyValuePair<string, string> dict in www.GetResponseHeaders())
+            // {
+            //     sb.Append(dict.Key).Append(": \t[").Append(dict.Value).Append("]\n");
+            // }
+			// if(www.downloadHandler.text == "Loggedin")
+			// {
+			// 	User user = JsonUtility.FromJson<User>(userData);
+			// 	Debug.Log(user.id);
+			// }
+			// else
+			// {
+			// 	Debug.Log(www.downloadHandler.text); //convert the result to text
+			// }
+
         }
     }
 

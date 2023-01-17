@@ -35,7 +35,7 @@ public class CreateAccount : MonoBehaviour
 
         if (username.Length < 3 || username.Length > 24)
         {
-            //alertText.text = "Invalid username";
+            alertText.text = "Invalid username";
             ActivateButtons(true);
             yield break;
         }

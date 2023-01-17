@@ -22,16 +22,16 @@ EditorBuildSettings:
     guid: 556af8b97ea9fd644ae898b7162240b9
   - enabled: 1
     path: Assets/Scenes/LoginPage/LoginPage.unity
-    guid: 7eee9c3064a76534cb18507dcec7e1d6
+    guid: ec78865e4372ba94380c3d3362e7ab49
   - enabled: 1
     path: Assets/Scenes/RegistrationPage/RegisterMenu.unity
-    guid: 1f08e464123617b4caf3b939e237ea82
+    guid: 7d26d5e681b0d3742b15f8f5be08de95
   - enabled: 1
     path: Assets/Scenes/UserPage/UserPage.unity
-    guid: 1f88c3d16c2520c4caacfc364c232e8d
+    guid: ffc699c44b7017c41934b2631fc3b175
   - enabled: 1
     path: Assets/Scenes/GuestPage/GuesPage.unity
-    guid: 5e15e409be1fdc54492074094cb64ca3
+    guid: 00b517889367df544a69d41f138a2d13
   - enabled: 1
     path: Assets/Scenes/SceneAR.unity
     guid: 0049c32336f00154cb21d064b97d4a30

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.44402185, g: 0.49316472, b: 0.57223153, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f3291274587e0984098e350c5e3ebe8c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e76976bd040d00a458f2765306dc21c4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -388,8 +388,8 @@ GameObject:
   - component: {fileID: 277493491}
   - component: {fileID: 277493490}
   - component: {fileID: 277493489}
-  - component: {fileID: 277493493}
   - component: {fileID: 277493494}
+  - component: {fileID: 277493495}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -484,18 +484,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &277493493
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 277493488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 749aa66cf76ee5541a1b7791448ee306, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &277493494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -505,16 +493,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 277493488}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9f5598c53f45c345af9939c849590f0, type: 3}
+  m_Script: {fileID: 11500000, guid: b1870a777484b7346a04ca800e145042, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loginEndpoint: https://lunar-byte-371808.et.r.appspot.com/api/loginuser/
-  createEndpoint: http://127.0.0.1:13756/account/create
+  loginEndpoint: https://lunar-byte-371808.et.r.appspot.com/api/userlogin/
   alertText: {fileID: 474702328}
   loginButton: {fileID: 1647505293}
-  createButton: {fileID: 0}
-  usernameInputField: {fileID: 355901772}
-  passwordInputField: {fileID: 96562409}
+--- !u!114 &277493495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 277493488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 691f853b1b0e7d947992738d20e9d7ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &341373368
 GameObject:
   m_ObjectHideFlags: 0
@@ -1854,16 +1850,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 277493494}
-        m_TargetAssemblyTypeName: Login, Assembly-CSharp
-        m_MethodName: OnLoginClick
-        m_Mode: 1
+      - m_Target: {fileID: 277493495}
+        m_TargetAssemblyTypeName: SceneSwitcher, Assembly-CSharp
+        m_MethodName: ChangeScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 2
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: GuesPage
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1315438262
@@ -2623,16 +2619,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 277493493}
-        m_TargetAssemblyTypeName: MoveScene, Assembly-CSharp
-        m_MethodName: RegisterPage
-        m_Mode: 3
+      - m_Target: {fileID: 277493495}
+        m_TargetAssemblyTypeName: SceneSwitcher, Assembly-CSharp
+        m_MethodName: ChangeScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 1
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: RegisterMenu
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &1870311409
