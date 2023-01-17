@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using TMPro;
 using System.Text;
+using UnityEngine.SceneManagement;
 
 
 
@@ -64,8 +65,11 @@ public class Login : MonoBehaviour
         }
         else
         {
+
         Debug.Log(www.downloadHandler.text);
+        var jsonLoggedIn = JsonUtility.FromJson<LoginResponse>(www.downloadHandler.text);   
         Debug.Log("POST done!");
+        SceneManager.LoadScene("UserProfile");
 			// StringBuilder sb = new StringBuilder();
             // foreach (System.Collections.Generic.KeyValuePair<string, string> dict in www.GetResponseHeaders())
             // {
@@ -73,7 +77,7 @@ public class Login : MonoBehaviour
             // }
 			// if(www.downloadHandler.text == "Loggedin")
 			// {
-			// 	User user = JsonUtility.FromJson<User>(userData);
+			// 	User user = JsonUtility.FromJson<U  ser>(userData);
 			// 	Debug.Log(user.id);
 			// }
 			// else

@@ -6,12 +6,12 @@ using UnityEngine;
 [Serializable]
 public class User
 {
-	public string id;
-	public string password;
+	public string Username;
+	public string Password;
 
-	public User(string id, string password)
+	public User(string Username, string Password)
 	{
-		this.id = id;
-		this.password = password;
+		this.Username = Username;
+		this.Password = Password;
 	}
 }
