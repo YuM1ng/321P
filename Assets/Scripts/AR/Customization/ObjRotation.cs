@@ -36,6 +36,12 @@ public class ObjRotation : MonoBehaviour
                     break;
                 case TouchPhase.Moved:
                     Vector2 touchPos = touch1.deltaPosition;
+                    Debug.Log($"TouchPos: {touchPos}");
+                    Quaternion newQuat = transform.rotation;
+                    newQuat.eulerAngles += new Vector3(touchPos.y, 0, 0);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, newQuat, 10.0f);
+                    //transform.rotation = Quaternion.Euler(0, touchPos.y, 0);
+                    //transform.rotation.eulerAngles += new Vector3(0, touchPos.y, 0);
                     break;
                 case TouchPhase.Ended:
                     break;
