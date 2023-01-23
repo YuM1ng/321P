@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Vuforia;
 
 public class CustomisationManager : MonoBehaviour
 {
+    [SerializeField]
+    GameObject m_BtnPlace;
+
     string dataSetPath = "Vuforia/FYP321.xml";
     string targetName = "TissuePaper";
 
@@ -12,6 +16,7 @@ public class CustomisationManager : MonoBehaviour
     void Start()
     {
         VuforiaApplication.Instance.OnVuforiaInitialized += VufInitialised;
+        m_BtnPlace.SetActive(false);
     }
 
     private void VufInitialised(VuforiaInitError err)
@@ -24,7 +29,7 @@ public class CustomisationManager : MonoBehaviour
     }
     private void TargetStatusChanged(ObserverBehaviour _behaviour, TargetStatus _status)
     {
-        switch (_status.Status)
+        /*switch (_status.Status)
         {
             case Status.NO_POSE:
                 break;
@@ -34,6 +39,14 @@ public class CustomisationManager : MonoBehaviour
                 break;
             case Status.EXTENDED_TRACKED: 
                 break;
+        }*/
+        if(_status.Status != Status.NO_POSE)
+        {
+            m_BtnPlace.SetActive(true);
+        }
+        else
+        {
+            m_BtnPlace.SetActive(false);
         }
     }
     // Update is called once per frame
