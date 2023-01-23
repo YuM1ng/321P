@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ObjRotation : MonoBehaviour
 {
     //Gyroscope m_gyro;
+
+    float lastPos;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,10 +39,18 @@ public class ObjRotation : MonoBehaviour
                     break;
                 case TouchPhase.Moved:
                     Vector2 touchPos = touch1.deltaPosition;
-                    Debug.Log($"TouchPos: {touchPos}");
-                    Quaternion newQuat = transform.rotation;
+                    /*Debug.Log($"TouchPos: {touchPos}");
+                    float mult = 0.1f;
+                    Quaternion newRot = transform.rotation;
+                    newRot.w += Mathf.Cos(touchPos.y*mult*0.5f);
+                    newRot.x += Mathf.Sin(touchPos.y* mult * 0.5f);
+                    transform.rotation = newRot;*/
+                    
+                    /*Quaternion newQuat = transform.rotation;
                     newQuat.eulerAngles += new Vector3(touchPos.y, 0, 0);
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, newQuat, 10.0f);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, newQuat, 1.0f);
+                    Debug.Log($"NewRot: {transform.rotation.eulerAngles}");*/
+
                     //transform.rotation = Quaternion.Euler(0, touchPos.y, 0);
                     //transform.rotation.eulerAngles += new Vector3(0, touchPos.y, 0);
                     break;
