@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using Vuforia;
@@ -10,9 +11,11 @@ public class CustomisationManager : DefaultObserverEventHandler
     GameObject m_BtnPlace;
     [SerializeField]
     GameObject m_prefabScene;
+    [SerializeField]
+    RawImage DispImg;
 
     ImageTargetBehaviour ImgTarget;
-    string dataSetPath = Application.streamingAssetsPath + "/Vuforia/FYP321.xml";
+    string dataSetPath = /*Application.streamingAssetsPath + */"Vuforia/FYP321.xml";
     string targetName = "TissuePaper";
     bool m_bInit;
 
@@ -31,9 +34,38 @@ public class CustomisationManager : DefaultObserverEventHandler
         if(err == VuforiaInitError.NONE)
         {
             Debug.Log($"Texture img: {dataSetPath}");
-            ImgTarget =  VuforiaBehaviour.Instance.ObserverFactory.CreateImageTarget(dataSetPath, targetName);
-            ImgTarget.OnTargetStatusChanged += TargetStatusChanged;
+            NativeGallery.GetImageFromGallery(ProcessIMG, "Select image to be tracked");
+            /*ImgTarget =  VuforiaBehaviour.Instance.ObserverFactory.CreateImageTarget(dataSetPath, targetName);
+            ImgTarget.OnTargetStatusChanged += TargetStatusChanged;*/
         }
+    }
+    private void ProcessIMG(string _path)
+    {
+
+        byte[] imgArray = File.ReadAllBytes(_path);
+        Texture2D texture = new Texture2D(2,2);
+        if (texture.LoadImage(imgArray))
+        {
+            DispImg.transform.localScale = new Vector3(texture.width/texture.height, 1, 0);
+            DispImg.texture = texture;
+
+            ImgTarget = VuforiaBehaviour.Instance.ObserverFactory.CreateImageTarget(texture, 0.115f, targetName);
+            ImgTarget.OnTargetStatusChanged += TargetStatusChanged;
+            //DefaultObserverEventHandler deoh = ImgTarget.gameObject.AddComponent<DefaultObserverEventHandler>();
+
+            GameObject spwn = Instantiate(m_prefabScene, ImgTarget.transform);
+            //spwn.transform.SetParent(ImgTarget.transform);
+            //spwn.transform.parent = ImgTarget.transform;
+            spwn.transform.localPosition = Vector3.zero;
+            spwn.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            m_bInit= true;
+
+            /*DefaultObserverEventHandler doeh = ImgTarget.GetComponent<DefaultObserverEventHandler>();
+            doeh.OnTargetFound.AddListener(TrackingFound);
+            doeh.OnTargetLost.AddListener(TrackingLost);*/
+        }
+
+
     }
     private void TargetStatusChanged(ObserverBehaviour _behaviour, TargetStatus _status)
     {
@@ -49,32 +81,36 @@ public class CustomisationManager : DefaultObserverEventHandler
             case Status.EXTENDED_TRACKED: 
                 break;
         }*/
-        /*if(_status.Status != Status.NO_POSE)
+        /*if (_status.Status != Status.NO_POSE)
         {
             m_BtnPlace.SetActive(true);
+            TrackingFound();
         }
         else
         {
             m_BtnPlace.SetActive(false);
+            TrackingLost();
         }*/
     }
 
-    protected override void OnTrackingFound()
+    /*protected override */void TrackingFound()
     {
         //base.OnTrackingFound();
         Debug.Log("Img found");
-        if(!m_bInit)
+        /*if(!m_bInit)
         {
             GameObject spwn = Instantiate(m_prefabScene);
+            Debug.Log($"ImgTarget name: {ImgTarget.transform.name}, GO parent: {ImgTarget.gameObject.name}");
             spwn.transform.parent = ImgTarget.transform;
+            spwn.transform.localPosition = Vector3.zero;
             spwn.SetActive(true);
             m_bInit= true;
-        }
+        }*/
     }
-    protected override void OnTrackingLost()
+    /*protected override */void TrackingLost()
     {
         Debug.Log("Img lost");
-        base.OnTrackingLost();
+        //base.OnTrackingLost();
     }
     // Update is called once per frame
     void Update()
