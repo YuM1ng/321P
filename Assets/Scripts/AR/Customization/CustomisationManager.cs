@@ -15,8 +15,7 @@ public class CustomisationManager : DefaultObserverEventHandler
     RawImage DispImg;
 
     ImageTargetBehaviour ImgTarget;
-    string dataSetPath = /*Application.streamingAssetsPath + */"Vuforia/FYP321.xml";
-    string targetName = "TissuePaper";
+    GameObject m_goPlot;
     bool m_bInit;
 
     // Start is called before the first frame update
@@ -30,10 +29,8 @@ public class CustomisationManager : DefaultObserverEventHandler
 
     private void VufInitialised(VuforiaInitError err)
     {
-        Debug.Log($"VufInit: {err}");
         if(err == VuforiaInitError.NONE)
         {
-            Debug.Log($"Texture img: {dataSetPath}");
             NativeGallery.GetImageFromGallery(ProcessIMG, "Select image to be tracked");
             /*ImgTarget =  VuforiaBehaviour.Instance.ObserverFactory.CreateImageTarget(dataSetPath, targetName);
             ImgTarget.OnTargetStatusChanged += TargetStatusChanged;*/
@@ -49,15 +46,14 @@ public class CustomisationManager : DefaultObserverEventHandler
             DispImg.transform.localScale = new Vector3(texture.width/texture.height, 1, 0);
             DispImg.texture = texture;
 
-            ImgTarget = VuforiaBehaviour.Instance.ObserverFactory.CreateImageTarget(texture, 0.115f, targetName);
+            ImgTarget = VuforiaBehaviour.Instance.ObserverFactory.CreateImageTarget(texture, 0.115f, "TissuePaper");
             ImgTarget.OnTargetStatusChanged += TargetStatusChanged;
-            //DefaultObserverEventHandler deoh = ImgTarget.gameObject.AddComponent<DefaultObserverEventHandler>();
+            DefaultObserverEventHandler deoh = ImgTarget.gameObject.AddComponent<DefaultObserverEventHandler>();
 
-            GameObject spwn = Instantiate(m_prefabScene, ImgTarget.transform);
+            m_goPlot = Instantiate(m_prefabScene, ImgTarget.transform);
             //spwn.transform.SetParent(ImgTarget.transform);
             //spwn.transform.parent = ImgTarget.transform;
-            spwn.transform.localPosition = Vector3.zero;
-            spwn.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            m_goPlot.transform.localPosition = Vector3.zero;
             m_bInit= true;
 
             /*DefaultObserverEventHandler doeh = ImgTarget.GetComponent<DefaultObserverEventHandler>();
@@ -81,16 +77,16 @@ public class CustomisationManager : DefaultObserverEventHandler
             case Status.EXTENDED_TRACKED: 
                 break;
         }*/
-        /*if (_status.Status != Status.NO_POSE)
+        if (_status.Status != Status.NO_POSE)
         {
             m_BtnPlace.SetActive(true);
-            TrackingFound();
+            m_goPlot.SetActive(true);
         }
         else
         {
             m_BtnPlace.SetActive(false);
-            TrackingLost();
-        }*/
+            m_goPlot.SetActive(false);
+        }
     }
 
     /*protected override */void TrackingFound()
