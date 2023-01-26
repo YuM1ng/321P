@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Vuforia;
@@ -10,23 +11,26 @@ public class CustomisationManager : DefaultObserverEventHandler
     [SerializeField]
     GameObject m_BtnPlace;
     [SerializeField]
-    GameObject m_prefabScene;
+    GameObject m_prefabEditPlot;
     [SerializeField]
     RawImage DispImg;
 
     ImageTargetBehaviour ImgTarget;
     GameObject m_goPlot;
-    bool m_bInit;
+    Camera m_MainCamera;
 
     // Start is called before the first frame update
     protected override void Start()
     {
         VuforiaApplication.Instance.OnVuforiaInitialized += VufInitialised;
         m_BtnPlace.SetActive(false);
-        m_bInit = false;
-        Debug.Log("CustMan Started");
+        GameObjectFactory.Instance.GetPrefab("hwhe");
+        m_MainCamera = Camera.main;
+        //Debug.Log("CustMan Started");
     }
-
+    /* After Vuforia is initialised, **Do this**
+     * 
+     */
     private void VufInitialised(VuforiaInitError err)
     {
         if(err == VuforiaInitError.NONE)
@@ -36,31 +40,46 @@ public class CustomisationManager : DefaultObserverEventHandler
             ImgTarget.OnTargetStatusChanged += TargetStatusChanged;*/
         }
     }
+    /* Process the image passed in, and create an Image Tracking instance with it
+     * 
+     */
     private void ProcessIMG(string _path)
     {
 
         byte[] imgArray = File.ReadAllBytes(_path);
+        //Create a Texture2D for the image to assign to
         Texture2D texture = new Texture2D(2,2);
+        //If image loads in successfully
         if (texture.LoadImage(imgArray))
         {
+            //set display image for visual reference
             DispImg.transform.localScale = new Vector3(texture.width/texture.height, 1, 0);
             DispImg.texture = texture;
 
+            //Calls VuforiaBehaviour to create an Image target instance with the loaded texture
             ImgTarget = VuforiaBehaviour.Instance.ObserverFactory.CreateImageTarget(texture, 0.115f, "TissuePaper");
+            //On status change
             ImgTarget.OnTargetStatusChanged += TargetStatusChanged;
-            DefaultObserverEventHandler deoh = ImgTarget.gameObject.AddComponent<DefaultObserverEventHandler>();
+            /*DefaultObserverEventHandler doeh = ImgTarget.AddComponent<DefaultObserverEventHandler>();
+            doeh.StatusFilter = TrackingStatusFilter.Tracked;
+            doeh.OnTargetFound = new UnityEngine.Events.UnityEvent();
+            doeh.OnTargetFound.AddListener(TrackingFound);
+            doeh.OnTargetLost = new UnityEngine.Events.UnityEvent();
+            doeh.OnTargetLost.AddListener(TrackingLost);*/
 
-            m_goPlot = Instantiate(m_prefabScene, ImgTarget.transform);
+            //Instantiate editting plot object for visual reference of AR orientation
+            m_goPlot = Instantiate(m_prefabEditPlot, ImgTarget.transform);
             //spwn.transform.SetParent(ImgTarget.transform);
             //spwn.transform.parent = ImgTarget.transform;
             m_goPlot.transform.localPosition = Vector3.zero;
-            m_bInit= true;
 
-            /*DefaultObserverEventHandler doeh = ImgTarget.GetComponent<DefaultObserverEventHandler>();
-            doeh.OnTargetFound.AddListener(TrackingFound);
-            doeh.OnTargetLost.AddListener(TrackingLost);*/
         }
 
+
+    }
+
+    private void PlaceObject()
+    {
 
     }
     private void TargetStatusChanged(ObserverBehaviour _behaviour, TargetStatus _status)
@@ -77,7 +96,7 @@ public class CustomisationManager : DefaultObserverEventHandler
             case Status.EXTENDED_TRACKED: 
                 break;
         }*/
-        if (_status.Status != Status.NO_POSE)
+        if (_status.Status == Status.TRACKED)
         {
             m_BtnPlace.SetActive(true);
             m_goPlot.SetActive(true);
@@ -93,6 +112,8 @@ public class CustomisationManager : DefaultObserverEventHandler
     {
         //base.OnTrackingFound();
         Debug.Log("Img found");
+        m_BtnPlace.SetActive(true);
+        m_goPlot.SetActive(true);
         /*if(!m_bInit)
         {
             GameObject spwn = Instantiate(m_prefabScene);
@@ -106,6 +127,8 @@ public class CustomisationManager : DefaultObserverEventHandler
     /*protected override */void TrackingLost()
     {
         Debug.Log("Img lost");
+        m_BtnPlace.SetActive(false);
+        m_goPlot.SetActive(false);
         //base.OnTrackingLost();
     }
     // Update is called once per frame
