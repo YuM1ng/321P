@@ -1850,10 +1850,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 277493494}
-        m_TargetAssemblyTypeName: Login, Assembly-CSharp
-        m_MethodName: OnLoginClick
-        m_Mode: 1
+      - m_Target: {fileID: 277493493}
+        m_TargetAssemblyTypeName: MoveScene, Assembly-CSharp
+        m_MethodName: LoginAsGuest
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

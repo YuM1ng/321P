@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Assets/Scene/RegistrationPage/RegisterMenu.unity
     guid: 1f08e464123617b4caf3b939e237ea82
   - enabled: 1
-    path: Assets/Assets/Scene/GuestPage/GuesPage.unity
+    path: Assets/Assets/Scene/MainPage/MainPage.unity
     guid: 5e15e409be1fdc54492074094cb64ca3
   - enabled: 1
     path: Assets/Assets/Scene/UserPage/UserPage.unity

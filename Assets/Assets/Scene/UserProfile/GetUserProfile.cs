@@ -5,15 +5,20 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using TMPro;
 using System.Text;
 using UnityEngine.SceneManagement;
 
 public class GetUserProfile : MonoBehaviour
 {
-    [SerializeField] 
-        private TextMeshProUGUI gender;
-    
+    [SerializeField] private TextMeshProUGUI user_id;
+    [SerializeField] private TextMeshProUGUI first_name;
+    [SerializeField] private TextMeshProUGUI last_name;
+    [SerializeField] private TextMeshProUGUI phone_number;
+    [SerializeField] private TextMeshProUGUI profile_picture;
+    [SerializeField] private TextMeshProUGUI homeaddress;
+    [SerializeField] private TextMeshProUGUI date_of_birth;
+    [SerializeField] private TextMeshProUGUI gender;
+
     // Start is called before the first frame update
     void Start()
     {   
@@ -24,10 +29,7 @@ public class GetUserProfile : MonoBehaviour
         // string serializedSessionId = JsonConvert.SerializeObject(Obj);
         Debug.Log(session_id);
         StartCoroutine(RetrieveUserProfile(session_id));
-        
-        
-       
-        
+
     }
     
 
@@ -36,7 +38,7 @@ public class GetUserProfile : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("session_id", session_id);
 
-        UnityWebRequest www = UnityWebRequest.Post("https://lunar-byte-371808.et.r.appspot.com/api/fetchuserprofilesid", form);
+        UnityWebRequest www = UnityWebRequest.Post("https://lunar-byte-371808.et.r.appspot.com/api/fetchUserProfilebyId", form);
         yield return www.SendWebRequest();
 
         if (www.result != UnityWebRequest.Result.Success)
@@ -45,9 +47,24 @@ public class GetUserProfile : MonoBehaviour
         }
         else
         {
-            Debug.Log(www.downloadHandler.text);
-            gender.text = www.downloadHandler.text;
-             
+            Debug.Log("GetUserProfile UserResponse: " + www.downloadHandler.text);
+            // gender.text = www.downloadHandler.text;
+            // Debug.Log(www.downloadHandler.text.id);
+            var userProfileResponses = JsonUtility.FromJson<UserProfileResponseList>("{\"users\":" + www.downloadHandler.text + "}");   
+            
+            Debug.Log(userProfileResponses.users);
+            if (userProfileResponses.users.Count > 0){
+                Debug.Log("userProfileResponse.list[0].gender: " + userProfileResponses.users[0].gender);
+
+                user_id.text = userProfileResponses.users[0].user_id;
+                first_name.text = userProfileResponses.users[0].first_Name;
+                last_name.text = userProfileResponses.users[0].last_name;
+                phone_number.text = userProfileResponses.users[0].phone_number;
+                homeaddress.text = userProfileResponses.users[0].homeaddress;
+                date_of_birth.text = userProfileResponses.users[0].date_of_birth;
+                gender.text = userProfileResponses.users[0].gender;
+
+            }
 
         }
 

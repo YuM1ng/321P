@@ -1,5 +1,4 @@
 using UnityEngine;
-using TMPro;
 using System.Collections;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -17,11 +16,9 @@ public class Login : MonoBehaviour
     private const string PASSWORD_REGEX = "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,24})";
 
     [SerializeField] private string loginEndpoint = "https://lunar-byte-371808.et.r.appspot.com/api/userlogin/";
-
     [SerializeField] private TextMeshProUGUI alertText;
     [SerializeField] private Button loginButton;
-   
-
+    
     public void OnLoginClick()
     {
         TMP_InputField inpuptID = GameObject.Find("UserName").GetComponent(typeof(TMP_InputField)) as TMP_InputField;
@@ -31,10 +28,7 @@ public class Login : MonoBehaviour
         // User contains username and password
         User user = GameObject.Find("UserManager").GetComponent<User>();
         user.setUser(username, password);
-        
-
         ActivateButtons(false);
-
         StartCoroutine(TryLogin(user));
     }
 
@@ -93,6 +87,11 @@ public class Login : MonoBehaviour
         }
     }
 
+    private void onGuestLoginClick(){
+        User user = GameObject.Find("UserManager").GetComponent<User>();
+        user.setUser("guest", "");
+        user.setSessionId("guest_session");
+    }
 
     private void ActivateButtons(bool toggle)
     {
