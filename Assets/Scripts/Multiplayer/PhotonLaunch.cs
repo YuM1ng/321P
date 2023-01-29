@@ -5,12 +5,25 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.WSA;
 
 public class PhotonLaunch : MonoBehaviourPunCallbacks
 {
     [SerializeField]
     [Tooltip("For logging stuff for now")]
     PunLogging m_PunLogger;
+
+    [Header("General")]
+    [SerializeField]
+    [Tooltip("The panel that holds the intro layout")]
+    GameObject m_IntroPanel;
+    [SerializeField]
+    [Tooltip("The input field where user input their nickname for Photon room")]
+    TMP_InputField m_NicknameInput;
+    [SerializeField]
+    [Tooltip("The button that connects the player to Photon server and lists room")]
+    Button m_CountinueButton;
+
 
     [Header("Room")]
     [SerializeField]
@@ -39,12 +52,20 @@ public class PhotonLaunch : MonoBehaviourPunCallbacks
     [Tooltip("SceneSpawner script to spawn new players")]
     SceneSpawner m_SPTheScene;
 
+    enum RoomState
+    {
+        RS_Enter,
+        RS_RoomSelect,
+        RS_InRoom
+    }
+    RoomState m_RScurr = RoomState.RS_Enter;
+
     // Start is called before the first frame update
     void Start()
     {
         PhotonNetwork.GameVersion = "0.0.1";
-        m_PunLogger.AddLogMsg("Connecting to Photon");
-        PhotonNetwork.ConnectUsingSettings();
+        /*m_PunLogger.AddLogMsg("Connecting to Photon");
+        PhotonNetwork.ConnectUsingSettings();*/
     }
     #region Connecting to photon
     public override void OnConnectedToMaster()
