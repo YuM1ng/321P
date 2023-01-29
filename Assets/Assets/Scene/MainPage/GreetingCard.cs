@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class GreetingCard : MonoBehaviour
 {   
-    public GreetingCardResponse card; 
+    public string card; 
     [SerializeField] public GameObject addButton; 
     
 
@@ -22,14 +22,14 @@ public class GreetingCard : MonoBehaviour
         
     }
 
-    public void setDetails(GreetingCardResponse details) {
+    public void setDetails(string details) {
         card = details; 
     }
 
     public void onAddButtonClick(){
         Debug.Log("Add button clicked");
         ShoppingCart cart = GameObject.Find("ShoppingCart").GetComponent<ShoppingCart>();
-        cart.add(card); 
+        cart.add(this); 
         cart.getItems();
     }
 }
