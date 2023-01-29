@@ -45,7 +45,7 @@ public class GetProduct : MonoBehaviour
             for (int i=0; i < greetingCardsResponse.Count; i ++){
                 Debug.Log(greetingCardsResponse[i].name);
                 GameObject greetingCard = Instantiate(greetingCardPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-                greetingCard.GetComponent<GreetingCard>().setDetails(greetingCardsResponse[i]);
+                greetingCard.GetComponent<GreetingCard>().setDetails(greetingCardsResponse[i].name);
                 greetingCard.transform.SetParent(transform, false); 
             }
         }

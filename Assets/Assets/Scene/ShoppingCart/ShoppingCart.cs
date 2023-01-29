@@ -15,7 +15,7 @@ Cart data is saved as ??? */
 
 public class ShoppingCart : MonoBehaviour
 {
-	public List<GreetingCardResponse> cart = new List<GreetingCardResponse>();
+	public List<GreetingCard> cart = new List<GreetingCard>();
 
 	public static ShoppingCart Instance;
 
@@ -25,14 +25,14 @@ public class ShoppingCart : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-	public void add(GreetingCardResponse item)
+	public void add(GreetingCard item)
 	{   
         Debug.Log("Adding item:" + item.name); 
         cart.Add(item);
 
 	}
 
-	public void remove(GreetingCardResponse item)
+	public void remove(GreetingCard item)
 	{
         if (cart.Contains(item)){
             cart.Remove(item);
@@ -40,7 +40,7 @@ public class ShoppingCart : MonoBehaviour
     }
 
     public void getItems(){
-        foreach (GreetingCardResponse x in cart){
+        foreach (GreetingCard x in cart){
             Debug.Log(x.name);
         }
     }
