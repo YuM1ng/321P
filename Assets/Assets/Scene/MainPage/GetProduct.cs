@@ -39,10 +39,14 @@ public class GetProduct : MonoBehaviour
         {
             // Debug.Log("GetProduct Response: " + www.downloadHandler.text);
             var getGreetingCardResponseList = JsonUtility.FromJson<GreetingCardResponseList>(www.downloadHandler.text);   
-            var greeting_cards = getGreetingCardResponseList.greeting_cards; 
-            for (int i=0; i < greeting_cards.Count; i ++){
-                Debug.Log(greeting_cards[i].name);
-                Instantiate(greetingCardPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            var greetingCardsResponse = getGreetingCardResponseList.greeting_cards; 
+
+            // TODO: compute position for each greeting card
+            for (int i=0; i < greetingCardsResponse.Count; i ++){
+                Debug.Log(greetingCardsResponse[i].name);
+                GameObject greetingCard = Instantiate(greetingCardPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+                greetingCard.GetComponent<GreetingCard>().setDetails(greetingCardsResponse[i]);
+                greetingCard.transform.SetParent(transform, false); 
             }
         }
     }
