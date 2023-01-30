@@ -4,7 +4,7 @@ using System.IO;
 using UnityEngine;
 using Vuforia;
 
-public class SaveSceneSystem : MonoBehaviour
+public class SaveSceneSystem : MonoBehaviourSingleton<SaveSceneSystem>
 {
     [System.Serializable]
     struct DataElement

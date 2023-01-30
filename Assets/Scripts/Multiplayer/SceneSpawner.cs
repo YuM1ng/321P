@@ -20,7 +20,7 @@ public class SceneSpawner : MonoBehaviour
     {
         PlayerScript goPS = SpawnPlayer(m_HostStage.transform);
         //goPS.SetName(_playerName);
-        //goPS.CameraOn();
+        goPS.CameraOn();
         m_PSme = goPS;
     }
 
@@ -29,7 +29,7 @@ public class SceneSpawner : MonoBehaviour
         PlayerScript goPS = SpawnPlayer(m_ParticipantsStage[PhotonNetwork.CurrentRoom.PlayerCount-2].transform);
         goPS.transform.forward = m_HostStage.transform.position - m_ParticipantsStage[PhotonNetwork.CurrentRoom.PlayerCount - 2].transform.position;
         //goPS.SetName(_playerName);
-        //goPS.CameraOn();
+        goPS.CameraOn();
         m_PSme = goPS;
     }
 
@@ -44,7 +44,7 @@ public class SceneSpawner : MonoBehaviour
 
     public void RemovePlayer()
     {
-        //m_PSme.CameraOff();
+        m_PSme.CameraOff();
         PhotonNetwork.Destroy(m_PSme.gameObject);
     }
     // Start is called before the first frame update

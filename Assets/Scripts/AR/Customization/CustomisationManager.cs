@@ -19,12 +19,14 @@ public class CustomisationManager : DefaultObserverEventHandler
     GameObject m_goPlot;
     Camera m_MainCamera;
 
+    GameObject m_goHolding;
+
     // Start is called before the first frame update
     protected override void Start()
     {
         VuforiaApplication.Instance.OnVuforiaInitialized += VufInitialised;
         m_BtnPlace.SetActive(false);
-        GameObjectFactory.Instance.GetPrefab("hwhe");
+        //GameObjectFactory.Instance.GetPrefab("hwhe");
         m_MainCamera = Camera.main;
         //Debug.Log("CustMan Started");
     }
@@ -78,9 +80,17 @@ public class CustomisationManager : DefaultObserverEventHandler
 
     }
 
-    private void PlaceObject()
+    public void HoldObject(string _nameOfPrefab)
     {
-
+        if(m_goHolding != null)
+        {
+            Destroy(m_goHolding);
+        }
+        m_goHolding = Instantiate(GameObjectFactory.Instance.GetPrefab(_nameOfPrefab), Camera.main.transform);
+        m_goHolding.transform.localPosition = new Vector3(0.0f, 0.0f, 4f);
+        Quaternion newRot = Quaternion.identity;
+        newRot.eulerAngles = new Vector3(0f, -90f, 0f);
+        m_goHolding.transform.rotation = newRot;
     }
     private void TargetStatusChanged(ObserverBehaviour _behaviour, TargetStatus _status)
     {

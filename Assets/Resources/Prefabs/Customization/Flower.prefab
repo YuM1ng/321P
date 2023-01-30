@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: aa0ef33dbc148ca408c69f9c863b444a, type: 3}
       propertyPath: m_RootOrder
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: aa0ef33dbc148ca408c69f9c863b444a, type: 3}
       propertyPath: m_LocalScale.x
@@ -75,5 +75,26 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aa0ef33dbc148ca408c69f9c863b444a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6025749848273953091}
   m_SourcePrefab: {fileID: 100100000, guid: aa0ef33dbc148ca408c69f9c863b444a, type: 3}
+--- !u!1 &6947842556205637604 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: aa0ef33dbc148ca408c69f9c863b444a, type: 3}
+  m_PrefabInstance: {fileID: 7830308601632105141}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6025749848273953091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6947842556205637604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81a7a1d5cb1b5c94484b98500c58fc46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_name: Flower

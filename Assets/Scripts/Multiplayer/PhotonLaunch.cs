@@ -5,7 +5,6 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.WSA;
 
 public class PhotonLaunch : MonoBehaviourPunCallbacks
 {
@@ -64,22 +63,32 @@ public class PhotonLaunch : MonoBehaviourPunCallbacks
     void Start()
     {
         PhotonNetwork.GameVersion = "0.0.1";
-        /*m_PunLogger.AddLogMsg("Connecting to Photon");
-        PhotonNetwork.ConnectUsingSettings();*/
+        m_PunLogger.AddLogMsg("Connecting to Photon");
+        PhotonNetwork.ConnectUsingSettings();
+        m_IntroPanel.SetActive(true);
+        m_RoomPanel.SetActive(false);
+        m_PlayerPanel.SetActive(false);
+        m_CountinueButton.onClick.AddListener(() => {
+            string nickname = m_NicknameInput.textComponent.text;
+            PhotonNetwork.NickName = nickname;
+            m_TMPPlayerName.text = nickname;
+            m_PunLogger.AddLogMsg("Joining lobby");
+            PhotonNetwork.JoinLobby();
+        });
     }
     #region Connecting to photon
     public override void OnConnectedToMaster()
     {
         m_PunLogger.AddLogMsg("Connected to Photon");
-        m_PunLogger.AddLogMsg("Joining lobby");
+        /*m_PunLogger.AddLogMsg("Joining lobby");*/
         //Debug.Log($"{System.DateTime.Now.Millisecond}{System.DateTime.Now.Millisecond}");
         //Setting this player's nickname
-        if(PhotonNetwork.NickName == ""){
-            /*System.DateTime dt = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
+        /*if(PhotonNetwork.NickName == ""){
+            *//*System.DateTime dt = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
             int val = (int)(System.DateTime.UtcNow - dt).TotalMilliseconds;*/
             /*****************************
              **** To change in future ****
-             *****************************/
+             *****************************//*
             //Using Ticks for random number to set as player's name
             int val = (int)System.DateTime.Now.Ticks;
             //Sets player nickname
@@ -88,7 +97,7 @@ public class PhotonLaunch : MonoBehaviourPunCallbacks
             //Set display text to nickname above
             m_TMPPlayerName.text = PhotonNetwork.NickName;
         }
-        PhotonNetwork.JoinLobby();
+        PhotonNetwork.JoinLobby();*/
     }
     public override void OnDisconnected(DisconnectCause cause)
     {
@@ -109,6 +118,7 @@ public class PhotonLaunch : MonoBehaviourPunCallbacks
         /**********************************
          * To be replaced when UI is done *
          **********************************/
+        m_IntroPanel.SetActive(false);
         m_PlayerPanel.SetActive(false);
         m_RoomPanel.SetActive(true);
     }
