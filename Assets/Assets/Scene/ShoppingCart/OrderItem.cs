@@ -32,10 +32,10 @@ public class OrderItem : MonoBehaviour
         nameObj.text = name; 
     }
 
-    public void onAddButtonClick(){
-        Debug.Log("Add button clicked");
-        ShoppingCart cart = GameObject.Find("ShoppingCart").GetComponent<ShoppingCart>();
-        cart.add(this); 
-        cart.getItems();
-    }
+    // public void onAddButtonClick(){
+    //     Debug.Log("Add button clicked");
+    //     ShoppingCart cart = GameObject.Find("ShoppingCart").GetComponent<ShoppingCart>();
+    //     cart.add(this); 
+    //     cart.getItems();
+    // }
 }
