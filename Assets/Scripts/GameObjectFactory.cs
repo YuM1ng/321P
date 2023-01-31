@@ -37,7 +37,7 @@ public class GameObjectFactory : MonoBehaviourSingleton<GameObjectFactory>
         {
             return goPrefabs[_nameOfPrefab];
         }
-        catch(Exception err)
+        catch(Exception)
         {
             return null;
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Vuforia;
 
@@ -20,6 +21,7 @@ public class CustomisationManager : DefaultObserverEventHandler
     Camera m_MainCamera;
 
     GameObject m_goHolding;
+    bool m_bPlaceable;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -28,6 +30,18 @@ public class CustomisationManager : DefaultObserverEventHandler
         m_BtnPlace.SetActive(false);
         //GameObjectFactory.Instance.GetPrefab("hwhe");
         m_MainCamera = Camera.main;
+        m_bPlaceable= false;
+        EventTrigger etPlace= m_BtnPlace.AddComponent<EventTrigger>();
+        EventTrigger.Entry triggEntry = new EventTrigger.Entry();
+        triggEntry.eventID = EventTriggerType.PointerClick;
+        triggEntry.callback.AddListener((data) => {
+            if (!m_bPlaceable || m_goHolding == null)
+                return;
+            m_goHolding.transform.SetParent(m_goPlot.transform);
+            m_goHolding = null;
+            Debug.Log("Place object");
+        });
+        etPlace.triggers.Add(triggEntry);
         //Debug.Log("CustMan Started");
     }
     /* After Vuforia is initialised, **Do this**
@@ -37,7 +51,7 @@ public class CustomisationManager : DefaultObserverEventHandler
     {
         if(err == VuforiaInitError.NONE)
         {
-            NativeGallery.GetImageFromGallery(ProcessIMG, "Select image to be tracked");
+            //NativeGallery.GetImageFromGallery(ProcessIMG, "Select image to be tracked");
             /*ImgTarget =  VuforiaBehaviour.Instance.ObserverFactory.CreateImageTarget(dataSetPath, targetName);
             ImgTarget.OnTargetStatusChanged += TargetStatusChanged;*/
         }
@@ -86,10 +100,10 @@ public class CustomisationManager : DefaultObserverEventHandler
         {
             Destroy(m_goHolding);
         }
-        m_goHolding = Instantiate(GameObjectFactory.Instance.GetPrefab(_nameOfPrefab), Camera.main.transform);
-        m_goHolding.transform.localPosition = new Vector3(0.0f, 0.0f, 4f);
+        m_goHolding = Instantiate(GameObjectFactory.Instance.GetPrefab(_nameOfPrefab), m_MainCamera.transform);
+        m_goHolding.transform.localPosition = new Vector3(0.0f, 0.0f, 0f);
         Quaternion newRot = Quaternion.identity;
-        newRot.eulerAngles = new Vector3(0f, -90f, 0f);
+        //newRot.eulerAngles = new Vector3(0f, -90f, 0f);
         m_goHolding.transform.rotation = newRot;
     }
     private void TargetStatusChanged(ObserverBehaviour _behaviour, TargetStatus _status)
@@ -109,12 +123,14 @@ public class CustomisationManager : DefaultObserverEventHandler
         if (_status.Status == Status.TRACKED)
         {
             m_BtnPlace.SetActive(true);
-            m_goPlot.SetActive(true);
+            //m_goPlot.SetActive(true);
+            m_bPlaceable = true;
         }
         else
         {
             m_BtnPlace.SetActive(false);
-            m_goPlot.SetActive(false);
+            //m_goPlot.SetActive(false);
+            m_bPlaceable = false;
         }
     }
 

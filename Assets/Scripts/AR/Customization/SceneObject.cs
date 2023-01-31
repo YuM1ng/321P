@@ -5,12 +5,12 @@ using UnityEngine;
 public class SceneObject : MonoBehaviour
 {
     [SerializeField]
-    string m_name;
+    SaveSceneSystem.ObjectType m_type;
 
 
     public void OnPlace()
     {
-        SaveSceneSystem.Instance.AddToTracking(m_name, this.gameObject);
+        SaveSceneSystem.Instance.AddToTracking(m_type, this.gameObject);
     }
 
     // Start is called before the first frame update

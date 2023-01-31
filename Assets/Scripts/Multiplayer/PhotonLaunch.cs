@@ -73,6 +73,7 @@ public class PhotonLaunch : MonoBehaviourPunCallbacks
             PhotonNetwork.NickName = nickname;
             m_TMPPlayerName.text = nickname;
             m_PunLogger.AddLogMsg("Joining lobby");
+            m_RScurr = RoomState.RS_RoomSelect;
             PhotonNetwork.JoinLobby();
         });
     }
@@ -80,6 +81,10 @@ public class PhotonLaunch : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         m_PunLogger.AddLogMsg("Connected to Photon");
+        if(m_RScurr == RoomState.RS_RoomSelect)
+        {
+            PhotonNetwork.JoinLobby();
+        }
         /*m_PunLogger.AddLogMsg("Joining lobby");*/
         //Debug.Log($"{System.DateTime.Now.Millisecond}{System.DateTime.Now.Millisecond}");
         //Setting this player's nickname
@@ -138,7 +143,7 @@ public class PhotonLaunch : MonoBehaviourPunCallbacks
         m_PunLogger.AddLogMsg($"Joined room: {PhotonNetwork.CurrentRoom.Name}");
         //StartCoroutine(m_RoomListing.ClearAllChildObjects());
         //m_RoomListing.ClearAll();
-
+        m_RScurr = RoomState.RS_InRoom;
         //If this player is first to join the room, spawn him at host stage
         if(PhotonNetwork.CurrentRoom.PlayerCount == 1)
         {
@@ -173,6 +178,7 @@ public class PhotonLaunch : MonoBehaviourPunCallbacks
         m_PlayerListing.ClearAll();
         //remove this player's object from scene
         m_SPTheScene.RemovePlayer();
+        m_RScurr = RoomState.RS_RoomSelect;
         //switch panel visibility
         m_RoomPanel.SetActive(true);
         m_PlayerPanel.SetActive(false);

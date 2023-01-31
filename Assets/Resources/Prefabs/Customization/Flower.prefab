@@ -79,6 +79,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aa0ef33dbc148ca408c69f9c863b444a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6025749848273953091}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aa0ef33dbc148ca408c69f9c863b444a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2388855889348188125}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aa0ef33dbc148ca408c69f9c863b444a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -5154299061710839001}
   m_SourcePrefab: {fileID: 100100000, guid: aa0ef33dbc148ca408c69f9c863b444a, type: 3}
 --- !u!1 &6947842556205637604 stripped
 GameObject:
@@ -97,4 +103,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81a7a1d5cb1b5c94484b98500c58fc46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_name: Flower
+  m_type: 1
+--- !u!114 &2388855889348188125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6947842556205637604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: -5154299061710839001}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &-5154299061710839001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6947842556205637604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 1
+  m_UseLocal: 1
