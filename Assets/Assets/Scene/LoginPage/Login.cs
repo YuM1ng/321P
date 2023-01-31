@@ -67,7 +67,7 @@ public class Login : MonoBehaviour
         Debug.Log("POST done!");
         Debug.Log(jsonLoggedIn.session_id);
         user.setSessionId(jsonLoggedIn.session_id);
-        SceneManager.LoadScene("UserProfile");
+        SceneManager.LoadScene("MainPage");
         Debug.Log(user.session_id);
 			// StringBuilder sb = new StringBuilder();
             // foreach (System.Collections.Generic.KeyValuePair<string, string> dict in www.GetResponseHeaders())

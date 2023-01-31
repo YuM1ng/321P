@@ -354,7 +354,7 @@
 "Assets/Scene/MainPage/GreetingCard.cs"
 "Assets/Scene/MainPage/GreetingCardResponse.cs"
 "Assets/Scene/MainPage/GreetingCardResponseList.cs"
-"Assets/Scene/MainPage/SliderMenuAnim.cs"
+"Assets/Scene/MainPage/PanelMenu.cs"
 "Assets/Scene/RegistrationPage/CreateAccount.cs"
 "Assets/Scene/ShoppingCart/ShoppingCart.cs"
 "Assets/Scene/UserProfile/GetUserProfile.cs"
