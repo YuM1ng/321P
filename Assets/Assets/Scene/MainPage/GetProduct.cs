@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using System.Text;
 using UnityEngine.SceneManagement;
+using System;
 
 
 public class GetProduct : MonoBehaviour
@@ -41,13 +42,41 @@ public class GetProduct : MonoBehaviour
             var getGreetingCardResponseList = JsonUtility.FromJson<GreetingCardResponseList>(www.downloadHandler.text);   
             var greetingCardsResponse = getGreetingCardResponseList.greeting_cards; 
 
+
+            int cols = 2; 
+            int col_index = 0; 
+            int row_index = 0; 
+            int y_displace = 650;
+            int x_displace = 500; 
+            int y = 0; 
+            int x = 0; 
+            int z = 0;
+
             // TODO: compute position for each greeting card
             for (int i=0; i < greetingCardsResponse.Count; i ++){
+                
                 Debug.Log(greetingCardsResponse[i].name);
-                GameObject greetingCard = Instantiate(greetingCardPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-                greetingCard.GetComponent<GreetingCard>().setDetails(greetingCardsResponse[i].name);
+                Vector3 position = new Vector3(x, y, z);
+                col_index ++; 
+                col_index = col_index % cols;
+                if (col_index == 0 && i != 0){
+                    //new row 
+                    row_index ++; 
+                }
+                x = col_index * x_displace ;   
+                y -= row_index * y_displace; 
+
+                GameObject greetingCard = Instantiate(greetingCardPrefab, position, Quaternion.identity);
+                greetingCard.GetComponent<GreetingCard>().setName(greetingCardsResponse[i].name);
+                greetingCard.GetComponent<GreetingCard>().setPrice(greetingCardsResponse[i].price);
+
+                // set gc image
+                string rawImageBytes = greetingCardsResponse[i].image.Split(',')[1];
+                greetingCard.GetComponent<GreetingCard>().setImage(rawImageBytes);
+                
                 greetingCard.transform.SetParent(transform, false); 
             }
         }
     }
+
 }

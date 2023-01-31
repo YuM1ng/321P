@@ -1,13 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
+using System.Collections;
+using UnityEngine.Networking;
+using UnityEngine.UI;
+using System.Text.RegularExpressions;
+using Newtonsoft.Json;
+using System.Text;
+using UnityEngine.SceneManagement;
+using System;
 
 /* Contains data from GreetingCardResponse and add button*/
 
 public class GreetingCard : MonoBehaviour
 {   
-    public string card; 
+    [SerializeField] public TextMeshProUGUI  nameObj; 
+    [SerializeField] public TextMeshProUGUI  priceObj; 
     [SerializeField] public GameObject addButton; 
     
 
@@ -22,8 +29,20 @@ public class GreetingCard : MonoBehaviour
         
     }
 
-    public void setDetails(string details) {
-        card = details; 
+    public void setPrice(string price) {
+        priceObj.text = "$" + price; 
+    }
+
+    public void setName(string name) {
+        nameObj.text = name; 
+    }
+
+    public void setImage(string rawImageBytes){
+        byte[] imageBytes = Convert.FromBase64String(rawImageBytes);
+        Texture2D tex = new Texture2D(2, 2);
+        tex.LoadImage(imageBytes);     
+        Sprite sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);           
+        this.transform.GetComponent<Image>().sprite = sprite; 
     }
 
     public void onAddButtonClick(){

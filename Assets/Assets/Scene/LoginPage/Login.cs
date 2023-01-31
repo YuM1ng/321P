@@ -89,7 +89,7 @@ public class Login : MonoBehaviour
 
     private void onGuestLoginClick(){
         User user = GameObject.Find("UserManager").GetComponent<User>();
-        user.setUser("guest", "");
+        user.setUser("Guest", "");
         user.setSessionId("guest_session");
     }
 

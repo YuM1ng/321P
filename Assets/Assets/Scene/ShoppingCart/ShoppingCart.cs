@@ -15,6 +15,8 @@ Cart data is saved as ??? */
 
 public class ShoppingCart : MonoBehaviour
 {
+    [SerializeField] public GameObject orderItemPrefab;
+
 	public List<GreetingCard> cart = new List<GreetingCard>();
 
 	public static ShoppingCart Instance;
@@ -43,5 +45,9 @@ public class ShoppingCart : MonoBehaviour
         foreach (GreetingCard x in cart){
             Debug.Log(x.name);
         }
+    }
+
+    public void displayOrderItems(){
+
     }
 }
