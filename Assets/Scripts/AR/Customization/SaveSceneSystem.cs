@@ -160,16 +160,16 @@ public class SaveSceneSystem : MonoBehaviourSingleton<SaveSceneSystem>
         DataFile loadedData = JsonUtility.FromJson<DataFile>(rawJson);
 
     }
-    IEnumerator UploadToServer(string _custJson)
+    /*IEnumerator UploadToServer(string _custJson)
     {
         WWWForm form = new WWWForm();
-        /*form.AddField("userId", userId);
+        form.AddField("userId", userId);
         form.AddField("name", name);
         form.AddField("image", image);
         form.AddField("greetingCardId", greetingCardId);
-        form.AddField("textmessage", "");*/
+        form.AddField("textmessage", "");
         form.AddField("options", _custJson);
-    }
+    }*/
     // Start is called before the first frame update
     void Start()
     {
