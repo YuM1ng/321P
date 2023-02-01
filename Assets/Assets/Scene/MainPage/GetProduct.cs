@@ -52,7 +52,6 @@ public class GetProduct : MonoBehaviour
             int x = 0; 
             int z = 0;
 
-            // TODO: compute position for each greeting card
             for (int i=0; i < greetingCardsResponse.Count; i ++){
                 
                 Debug.Log(greetingCardsResponse[i].name);

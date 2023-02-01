@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scene/ShoppingCart/ShoppingCart.unity
+- path: Assets/Scene/LoginPage/LoginPage.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

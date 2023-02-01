@@ -10,14 +10,12 @@ using System.Text;
 using UnityEngine.SceneManagement;
 
 
-/* CartManager handles adding and removing items from cart tagged to a user.
-Cart data is saved as ??? */
+/* The ShoppingCart consists of a list of GreetingCard objects.  */
 
 public class ShoppingCart : MonoBehaviour
 {
-    [SerializeField] public GameObject orderItemPrefab;
 
-	public List<GreetingCard> cart = new List<GreetingCard>();
+	public List<GreetingCard> cards = new List<GreetingCard>();
 
 	public static ShoppingCart Instance;
 
@@ -30,24 +28,29 @@ public class ShoppingCart : MonoBehaviour
 	public void add(GreetingCard item)
 	{   
         Debug.Log("Adding item:" + item.name); 
-        cart.Add(item);
-
+        cards.Add(item);
+        getCards();
 	}
 
 	public void remove(GreetingCard item)
 	{
-        if (cart.Contains(item)){
-            cart.Remove(item);
-        }
+        // if (cart.Contains(item)){
+        //     cart.Remove(item);
+        // }
+
+        Debug.Log("Removing item:" + item.name);
+        getCards();
+
     }
 
-    public void getItems(){
-        foreach (GreetingCard x in cart){
+    public List<GreetingCard> getCards(){
+        foreach (GreetingCard x in cards){
             Debug.Log(x.name);
         }
+        return cards;
     }
 
-    public void displayOrderItems(){
-
+    public void onClick(){
+        SceneManager.LoadScene("ShoppingCartPage");
     }
 }

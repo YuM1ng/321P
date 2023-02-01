@@ -9,18 +9,20 @@ using System.Text;
 using UnityEngine.SceneManagement;
 using System;
 
-/* Contains data from GreetingCardResponse and add button*/
+/* Contains some data from GreetingCardResponse and add button*/
 
 public class GreetingCard : MonoBehaviour
 {   
     [SerializeField] public TextMeshProUGUI  nameObj; 
     [SerializeField] public TextMeshProUGUI  priceObj; 
     [SerializeField] public GameObject addButton; 
+    public static GreetingCard Instance;
     
-
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        Instance = this;
+        DontDestroyOnLoad(gameObject);        
     }
 
     // Update is called once per frame
@@ -49,6 +51,5 @@ public class GreetingCard : MonoBehaviour
         Debug.Log("Add button clicked");
         ShoppingCart cart = GameObject.Find("ShoppingCart").GetComponent<ShoppingCart>();
         cart.add(this); 
-        cart.getItems();
     }
 }

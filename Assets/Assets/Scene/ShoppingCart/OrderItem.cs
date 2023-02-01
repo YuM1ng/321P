@@ -4,14 +4,13 @@ using UnityEngine;
 using TMPro;
 
 
-/* Contains data from GreetingCardResponse and add button*/
+/* Contains GreetingCard */
 
 public class OrderItem : MonoBehaviour
 {   
-    [SerializeField] public TextMeshProUGUI  nameObj; 
-    [SerializeField] public TextMeshProUGUI  priceObj; 
-    [SerializeField] public GameObject addButton; 
-    
+    public GreetingCard gcObj; 
+    [SerializeField] public GameObject removeButton; 
+    public string id; 
 
     // Start is called before the first frame update
     void Start()
@@ -24,18 +23,26 @@ public class OrderItem : MonoBehaviour
         
     }
 
+    public void setId(string _id){
+        id = _id; 
+    }
+
+    public void setGreetingCardData(GreetingCard card){
+        gcObj = card;
+    }
+
     public void setPrice(string price) {
-        priceObj.text = "$" + price; 
+        // priceObj.text = "$" + price; 
     }
 
     public void setName(string name) {
-        nameObj.text = name; 
+        // nameObj.text = name; 
     }
 
-    // public void onAddButtonClick(){
-    //     Debug.Log("Add button clicked");
-    //     ShoppingCart cart = GameObject.Find("ShoppingCart").GetComponent<ShoppingCart>();
-    //     cart.add(this); 
-    //     cart.getItems();
-    // }
+    public void onRemoveButtonClick(){
+        Debug.Log("Remove bbutton clicked");
+        ShoppingCart cart = GameObject.Find("ShoppingCart").GetComponent<ShoppingCart>();
+        cart.remove(this.gcObj); 
+        cart.getCards();
+    }
 }

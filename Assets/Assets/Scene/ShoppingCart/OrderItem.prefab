@@ -122,9 +122,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4896301247682950745}
-        m_TargetAssemblyTypeName: GreetingCard, Assembly-CSharp
-        m_MethodName: onAddButtonClick
+      - m_Target: {fileID: 8070610196299970460}
+        m_TargetAssemblyTypeName: OrderItem, Assembly-CSharp
+        m_MethodName: onRemoveButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -280,7 +280,7 @@ GameObject:
   - component: {fileID: 3796067835654387912}
   - component: {fileID: 3796067835654387914}
   - component: {fileID: 3796067835654387915}
-  - component: {fileID: 4896301247682950745}
+  - component: {fileID: 8070610196299970460}
   m_Layer: 5
   m_Name: OrderItem
   m_TagString: Untagged
@@ -349,7 +349,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4896301247682950745
+--- !u!114 &8070610196299970460
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -358,12 +358,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3796067835654387913}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bdef9cc5c9130e4fb2745c50aeeacab, type: 3}
+  m_Script: {fileID: 11500000, guid: 8fb0ab82c9696f64b8a9490f557c4b84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameObj: {fileID: 1361013652593446086}
-  priceObj: {fileID: 5273392967479973604}
-  addButton: {fileID: 1967066856713796735}
+  gcObj: {fileID: 0}
+  removeButton: {fileID: 0}
 --- !u!1 &4937928896719317878
 GameObject:
   m_ObjectHideFlags: 0
