@@ -10,7 +10,6 @@ public class GreetingCardResponse
     public string name;
     public string price;
     public string image;
-    public string model_file;
     public string description;
     public string category;
     public string language;

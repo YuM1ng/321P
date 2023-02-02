@@ -21,15 +21,23 @@ public class Login : MonoBehaviour
     
     public void OnLoginClick()
     {
+        alertText.text = "";
         TMP_InputField inpuptID = GameObject.Find("UserName").GetComponent(typeof(TMP_InputField)) as TMP_InputField;
 		TMP_InputField inputPswd = GameObject.Find("Password").GetComponent(typeof(TMP_InputField)) as TMP_InputField;
         string username = inpuptID.text;
-		string password = inputPswd.text;   
+		string password = inputPswd.text;
+        if (username == "" && password == "")
+        {
+            alertText.text = "Please enter your username or password";
+        }
+        else
+        {
         // User contains username and password
         User user = GameObject.Find("UserManager").GetComponent<User>();
         user.setUser(username, password);
         ActivateButtons(false);
         StartCoroutine(TryLogin(user));
+        }
     }
 
     // public void OnCreateClick()
@@ -54,21 +62,32 @@ public class Login : MonoBehaviour
         yield return www.SendWebRequest();
         //return request
 
-        if (www.result != UnityWebRequest.Result.Success)
+        if (www.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log(www.error);
-            
+            Debug.Log(www.result);
+            Debug.Log(www.downloadHandler.text);
+            var jsonLoggedIn = JsonUtility.FromJson<LoginResponse>(www.downloadHandler.text);   
+            Debug.Log("POST done!");
+            Debug.Log(jsonLoggedIn.session_id);
+            user.setSessionId(jsonLoggedIn.session_id);
+            Debug.Log(user.session_id);
+            if (jsonLoggedIn.code == 1)
+            {
+                
+                SceneManager.LoadScene("MainPage");
+                loginButton.interactable = false;
+            }
+            else
+            {
+                alertText.text = "Your username or password is wrong";
+                loginButton.interactable = true;
+            }
         }
         else
         {
-        Debug.Log(www.result);
-        Debug.Log(www.downloadHandler.text);
-        var jsonLoggedIn = JsonUtility.FromJson<LoginResponse>(www.downloadHandler.text);   
-        Debug.Log("POST done!");
-        Debug.Log(jsonLoggedIn.session_id);
-        user.setSessionId(jsonLoggedIn.session_id);
-        SceneManager.LoadScene("MainPage");
-        Debug.Log(user.session_id);
+            alertText.text = "Error Connecting to the server.";
+            loginButton.interactable = true;
+        
 			// StringBuilder sb = new StringBuilder();
             // foreach (System.Collections.Generic.KeyValuePair<string, string> dict in www.GetResponseHeaders())
             // {
@@ -85,6 +104,7 @@ public class Login : MonoBehaviour
 			// }
 
         }
+        yield return null;
     }
 
     private void onGuestLoginClick(){
