@@ -20,6 +20,7 @@ public class SceneSpawner : MonoBehaviour
     {
         PlayerScript goPS = SpawnPlayer(m_HostStage.transform);
         //goPS.SetName(_playerName);
+        goPS.SetForward(goPS.transform.forward);
         goPS.CameraOn();
         m_PSme = goPS;
     }
@@ -29,6 +30,7 @@ public class SceneSpawner : MonoBehaviour
         PlayerScript goPS = SpawnPlayer(m_ParticipantsStage[PhotonNetwork.CurrentRoom.PlayerCount-2].transform);
         goPS.transform.forward = m_HostStage.transform.position - m_ParticipantsStage[PhotonNetwork.CurrentRoom.PlayerCount - 2].transform.position;
         //goPS.SetName(_playerName);
+        goPS.SetForward(goPS.transform.forward);
         goPS.CameraOn();
         m_PSme = goPS;
     }

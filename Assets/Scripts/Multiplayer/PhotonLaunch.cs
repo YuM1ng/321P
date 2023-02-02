@@ -51,6 +51,8 @@ public class PhotonLaunch : MonoBehaviourPunCallbacks
     [Tooltip("SceneSpawner script to spawn new players")]
     SceneSpawner m_SPTheScene;
 
+    bool m_AmRoomOwner = false;
+
     enum RoomState
     {
         RS_Enter,
@@ -133,6 +135,7 @@ public class PhotonLaunch : MonoBehaviourPunCallbacks
     public override void OnCreatedRoom()
     {
         m_PunLogger.AddLogMsg($"Room successfully created");
+        m_AmRoomOwner = true;
     }
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
@@ -143,7 +146,6 @@ public class PhotonLaunch : MonoBehaviourPunCallbacks
         m_PunLogger.AddLogMsg($"Joined room: {PhotonNetwork.CurrentRoom.Name}");
         //StartCoroutine(m_RoomListing.ClearAllChildObjects());
         //m_RoomListing.ClearAll();
-        m_RScurr = RoomState.RS_InRoom;
         //If this player is first to join the room, spawn him at host stage
         if(PhotonNetwork.CurrentRoom.PlayerCount == 1)
         {
@@ -166,6 +168,7 @@ public class PhotonLaunch : MonoBehaviourPunCallbacks
         }
         //set room name display text to current room name
         m_TMPRoomName.text = PhotonNetwork.CurrentRoom.Name;
+        m_RScurr = RoomState.RS_InRoom;
         //switch panel visibility
         m_RoomPanel.SetActive(false);
         m_PlayerPanel.SetActive(true);
@@ -228,6 +231,11 @@ public class PhotonLaunch : MonoBehaviourPunCallbacks
         m_PunLogger.AddLogMsg($"Player ({otherPlayer.NickName}) left the room");
         //remove player's name from list
         m_PlayerListing.RemovePlayer(otherPlayer);
+        //checks if original room owner has left, if so leaves room
+        if (PhotonNetwork.CurrentRoom.masterClientId != 1)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
 
     }
     #endregion
@@ -243,9 +251,24 @@ public class PhotonLaunch : MonoBehaviourPunCallbacks
     public void LeaveRoom()
     {
         m_PunLogger.AddLogMsg($"Leaving room '{PhotonNetwork.CurrentRoom.Name}'");
+        /*if (m_AmRoomOwner)
+        {
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+            PhotonNetwork.CurrentRoom.EmptyRoomTtl = 0;
+            PhotonNetwork.CurrentRoom.PlayerTtl= 0;
+            if (PhotonNetwork.CurrentRoom.PlayerCount > 1)
+            {
+                for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; ++i)
+                {
+                    Debug.Log(PhotonNetwork.CurrentRoom.Players[i].NickName);
+                }
+            }
+        }*/
+        /*Debug.Log($"MasterClientID: {PhotonNetwork.CurrentRoom.MasterClientId}");*/
         PhotonNetwork.LeaveRoom();
 
     }
+
     // Update is called once per frame
     void Update()
     {
