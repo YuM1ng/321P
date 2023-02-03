@@ -19,16 +19,18 @@ public class ShoppingCartRenderer : MonoBehaviour
     {
         Debug.Log("Rendering order item"); 
         List<GreetingCard> cards = cart.getCards(); 
-        foreach (GreetingCard x in cards){
+        int y = 0;
+        int y_displace = -500;
+        for (int i=0; i < cards.Count; i ++){
             // instantiate orderItem 
-            Debug.Log("Instantiating OrderItem: " + x.nameObj.text);
-            Vector3 position = new Vector3(0, 0, 0);
+            Debug.Log("Instantiating OrderItem: " + cards[i].nameObj.text);
+            Vector3 position = new Vector3(0, y + i * y_displace, 0);
             GameObject orderItemObj = Instantiate(orderItemPrefab, position, Quaternion.identity); 
             OrderItem orderItem = orderItemObj.GetComponent<OrderItem>(); 
             orderItem.transform.SetParent(transform, false); 
-            Debug.Log(x);
+            Debug.Log(cards[i]);
             Debug.Log(orderItem); 
-            orderItem.setGreetingCardData(x); 
+            orderItem.setGreetingCardData(cards[i]); 
         }
     }
 }
