@@ -91,7 +91,7 @@ public class GreetingCardCatalogue : MonoBehaviour
                 GameObject greetingCard = Instantiate(greetingCardPrefab, position, Quaternion.identity);
                 greetingCard.GetComponent<GreetingCard>().setName(greetingCardsResponse[i].name);
                 greetingCard.GetComponent<GreetingCard>().setPrice(greetingCardsResponse[i].price);
-
+                greetingCard.GetComponent<GreetingCard>().setDescription(greetingCardsResponse[i].description);
                 // set gc image
                 string rawImageBytes = greetingCardsResponse[i].image.Split(',')[1];
                 greetingCard.GetComponent<GreetingCard>().setImage(rawImageBytes);

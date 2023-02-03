@@ -38,7 +38,7 @@ public class GreetingCard : MonoBehaviour
     }
 
     public void setName(string name) {
-        nameObj.text = name; 
+        nameObj.text = name.ToUpper(); 
     }
 
     public void setDescription(string description) {
