@@ -1,7 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Collections;
+using UnityEngine.Networking;
+using UnityEngine.UI;
+using System.Text.RegularExpressions;
+using Newtonsoft.Json;
+using System.Text;
+using UnityEngine.SceneManagement;
+using System;
 
 
 /* Contains GreetingCard */
@@ -10,6 +16,9 @@ public class OrderItem : MonoBehaviour
 {   
     public GreetingCard gcObj; 
     [SerializeField] public GameObject removeButton; 
+    [SerializeField] public TextMeshProUGUI name; 
+    [SerializeField] public TextMeshProUGUI price; 
+
     public string id; 
 
     // Start is called before the first frame update
@@ -28,15 +37,10 @@ public class OrderItem : MonoBehaviour
     }
 
     public void setGreetingCardData(GreetingCard card){
-        gcObj = card;
-    }
-
-    public void setPrice(string price) {
-        // priceObj.text = "$" + price; 
-    }
-
-    public void setName(string name) {
-        // nameObj.text = name; 
+        name.text = card.nameObj.text; 
+        price.text = card.priceObj.text; 
+        Image image = this.transform.GetComponent<Image>();
+        image.sprite = card.transform.GetComponent<Image>().sprite; 
     }
 
     public void onRemoveButtonClick(){

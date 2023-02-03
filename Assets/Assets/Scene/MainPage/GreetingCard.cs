@@ -13,11 +13,11 @@ using System;
 
 public class GreetingCard : MonoBehaviour
 {   
-    [SerializeField] public TextMeshProUGUI  nameObj; 
-    [SerializeField] public TextMeshProUGUI  priceObj; 
+    [SerializeField] public TextMeshProUGUI nameObj; 
+    [SerializeField] public TextMeshProUGUI priceObj; 
     [SerializeField] public GameObject addButton; 
     public static GreetingCard Instance;
-    
+
     // Start is called before the first frame update
     void Awake()
     {

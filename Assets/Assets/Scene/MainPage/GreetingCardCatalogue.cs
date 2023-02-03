@@ -10,9 +10,16 @@ using UnityEngine.SceneManagement;
 using System;
 
 
-public class GetProduct : MonoBehaviour
+public class GreetingCardCatalogue : MonoBehaviour
 {
     [SerializeField] public GameObject greetingCardPrefab;
+    public static GreetingCardCatalogue Instance;
+    
+    void Awake()
+    {
+        Instance = this;
+        DontDestroyOnLoad(gameObject);        
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -22,8 +29,24 @@ public class GetProduct : MonoBehaviour
         if (user != null) {
             session_id = user.session_id.ToString();
         }
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
         Debug.Log(session_id);
-        StartCoroutine(RetrieveProduct(session_id));    
+        StartCoroutine(RetrieveProduct(session_id));            
+    }
+    
+    // function to ensure catalogue only visible in MainPage scene
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode){
+         Scene m_Scene = SceneManager.GetActiveScene();
+         string sceneName = m_Scene.name;
+         Debug.Log("Current scene:"+ sceneName);
+
+         if (sceneName == "MainPage"){
+            gameObject.SetActive(true);
+         }else{
+            gameObject.SetActive(false);
+         }
     }
 
     // Update is called once per frame

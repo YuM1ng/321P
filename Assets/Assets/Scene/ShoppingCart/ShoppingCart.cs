@@ -10,7 +10,7 @@ using System.Text;
 using UnityEngine.SceneManagement;
 
 
-/* The ShoppingCart consists of a list of GreetingCard objects.  */
+/* The ShoppingCart consists of a list of GreetingCard objects corresponding to what the user have added inside */
 
 public class ShoppingCart : MonoBehaviour
 {
@@ -44,8 +44,9 @@ public class ShoppingCart : MonoBehaviour
     }
 
     public List<GreetingCard> getCards(){
+        Debug.Log("Current items in shopping cart: ");
         foreach (GreetingCard x in cards){
-            Debug.Log(x.name);
+            Debug.Log(x.nameObj.text);
         }
         return cards;
     }
