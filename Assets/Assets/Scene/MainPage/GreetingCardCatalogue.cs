@@ -69,10 +69,10 @@ public class GreetingCardCatalogue : MonoBehaviour
             int cols = 2; 
             int col_index = 0; 
             int row_index = 0; 
-            int y_displace = 650;
+            int y_displace = 865;
             int x_displace = 500; 
-            int y = 0; 
-            int x = 0; 
+            int y = 165; 
+            int x = -250; 
             int z = 0;
 
             for (int i=0; i < greetingCardsResponse.Count; i ++){
@@ -85,8 +85,8 @@ public class GreetingCardCatalogue : MonoBehaviour
                     //new row 
                     row_index ++; 
                 }
-                x = col_index * x_displace ;   
-                y -= row_index * y_displace; 
+                x = x + col_index * x_displace ;   
+                y = y - row_index * y_displace; 
 
                 GameObject greetingCard = Instantiate(greetingCardPrefab, position, Quaternion.identity);
                 greetingCard.GetComponent<GreetingCard>().setName(greetingCardsResponse[i].name);

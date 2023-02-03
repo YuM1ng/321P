@@ -15,6 +15,8 @@ public class GreetingCard : MonoBehaviour
 {   
     [SerializeField] public TextMeshProUGUI nameObj; 
     [SerializeField] public TextMeshProUGUI priceObj; 
+    [SerializeField] public TextMeshProUGUI descriptionObj; 
+    [SerializeField] public GameObject imageObj; 
     [SerializeField] public GameObject addButton; 
     public static GreetingCard Instance;
 
@@ -39,12 +41,16 @@ public class GreetingCard : MonoBehaviour
         nameObj.text = name; 
     }
 
+    public void setDescription(string description) {
+        descriptionObj.text = description; 
+    }
+
     public void setImage(string rawImageBytes){
         byte[] imageBytes = Convert.FromBase64String(rawImageBytes);
         Texture2D tex = new Texture2D(2, 2);
         tex.LoadImage(imageBytes);     
         Sprite sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);           
-        this.transform.GetComponent<Image>().sprite = sprite; 
+        imageObj.GetComponent<Image>().sprite = sprite; 
     }
 
     public void onAddButtonClick(){

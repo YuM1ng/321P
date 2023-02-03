@@ -18,6 +18,7 @@ public class OrderItem : MonoBehaviour
     [SerializeField] public GameObject removeButton; 
     [SerializeField] public TextMeshProUGUI name; 
     [SerializeField] public TextMeshProUGUI price; 
+    [SerializeField] public GameObject image; 
 
     public string id; 
 
@@ -39,8 +40,7 @@ public class OrderItem : MonoBehaviour
     public void setGreetingCardData(GreetingCard card){
         name.text = card.nameObj.text; 
         price.text = card.priceObj.text; 
-        Image image = this.transform.GetComponent<Image>();
-        image.sprite = card.transform.GetComponent<Image>().sprite; 
+        image.GetComponent<Image>().sprite = card.imageObj.GetComponent<Image>().sprite; 
     }
 
     public void onRemoveButtonClick(){
