@@ -1,11 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Networking;
 using Vuforia;
 
-[CreateAssetMenu(menuName ="Singleton/SaveLoadSystem")]
-public class SaveSceneSystem : MonoBehaviourSingleton<SaveSceneSystem>
+//[CreateAssetMenu(menuName ="Singleton/SaveLoadSystem")]
+public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneSystem>
 {
     public enum ObjectType
     {
@@ -107,6 +109,8 @@ public class SaveSceneSystem : MonoBehaviourSingleton<SaveSceneSystem>
 
     List<GameObject>[] m_trackedObjects;
 
+    private string m_userID;
+
     /* When an object that is savable (has SceneObject.cs script on it) is placed, this function will be called to add it to tracking
      * Parameters:
      *      - _type : the type of object (based on those defined in ObjectType enum)
@@ -144,13 +148,26 @@ public class SaveSceneSystem : MonoBehaviourSingleton<SaveSceneSystem>
      *  Parameters:
      *      - _fileName: name of the scene to be saved
      */
-    public void SaveScene(string _fileName)
+    public void SaveScene(string _fileName, /*string _userID,*/ Texture2D _texIMG, string _msg)
     {
         //Creates a new DataFile variable based on the objects list in m_trackedObjects
         DataFile newSave = new DataFile(m_trackedObjects);
+
+        byte[] imgByte = _texIMG.EncodeToPNG();
+        string x64Img = Convert.ToBase64String(imgByte);
+
         //Converts it to Json string
         string rawJson = JsonUtility.ToJson(newSave,true);
-        
+        WWWForm custForm = new WWWForm();
+        custForm.AddField("userId", m_userID);
+        custForm.AddField("name", _fileName);
+        custForm.AddField("image", x64Img);
+        custForm.AddField("greetingCardId", "120");
+        custForm.AddField("textMessage", _msg);
+        custForm.AddField("options", rawJson);
+
+        StartCoroutine(UploadToServer(custForm));
+
         /*//save to local path
         string filePath = Application.persistentDataPath + "/" + _fileName + ".json";
         File.WriteAllText(filePath, rawJson);*/
@@ -162,25 +179,64 @@ public class SaveSceneSystem : MonoBehaviourSingleton<SaveSceneSystem>
         DataFile loadedData = JsonUtility.FromJson<DataFile>(rawJson);
 
     }
-    /*IEnumerator UploadToServer(string _custJson)
+    IEnumerator UploadToServer(WWWForm _custForm)
     {
-        WWWForm form = new WWWForm();
+        /*WWWForm form = new WWWForm();
         form.AddField("userId", userId);
         form.AddField("name", name);
         form.AddField("image", image);
         form.AddField("greetingCardId", greetingCardId);
         form.AddField("textmessage", "");
-        form.AddField("options", _custJson);
-    }*/
+        form.AddField("options", _custJson);*/
+
+        UnityWebRequest www = UnityWebRequest.Post("https://lunar-byte-371808.et.r.appspot.com/api/insertCustomization", _custForm);
+        yield return www.SendWebRequest();
+        if(www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            Debug.Log("Cust upload done");
+        }
+    }
     // Start is called before the first frame update
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
     void Start()
     {
         /*VuforiaBehaviour.Instance.*/
+        User curruser = GameObject.Find("UserManager").GetComponent<User>();
+        if (curruser != null)
+        {
+            StartCoroutine(GetUserID(curruser.session_id));
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    private IEnumerator GetUserID(string _sess)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("session_id", _sess);
+
+        UnityWebRequest www = UnityWebRequest.Post("https://lunar-byte-371808.et.r.appspot.com/api/fetchUserProfilebyId", form);
+        yield return www.SendWebRequest();
+        if (www.result == UnityWebRequest.Result.Success)
+        {
+            var userProfileResponses = JsonUtility.FromJson<UserProfileResponseList>("{\"users\":" + www.downloadHandler.text + "}");
+
+            if (userProfileResponses.users.Count > 0)
+            {
+                m_userID = userProfileResponses.users[0].user_id;
+            }
+        }
+
     }
 }
