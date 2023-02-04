@@ -11,6 +11,8 @@ public class SaveSceneSystem : MonoBehaviourSingleton<SaveSceneSystem>
     {
         Wine,
         Flower,
+        Lantern1,
+        Mooncake,
         TotalType
     }
 
