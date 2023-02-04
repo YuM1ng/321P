@@ -1920,11 +1920,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   registerEndpoint: https://lunar-byte-371808.et.r.appspot.com/api/insertuser/
-  alertText: {fileID: 0}
-  createButton: {fileID: 0}
-  EmailInputField: {fileID: 0}
-  usernameInputField: {fileID: 0}
-  passwordInputField: {fileID: 0}
+  alertText: {fileID: 341340145}
+  createButton: {fileID: 1931925974}
+  EmailInputField: {fileID: 446971757}
+  usernameInputField: {fileID: 1569653980}
+  passwordInputField: {fileID: 60468609}
 --- !u!1 &979193613
 GameObject:
   m_ObjectHideFlags: 0
@@ -3148,10 +3148,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 277493493}
-        m_TargetAssemblyTypeName: SceneSwitcher, Assembly-CSharp
-        m_MethodName: ChangeScene
-        m_Mode: 5
+      - m_Target: {fileID: 963194229}
+        m_TargetAssemblyTypeName: CreateAccount, Assembly-CSharp
+        m_MethodName: OnCreateClick
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
