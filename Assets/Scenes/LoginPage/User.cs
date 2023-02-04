@@ -4,14 +4,28 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class User
+public class User : MonoBehaviour
 {
-	public string id;
-	public string password;
+	public string Username;
+	public string Password;
+	public string session_id;
 
-	public User(string id, string password)
+	public static User Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+	public void setUser(string Username, string Password)
 	{
-		this.id = id;
-		this.password = password;
+		this.Username = Username;
+		this.Password = Password;
+	}
+
+	public void setSessionId(string session_id)
+	{
+		this.session_id = session_id;
 	}
 }

@@ -24,5 +24,9 @@ public class MoveScene : MonoBehaviour
         SceneManager.LoadScene(sceneID);
     }
 
+    public void ShoppingCart(int sceneID)
+    {
+        SceneManager.LoadScene(sceneID);
+    }        
 
 }

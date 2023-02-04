@@ -5,21 +5,6 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/MainMenu.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 0
-    path: Assets/Scenes/Scene.unity
-    guid: ca267f4736892e541b814ef5d1cf0f67
-  - enabled: 0
-    path: Assets/Scenes/ScenePortrait.unity
-    guid: d5ce763e0a79c7d469e7f1f74aec6862
-  - enabled: 0
-    path: Assets/Scenes/Scene2DCustomisation.unity
-    guid: 10ca042ed35860f44963b40c43e030a6
-  - enabled: 0
-    path: Assets/Scenes/SceneMultiplayer.unity
-    guid: 556af8b97ea9fd644ae898b7162240b9
   - enabled: 1
     path: Assets/Scenes/LoginPage/LoginPage.unity
     guid: ec78865e4372ba94380c3d3362e7ab49
@@ -27,12 +12,21 @@ EditorBuildSettings:
     path: Assets/Scenes/RegistrationPage/RegisterMenu.unity
     guid: 7d26d5e681b0d3742b15f8f5be08de95
   - enabled: 1
+    path: Assets/Scenes/MainPage/MainPage.unity
+    guid: ec4416ac28b23eb4ea8182c7f5398564
+  - enabled: 1
     path: Assets/Scenes/UserPage/UserPage.unity
     guid: ffc699c44b7017c41934b2631fc3b175
   - enabled: 1
-    path: Assets/Scenes/GuestPage/GuesPage.unity
-    guid: 00b517889367df544a69d41f138a2d13
+    path: Assets/Scenes/UserProfile/UserProfile.unity
+    guid: f7b2e10dee14e48448cd539f94ce888c
   - enabled: 1
     path: Assets/Scenes/SceneAR.unity
     guid: 0049c32336f00154cb21d064b97d4a30
+  - enabled: 1
+    path: Assets/Scenes/SceneMultiplayer.unity
+    guid: 556af8b97ea9fd644ae898b7162240b9
+  - enabled: 0
+    path: Assets/Scenes/3DCustomisationScene.unity
+    guid: 868b89d4d062db6438759a977715ba3c
   m_configObjects: {}
