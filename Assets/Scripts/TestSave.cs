@@ -32,6 +32,10 @@ public class TestSave : MonoBehaviour
     {
         ssSystem.SaveScene("Autumn123", _texImg, "Mid-Autumn customisation");
     }
+    public void LoadBtn()
+    {
+        ssSystem.LoadScene("Autumn123");
+    }
     // Update is called once per frame
     void Update()
     {

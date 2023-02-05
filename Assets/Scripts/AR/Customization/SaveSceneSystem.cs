@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 using Vuforia;
+using Image = UnityEngine.UI.Image;
 
 //[CreateAssetMenu(menuName ="Singleton/SaveLoadSystem")]
 public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneSystem>
@@ -110,6 +112,9 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
     List<GameObject>[] m_trackedObjects;
 
     private string m_userID;
+    private int m_greetCardID;
+    //private string m_greetCardImg;
+    public RawImage m_disp;
 
     /* When an object that is savable (has SceneObject.cs script on it) is placed, this function will be called to add it to tracking
      * Parameters:
@@ -148,21 +153,47 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
      *  Parameters:
      *      - _fileName: name of the scene to be saved
      */
-    public void SaveScene(string _fileName, /*string _userID,*/ Texture2D _texIMG, string _msg)
+    public void SaveScene(string _fileName, Texture2D _texIMG, string _msg)
     {
         //Creates a new DataFile variable based on the objects list in m_trackedObjects
         DataFile newSave = new DataFile(m_trackedObjects);
 
-        byte[] imgByte = _texIMG.EncodeToPNG();
-        string x64Img = Convert.ToBase64String(imgByte);
-
         //Converts it to Json string
-        string rawJson = JsonUtility.ToJson(newSave,true);
+        string rawJson = JsonUtility.ToJson(newSave, true);
+
+        /*RenderTexture rdTexture = RenderTexture.GetTemporary(_texIMG.width,_texIMG.height,0, RenderTextureFormat.Default, RenderTextureReadWrite.Linear);
+        Graphics.Blit(_texIMG,rdTexture);
+        RenderTexture prevTex = RenderTexture.active;
+        RenderTexture.active = rdTexture;
+        Texture2D copyTexture = new Texture2D(_texIMG.width, _texIMG.height);
+        copyTexture.ReadPixels(new Rect(0, 0, rdTexture.width, rdTexture.height), 0, 0);
+        copyTexture.Apply();
+        RenderTexture.active = prevTex;
+        RenderTexture.ReleaseTemporary(rdTexture);*/
+
+
+        byte[] imgByte = DecompressTexture2D(_texIMG).EncodeToJPG();
+        //byte[] imgByte = _texIMG.GetRawTextureData();
+        /*string filePath = Application.persistentDataPath + "/test.jpg";
+        Debug.Log(filePath);
+        File.WriteAllBytes(filePath, imgByte);*/
+
+        /*Texture2D tex = new Texture2D(2, 2);
+        tex.LoadRawTextureData(imgByte);
+        m_disp.texture = tex;*/
+
+        string x64Img = Convert.ToBase64String(imgByte);
+        x64Img = "data:image/jpg;base64, " + x64Img;
+        Debug.Log($"img: {x64Img}");
+        /*string filePath = Application.persistentDataPath + "/test.txt";
+        Debug.Log(filePath);
+        File.WriteAllText(filePath, x64Img);*/
+
         WWWForm custForm = new WWWForm();
         custForm.AddField("userId", m_userID);
         custForm.AddField("name", _fileName);
         custForm.AddField("image", x64Img);
-        custForm.AddField("greetingCardId", "120");
+        //custForm.AddField("greetingCardId", m_greetCardID);
         custForm.AddField("textMessage", _msg);
         custForm.AddField("options", rawJson);
 
@@ -170,35 +201,16 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
 
         /*//save to local path
         string filePath = Application.persistentDataPath + "/" + _fileName + ".json";
+        Debug.Log(filePath);
         File.WriteAllText(filePath, rawJson);*/
     }
     public void LoadScene(string _fileName)
     {
-        string filePath = Application.persistentDataPath + "/" + _fileName + ".json";
+        StartCoroutine(GetFromServer());
+        /*string filePath = Application.persistentDataPath + "/" + _fileName + ".json";
         string rawJson = File.ReadAllText(filePath);
-        DataFile loadedData = JsonUtility.FromJson<DataFile>(rawJson);
+        DataFile loadedData = JsonUtility.FromJson<DataFile>(rawJson);*/
 
-    }
-    IEnumerator UploadToServer(WWWForm _custForm)
-    {
-        /*WWWForm form = new WWWForm();
-        form.AddField("userId", userId);
-        form.AddField("name", name);
-        form.AddField("image", image);
-        form.AddField("greetingCardId", greetingCardId);
-        form.AddField("textmessage", "");
-        form.AddField("options", _custJson);*/
-
-        UnityWebRequest www = UnityWebRequest.Post("https://lunar-byte-371808.et.r.appspot.com/api/insertCustomization", _custForm);
-        yield return www.SendWebRequest();
-        if(www.result != UnityWebRequest.Result.Success)
-        {
-            Debug.Log(www.error);
-        }
-        else
-        {
-            Debug.Log("Cust upload done");
-        }
     }
     // Start is called before the first frame update
     private void Awake()
@@ -213,12 +225,68 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
         {
             StartCoroutine(GetUserID(curruser.session_id));
         }
+
+        //StartCoroutine(GetGreetCard());
     }
 
-    // Update is called once per frame
-    void Update()
+        // Update is called once per frame
+        void Update()
     {
         
+    }
+
+    private Texture2D DecompressTexture2D(Texture2D _fromTexture)
+    {
+        RenderTexture rdTexture = RenderTexture.GetTemporary(_fromTexture.width, _fromTexture.height, 0, RenderTextureFormat.Default, RenderTextureReadWrite.Linear);
+        Graphics.Blit(_fromTexture, rdTexture);
+        RenderTexture prevTex = RenderTexture.active;
+        RenderTexture.active = rdTexture;
+        Texture2D copyTexture = new Texture2D(_fromTexture.width, _fromTexture.height);
+        copyTexture.ReadPixels(new Rect(0, 0, rdTexture.width, rdTexture.height), 0, 0);
+        copyTexture.Apply();
+        RenderTexture.active = prevTex;
+        RenderTexture.ReleaseTemporary(rdTexture);
+        return copyTexture;
+    }
+
+    IEnumerator UploadToServer(WWWForm _custForm)
+    {
+        /*WWWForm form = new WWWForm();
+        form.AddField("userId", userId);
+        form.AddField("name", name);
+        form.AddField("image", image);
+        form.AddField("greetingCardId", greetingCardId);
+        form.AddField("textmessage", "");
+        form.AddField("options", _custJson);*/
+
+        UnityWebRequest www = UnityWebRequest.Post("https://lunar-byte-371808.et.r.appspot.com/api/insertCustomization/", _custForm);
+        yield return www.SendWebRequest();
+        if(www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log($"err: {www.error} | desc: {www.downloadHandler.text}");
+        }
+        else
+        {
+            Debug.Log("Cust upload done");
+        }
+    }
+    IEnumerator GetFromServer()
+    {
+        WWWForm custForm = new WWWForm();
+        custForm.AddField("userId", m_userID);
+
+        UnityWebRequest www = UnityWebRequest.Post("https://lunar-byte-371808.et.r.appspot.com/api/getCustomizationbyUserId", custForm);
+        yield return www.SendWebRequest();
+
+        if (www.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log($"Get cust: {www.downloadHandler.text}");
+        }
+        else
+        {
+            Debug.Log($"err: {www.error} | desc: {www.downloadHandler.text}");
+        }
+
     }
 
     private IEnumerator GetUserID(string _sess)
@@ -239,4 +307,31 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
         }
 
     }
+    /*private IEnumerator GetGreetCard()
+    {
+        UnityWebRequest www = UnityWebRequest.Get("https://lunar-byte-371808.et.r.appspot.com/api/getGreetingCards");
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            // Debug.Log("GetProduct Response: " + www.downloadHandler.text);
+            var getGreetingCardResponseList = JsonUtility.FromJson<GreetingCardResponseList>(www.downloadHandler.text);
+            var greetingCardsResponse = getGreetingCardResponseList.greeting_cards;
+            if (greetingCardsResponse.Count > 0)
+            {
+                m_greetCardID = greetingCardsResponse[0].greeting_card_id;
+                m_greetCardImg = greetingCardsResponse[0].image.Split(',')[1];
+                Debug.Log($"Img taken: { greetingCardsResponse[0].name} ({m_greetCardID})");
+            }
+            else
+            {
+                Debug.Log("get card err");
+            }
+        }
+
+    }*/
 }

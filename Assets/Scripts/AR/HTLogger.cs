@@ -27,8 +27,8 @@ public class HTLogger : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        AddMsg("HTLogger is awake!!");
-        VuforiaApplication.Instance.OnVuforiaInitialized += AddLogMsg;
+        //AddMsg("HTLogger is awake!!");
+        //VuforiaApplication.Instance.OnVuforiaInitialized += AddLogMsg;
     }
 
     // Update is called once per frame

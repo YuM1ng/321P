@@ -14,7 +14,7 @@ public class SceneObject : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _ssSystem = GameObject.Find("SaveSystem").GetComponent<SaveSceneSystem>();
     }
