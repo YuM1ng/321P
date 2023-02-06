@@ -32,4 +32,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/3DCustomisationScene.unity
     guid: 868b89d4d062db6438759a977715ba3c
+  - enabled: 1
+    path: Assets/Scenes/ARMenu.unity
+    guid: bcf67cdfc64e45e42846fc0b201d55f9
+  - enabled: 1
+    path: Assets/Scenes/ScanARCust.unity
+    guid: 59759d0bfb366be4a8bbecadc4745db7
   m_configObjects: {}
