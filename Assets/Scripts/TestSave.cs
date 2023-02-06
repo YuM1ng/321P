@@ -30,11 +30,15 @@ public class TestSave : MonoBehaviour
 
     public void SaveBtn()
     {
-        ssSystem.SaveScene("Autumn123", _texImg, "Mid-Autumn customisation");
+        ssSystem.SaveScene("MidAutumn23", _texImg, "Mid-Autumn customisation");
     }
     public void LoadBtn()
     {
-        ssSystem.LoadScene("Autumn123");
+        ssSystem.LoadScene("MidAutumn23");
+    }
+    public void DeleteBtn()
+    {
+        ssSystem.DeleteScene();
     }
     // Update is called once per frame
     void Update()

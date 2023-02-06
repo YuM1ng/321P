@@ -11,6 +11,8 @@ using Image = UnityEngine.UI.Image;
 //[CreateAssetMenu(menuName ="Singleton/SaveLoadSystem")]
 public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneSystem>
 {
+    /* Types of object that can be placed and saved
+     */
     public enum ObjectType
     {
         Wine,
@@ -19,7 +21,7 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
         Mooncake,
         TotalType
     }
-
+    #region Save file data
     /*  struct to hold per object's instance's informations, currently saves local position, local scale, and local quaternion rotation
      *  Variables:
      *      - _position : local position of object
@@ -108,13 +110,14 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
 
         }
     }
+    #endregion
 
     List<GameObject>[] m_trackedObjects;
 
     private string m_userID;
-    private int m_greetCardID;
+    //private int m_greetCardID;
     //private string m_greetCardImg;
-    public RawImage m_disp;
+    //public RawImage m_disp;
 
     /* When an object that is savable (has SceneObject.cs script on it) is placed, this function will be called to add it to tracking
      * Parameters:
@@ -159,7 +162,7 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
         DataFile newSave = new DataFile(m_trackedObjects);
 
         //Converts it to Json string
-        string rawJson = JsonUtility.ToJson(newSave, true);
+        string rawJson = JsonUtility.ToJson(newSave/*, true*/);
 
         /*RenderTexture rdTexture = RenderTexture.GetTemporary(_texIMG.width,_texIMG.height,0, RenderTextureFormat.Default, RenderTextureReadWrite.Linear);
         Graphics.Blit(_texIMG,rdTexture);
@@ -179,12 +182,13 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
         File.WriteAllBytes(filePath, imgByte);*/
 
         /*Texture2D tex = new Texture2D(2, 2);
-        tex.LoadRawTextureData(imgByte);
+        //tex.LoadRawTextureData(imgByte);
+        tex.LoadImage(imgByte);
         m_disp.texture = tex;*/
 
         string x64Img = Convert.ToBase64String(imgByte);
         x64Img = "data:image/jpg;base64, " + x64Img;
-        Debug.Log($"img: {x64Img}");
+        //Debug.Log($"img: {x64Img}");
         /*string filePath = Application.persistentDataPath + "/test.txt";
         Debug.Log(filePath);
         File.WriteAllText(filePath, x64Img);*/
@@ -210,8 +214,83 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
         /*string filePath = Application.persistentDataPath + "/" + _fileName + ".json";
         string rawJson = File.ReadAllText(filePath);
         DataFile loadedData = JsonUtility.FromJson<DataFile>(rawJson);*/
+    }
+    public void DeleteScene()
+    {
+        StartCoroutine(DeleteSceneFromServer());
+    }
+    #region Static functions for general use
+    /* Loads a customization json string and instantiate them onto the parent transform specified
+     *  Parameters:
+     *      - _rawJson: the customization json string
+     *      - _parent: the transform of the parent to instantiate the object under
+     */
+    public static void LoadCustJsonToTransform(string _rawJson, Transform _parent)
+    {
+        // Converts the customization json to DataaFile struct
+        DataFile custScene = JsonUtility.FromJson<DataFile>(_rawJson);
+        // Loop through each unique object list
+        for(int i=0; i < custScene.m_ObjectList.Count; ++i)
+        {
+            //GameObject variable to assign the prefab instance to
+            GameObject thePrefab;
+            // Implicit convertion of the index to ObjectType enum, since the enum value correspond to the list index, and assign the appropriate prefab
+            switch ((ObjectType)i)
+            {
+                case ObjectType.Wine:
+                    thePrefab = GameObjectFactory.Instance.GetPrefab("Wine");
+                    break;
+                case ObjectType.Flower:
+                    thePrefab = GameObjectFactory.Instance.GetPrefab("Flower");
+                    break;
+                case ObjectType.Lantern1:
+                    thePrefab = GameObjectFactory.Instance.GetPrefab("Lantern1");
+                    break;
+                case ObjectType.Mooncake:
+                    thePrefab = GameObjectFactory.Instance.GetPrefab("Mooncake");
+                    break;
+                default:
+                    Debug.Log("No such object");
+                    continue;
+            }
+            //foreach instances of this unique object
+            foreach (DataElement objElement in custScene.m_ObjectList[i]._ObjectInstances)
+            {
+                //instantiate the prefab set before
+                GameObject go = Instantiate(thePrefab, _parent);
+                //calls the DataElement function to apply the transform values
+                objElement.ToTransform(go.transform);
+                //go.transform.localScale = Vector3.one;
+            }
+        }
+        Debug.Log("CustJson loaded");
+    }
+    /* Function to execute process to create a Vuforia Image Targeet with a supplied base 64 image string
+     * Parameter:
+     *      -_x64Img: the string of base 64 image
+     *      
+     *  Returns:
+     *      ImageTargetBehaviour: An instance of Vuforia's Image Target
+     */
+    public static ImageTargetBehaviour ImgTargetFromRawData(string _x64Img)
+    {
+        // Converts base 64 img string back to bytes
+        byte[] imgData = Convert.FromBase64String( _x64Img );
+        // Creates a texture2d object to apply image data to
+        Texture2D imgTexture = new Texture2D(2, 2);
+        //attempts to load data onto texture
+        if (imgTexture.LoadImage(imgData))
+        {
+            //if success creates a new image target instance using VuforiaBehaviour
+            return VuforiaBehaviour.Instance.ObserverFactory.CreateImageTarget(imgTexture, 0.148f, "ImgTarget");
+        }
+        else
+        {
+            return null;
+        }
 
     }
+    #endregion
     // Start is called before the first frame update
     private void Awake()
     {
@@ -229,8 +308,8 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
         //StartCoroutine(GetGreetCard());
     }
 
-        // Update is called once per frame
-        void Update()
+    // Update is called once per frame
+    void Update()
     {
         
     }
@@ -280,7 +359,20 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
 
         if (www.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log($"Get cust: {www.downloadHandler.text}");
+            //Debug.Log($"Get cust: {www.downloadHandler.text}"); 
+            /*string filePath = Application.persistentDataPath + "/result.txt";
+            Debug.Log(filePath);
+            File.WriteAllText(filePath, www.downloadHandler.text);*/
+            CustomisationResponseList resList = JsonUtility.FromJson<CustomisationResponseList>("{\"custList\":"+www.downloadHandler.text+"}");
+            if (resList.custList.Count > 0)
+            {
+                //Debug.Log($"Num of Cust: {resList.custList.Count}");
+                CustomisationResponse res1 = resList.custList[1];
+                string x64ImgStr = res1.image.Split(",")[1];
+                ImageTargetBehaviour imgTarget = ImgTargetFromRawData(x64ImgStr);
+                LoadCustJsonToTransform(res1.options, imgTarget.transform);
+                //imgTarget.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+            }
         }
         else
         {
@@ -288,6 +380,7 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
         }
 
     }
+
 
     private IEnumerator GetUserID(string _sess)
     {
@@ -306,6 +399,22 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
             }
         }
 
+    }
+    private IEnumerator DeleteSceneFromServer()
+    {
+        WWWForm deleteForm = new WWWForm();
+        deleteForm.AddField("userId", m_userID);
+
+        UnityWebRequest www = UnityWebRequest.Post("https://lunar-byte-371808.et.r.appspot.com/api/deleteCustomization/:Id", deleteForm);
+        yield return www.SendWebRequest();
+        if (www.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log($"result:{www.downloadHandler.text}");
+        }
+        else
+        {
+            Debug.Log($"err:{www.error}| desc:\n{www.downloadHandler.text}");
+        }
     }
     /*private IEnumerator GetGreetCard()
     {
