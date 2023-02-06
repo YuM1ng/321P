@@ -370,7 +370,8 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
                 CustomisationResponse res1 = resList.custList[1];
                 string x64ImgStr = res1.image.Split(",")[1];
                 ImageTargetBehaviour imgTarget = ImgTargetFromRawData(x64ImgStr);
-                LoadCustJsonToTransform(res1.options, imgTarget.transform);
+                //LoadCustJsonToTransform(res1.options, imgTarget.transform);
+                LoadCustJsonToTransform("{\"m_ObjectList\":[{\"_ObjectInstances\":[]},{\"_ObjectInstances\":[]},{\"_ObjectInstances\":[{\"_position\":[-0.015799999237060548,0.0,-0.021900000050663949],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]},{\"_position\":[-0.04050000011920929,0.0,0.0010000000474974514],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]},{\"_position\":[-0.020099999383091928,0.0,0.03420000150799751],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]},{\"_position\":[0.008999999612569809,0.0,-0.0430000014603138],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]}]},{\"_ObjectInstances\":[{\"_position\":[0.020500000566244127,0.0,-0.012400000356137753],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]},{\"_position\":[0.016499999910593034,0.0,0.023399999365210534],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]}]}]}", imgTarget.transform);
                 //imgTarget.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
             }
         }
