@@ -215,9 +215,9 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
         string rawJson = File.ReadAllText(filePath);
         DataFile loadedData = JsonUtility.FromJson<DataFile>(rawJson);*/
     }
-    public void DeleteScene()
+    public void DeleteScene(int _customisaitonID)
     {
-        StartCoroutine(DeleteSceneFromServer());
+        StartCoroutine(DeleteSceneFromServer(_customisaitonID));
     }
     #region Static functions for general use
     /* Loads a customization json string and instantiate them onto the parent transform specified
@@ -282,7 +282,9 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
         if (imgTexture.LoadImage(imgData))
         {
             //if success creates a new image target instance using VuforiaBehaviour
-            return VuforiaBehaviour.Instance.ObserverFactory.CreateImageTarget(imgTexture, 0.148f, "ImgTarget");
+            ImageTargetBehaviour imgTarg = VuforiaBehaviour.Instance.ObserverFactory.CreateImageTarget(imgTexture, 0.148f, "ImgTarget");
+            imgTarg.gameObject.AddComponent<DefaultObserverEventHandler>();
+            return imgTarg;
         }
         else
         {
@@ -392,8 +394,8 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
                 //Creates a Vuforia ImageTargetBehaviour by calling function
                 ImageTargetBehaviour imgTarget = ImgTargetFromRawData(x64ImgStr);
                 //CAlls another funciton ot load customization information
-                //LoadCustJsonToTransform(res1.options, imgTarget.transform);
-                LoadCustJsonToTransform("{\"m_ObjectList\":[{\"_ObjectInstances\":[]},{\"_ObjectInstances\":[]},{\"_ObjectInstances\":[{\"_position\":[-0.015799999237060548,0.0,-0.021900000050663949],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]},{\"_position\":[-0.04050000011920929,0.0,0.0010000000474974514],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]},{\"_position\":[-0.020099999383091928,0.0,0.03420000150799751],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]},{\"_position\":[0.008999999612569809,0.0,-0.0430000014603138],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]}]},{\"_ObjectInstances\":[{\"_position\":[0.020500000566244127,0.0,-0.012400000356137753],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]},{\"_position\":[0.016499999910593034,0.0,0.023399999365210534],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]}]}]}", imgTarget.transform);
+                LoadCustJsonToTransform(res1.options, imgTarget.transform);
+                //LoadCustJsonToTransform("{\"m_ObjectList\":[{\"_ObjectInstances\":[]},{\"_ObjectInstances\":[]},{\"_ObjectInstances\":[{\"_position\":[-0.015799999237060548,0.0,-0.021900000050663949],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]},{\"_position\":[-0.04050000011920929,0.0,0.0010000000474974514],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]},{\"_position\":[-0.020099999383091928,0.0,0.03420000150799751],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]},{\"_position\":[0.008999999612569809,0.0,-0.0430000014603138],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]}]},{\"_ObjectInstances\":[{\"_position\":[0.020500000566244127,0.0,-0.012400000356137753],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]},{\"_position\":[0.016499999910593034,0.0,0.023399999365210534],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]}]}]}", imgTarget.transform);
                 //imgTarget.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
             }
         }
@@ -431,16 +433,16 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
     }
     /* Deleting customization in server
      */
-    private IEnumerator DeleteSceneFromServer()
+    private IEnumerator DeleteSceneFromServer(int _customisationID)
     {
-        WWWForm deleteForm = new WWWForm();
+        /*WWWForm deleteForm = new WWWForm();
         deleteForm.AddField("userId", m_userID);
-
-        UnityWebRequest www = UnityWebRequest.Post("https://lunar-byte-371808.et.r.appspot.com/api/deleteCustomization/:Id", deleteForm);
+*/
+        UnityWebRequest www = UnityWebRequest.Delete("https://lunar-byte-371808.et.r.appspot.com/api/deleteCustomization/"+_customisationID);
         yield return www.SendWebRequest();
         if (www.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log($"result:{www.downloadHandler.text}");
+            Debug.Log($"done");
         }
         else
         {

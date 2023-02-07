@@ -38,7 +38,7 @@ public class TestSave : MonoBehaviour
     }
     public void DeleteBtn()
     {
-        ssSystem.DeleteScene();
+        //ssSystem.DeleteScene();
     }
     // Update is called once per frame
     void Update()

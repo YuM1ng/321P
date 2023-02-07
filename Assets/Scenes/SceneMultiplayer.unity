@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
+  m_IndirectSpecularColor: {r: 0.44402185, g: 0.49316472, b: 0.57223153, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1295,8 +1295,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Social room
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cdc78a59096c6fb4b8196a34e090290e, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: cdc78a59096c6fb4b8196a34e090290e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1646,6 +1646,7 @@ GameObject:
   - component: {fileID: 438748374}
   - component: {fileID: 438748373}
   - component: {fileID: 438748372}
+  - component: {fileID: 438748375}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -1703,6 +1704,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &438748375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438748371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 691f853b1b0e7d947992738d20e9d7ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &447592042
 GameObject:
   m_ObjectHideFlags: 0
@@ -2825,8 +2838,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cdc78a59096c6fb4b8196a34e090290e, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: cdc78a59096c6fb4b8196a34e090290e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3043,8 +3056,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter room name...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cdc78a59096c6fb4b8196a34e090290e, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: cdc78a59096c6fb4b8196a34e090290e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3405,10 +3418,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2051611202, guid: e70928bcaebb3d34fa7186565b11d624, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e70928bcaebb3d34fa7186565b11d624, type: 3}
 --- !u!4 &781342504 stripped
 Transform:
@@ -4062,8 +4072,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Create & join room
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cdc78a59096c6fb4b8196a34e090290e, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: cdc78a59096c6fb4b8196a34e090290e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4531,8 +4541,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Player name:'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cdc78a59096c6fb4b8196a34e090290e, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: cdc78a59096c6fb4b8196a34e090290e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4695,6 +4705,7 @@ GameObject:
   - component: {fileID: 1263468884}
   - component: {fileID: 1263468886}
   - component: {fileID: 1263468885}
+  - component: {fileID: 1263468887}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -4760,6 +4771,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1263468883}
   m_CullTransparentMesh: 1
+--- !u!114 &1263468887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263468883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 438748375}
+          m_TargetAssemblyTypeName: SceneSwitcher, Assembly-CSharp
+          m_MethodName: ChangeScene
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: MainPage
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1276907027
 GameObject:
   m_ObjectHideFlags: 0
@@ -6072,8 +6112,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Select/Create a room
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cdc78a59096c6fb4b8196a34e090290e, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: cdc78a59096c6fb4b8196a34e090290e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6986,8 +7026,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Player *
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cdc78a59096c6fb4b8196a34e090290e, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: cdc78a59096c6fb4b8196a34e090290e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

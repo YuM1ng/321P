@@ -14,7 +14,17 @@ public class ResultEntry : MonoBehaviour
     [SerializeField]
     RawImage m_targetImage;
     [SerializeField]
-    Button m_ProceedToScan;
+    Button m_btnProceedToScan;
+    [SerializeField]
+    Button m_btnGetShareCode;
+    [SerializeField]
+    Button m_btnDeleteCustomisation;
+    [SerializeField]
+    GameObject m_deletePrompt;
+    [SerializeField]
+    Button m_btnYESDeleteCustomisation;
+    [SerializeField]
+    Button m_btnNODeleteCustomisation;
 
     public void SetNameOfCust(string _nameOfCust)
     {
@@ -35,5 +45,13 @@ public class ResultEntry : MonoBehaviour
         pos.x = 0.5f * rtSizeDelta.x;
         rtTrans.anchoredPosition = pos;
     }
-    public Button GetProceedButton() { return m_ProceedToScan; }
+    public void SetDeletePrompt(bool _active)
+    {
+        m_deletePrompt.SetActive(_active);
+    }
+    public Button GetProceedButton() { return m_btnProceedToScan; }
+    public Button GetShareCodeButton() { return m_btnGetShareCode; }
+    public Button GetDeleteCustButton() { return m_btnDeleteCustomisation; }
+    public Button GetYESDeleteCustButton() { return m_btnYESDeleteCustomisation; }
+    public Button GetNODeleteCustButton() { return m_btnNODeleteCustomisation; }
 }

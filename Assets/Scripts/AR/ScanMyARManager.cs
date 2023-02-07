@@ -115,16 +115,16 @@ public class ScanMyARManager : MonoBehaviour
                     /*************************************************************
                      * Due to current server data, one entry has different format, resulting in it not being able to split into 2 or more string
                      *************************************************************/
-                    //split image string at each commas
+                    /*//split image string at each commas
                     string[] imgStrArr = cust.image.Split(",");
                     //variable for taking the actual base64 image string
                     string imgStr;
                     if (imgStrArr.Length > 1)
                         imgStr = imgStrArr[1];
                     else
-                        imgStr = imgStrArr[0];
+                        imgStr = imgStrArr[0];*/
                     //converts base64 string to byte array
-                    byte[] imgbyte = Convert.FromBase64String(imgStr);
+                    byte[] imgbyte = Convert.FromBase64String(cust.image.Split(",")[1]);
                     //creates a texture for loading image byte into
                     Texture2D imgTexture = new Texture2D(2, 2);
                     if (imgTexture.LoadImage(imgbyte))
@@ -132,9 +132,30 @@ public class ScanMyARManager : MonoBehaviour
                         //if successfullt loaded, set this display image to this image
                         reGO.SetImage(imgTexture);
                     }
-                    //Add custom on-click event to button that passes in the customisation json string and Texture2D created above
+                    //Add custom on-click event to "proceed to scan" button that passes in the customisation json string and Texture2D created above
                     reGO.GetProceedButton().onClick.AddListener(()=> { 
                         CreateARScan(cust.options, imgTexture); 
+                    });
+                    //Add custom on-click event to "Get share code" button that
+                    Button btnShare = reGO.GetShareCodeButton();
+                    btnShare.onClick.AddListener(() =>
+                    {
+                        StartCoroutine(GetCustomizationShare(cust.customization_id, _userid, btnShare.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>(), btnShare.transform.GetComponent<UnityEngine.UI.Image>()));
+                    });
+                    //Add custom on-click event to "Delete customisation" button that shows the delete confirmation panel
+                    reGO.GetDeleteCustButton().onClick.AddListener(() =>
+                    {
+                        reGO.SetDeletePrompt(true);
+                    });
+                    //Add custom on-click event to "Delete NO" button that disables delete prompt
+                    reGO.GetNODeleteCustButton().onClick.AddListener(() =>
+                    {
+                        reGO.SetDeletePrompt(false);
+                    });
+                    //Add custom on-click event to "Delete YES" button that executes deletion of this customisation
+                    reGO.GetYESDeleteCustButton().onClick.AddListener(() =>
+                    {
+                        StartCoroutine(DeleteSceneFromServer(cust.customization_id, go));
                     });
                 }
                 //set display text for 
@@ -151,6 +172,53 @@ public class ScanMyARManager : MonoBehaviour
             //in the event of error show error text
             m_displayText.text = "Error encountered :(";
             Debug.Log($"err:{www.error}");
+        }
+    }
+    /*
+     */
+    IEnumerator GetCustomizationShare(int _custID, string _userID, TextMeshProUGUI _btnText, UnityEngine.UI.Image _buttonColor)
+    {
+        WWWForm getShareCodeForm = new();
+        getShareCodeForm.AddField("userId", _userID);
+        getShareCodeForm.AddField("customizationId", _custID);
+
+        UnityWebRequest www = UnityWebRequest.Post("https://lunar-byte-371808.et.r.appspot.com/api/insertCustomizationShare", getShareCodeForm);
+        yield return www.SendWebRequest();
+
+        if (www.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log($"res:{www.downloadHandler.text}");
+            _buttonColor.color = Color.green;
+            var res = JsonUtility.FromJson<CustShareCodeResponse>(www.downloadHandler.text);
+            Debug.Log(res.customizationsShareLink);
+            GUIUtility.systemCopyBuffer= res.customizationsShareLink;
+            _btnText.text = "Copied to clipboard";
+            yield return new WaitForSeconds(2);
+            _btnText.text = "Get share code";
+            _buttonColor.color = Color.white;
+        }
+        else
+        {
+            Debug.Log($"err:{www.error}");
+        }
+    }
+    /* Deleting customization in server
+     */
+    private IEnumerator DeleteSceneFromServer(int _customisationID, GameObject _go)
+    {
+        /*WWWForm deleteForm = new WWWForm();
+        deleteForm.AddField("userId", m_userID);*/
+
+        UnityWebRequest www = UnityWebRequest.Delete("https://lunar-byte-371808.et.r.appspot.com/api/deleteCustomization/" + _customisationID);
+        yield return www.SendWebRequest();
+        if (www.result == UnityWebRequest.Result.Success)
+        {
+            _go.SetActive(false);
+            Debug.Log($"done");
+        }
+        else
+        {
+            Debug.Log($"err:{www.error}| desc:\n{www.downloadHandler.text}");
         }
     }
     /* Function that sets up AR image scanning in the scene, to be called by "Proceed to Scan" button

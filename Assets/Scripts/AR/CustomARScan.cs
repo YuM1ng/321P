@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -47,28 +48,53 @@ public class CustomARScan : MonoBehaviour
     {
         m_ResponseText.gameObject.SetActive(true);
         m_ResponseText.text = "Searching for customization...";
-        StartCoroutine(GetCustomizations());
+        StartCoroutine(GetCustomizations(m_CustomizationIDInput.textComponent.text));
 
     }
-    IEnumerator GetCustomizations()
+    IEnumerator GetCustomizations(string _custShareID)
     {
         WWWForm getCustForm = new WWWForm();
-        /***************************
-         * update url
-         ***************************/
-        UnityWebRequest www = UnityWebRequest.Post("https://lunar-byte-371808.et.r.appspot.com/api/", getCustForm);
+        getCustForm.AddField("customizationsShareLink", _custShareID);
+        
+        UnityWebRequest www = UnityWebRequest.Post("https://lunar-byte-371808.et.r.appspot.com/api/getCustomizationSharebyShareLink", getCustForm);
         yield return www.SendWebRequest();
 
         if (www.result == UnityWebRequest.Result.Success)
         {
             m_ResponseText.text = "Customization found!";
-            /***************************************
-             * set cuztomisation values accordingly
-             ***************************************/
-            byte[] imgTarget /*= Convert.FromBase64String()*/;
-            Texture2D tmpTexture = new Texture2D(2, 2);
-            //tmpTexture.LoadImage(imgTarget);
-            m_imgTarget = VuforiaBehaviour.Instance.ObserverFactory.CreateImageTarget(tmpTexture, 0.148f, "CustomTarget");
+            Debug.Log($"cust:{www.downloadHandler.text}");
+            //converts response json to ShareCodeCustResponse data format
+            var resCust = JsonUtility.FromJson<ShareCodeCustResponseList>("{\"sccrList\":"+www.downloadHandler.text+"}");
+            if (resCust.sccrList.Count > 0)
+            {
+                //Converts base64 image
+                byte[] imgTarget = Convert.FromBase64String(resCust.sccrList[0].image.Split(",")[1]);
+                //Create texture2D to load image
+                Texture2D tmpTexture = new Texture2D(2, 2);
+                //Load img byte into texture2D
+                tmpTexture.LoadImage(imgTarget);
+                //enables results panel
+                m_ResultPanel.SetActive(true);
+                //get ResultEntry script
+                ResultEntry reDisp = m_ResultPanel.GetComponent<ResultEntry>();
+                reDisp.SetNameOfCust(resCust.sccrList[0].name);
+                //sets display image of image target
+                reDisp.SetImage(tmpTexture);
+                //adds listener onto proceed button
+                reDisp.GetProceedButton().onClick.AddListener(() =>
+                {
+                    //disable pre-scanning ui
+                    m_PreScanPanel.SetActive(false);
+                    //Create image target
+                    m_imgTarget = VuforiaBehaviour.Instance.ObserverFactory.CreateImageTarget(tmpTexture, 0.148f, "CustomTarget");
+                    //Load customisation onto image target
+                    SaveSceneSystem.LoadCustJsonToTransform(resCust.sccrList[0].options, m_imgTarget.transform);
+                    //sets during scanning ui's image reference
+                    m_duringScanImgPrompt.texture = tmpTexture;
+                    //enable during-scanning's ui
+                    m_ScanningPanel.SetActive(true);
+                });
+            }
 
         }
         else
