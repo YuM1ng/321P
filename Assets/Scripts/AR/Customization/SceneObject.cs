@@ -7,16 +7,16 @@ public class SceneObject : MonoBehaviour
     [SerializeField]
     SaveSceneSystem.ObjectType m_type;
 
-    SaveSceneSystem _ssSystem;
+    //SaveSceneSystem _ssSystem;
     public void OnPlace()
     {
-        _ssSystem.AddToTracking(m_type, this.gameObject);
+        GameObject.Find("SaveSystem").GetComponent<SaveSceneSystem>().AddToTracking(m_type, this.gameObject);
     }
 
     // Start is called before the first frame update
     void Awake()
     {
-        _ssSystem = GameObject.Find("SaveSystem").GetComponent<SaveSceneSystem>();
+        
     }
 
     // Update is called once per frame

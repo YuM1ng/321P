@@ -38,4 +38,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ScanARCust.unity
     guid: 59759d0bfb366be4a8bbecadc4745db7
+  - enabled: 1
+    path: Assets/Scenes/ScanMyARCust.unity
+    guid: ec2864b824c532448bab9b1a8ae3e662
   m_configObjects: {}

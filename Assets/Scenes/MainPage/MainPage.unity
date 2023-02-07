@@ -3228,7 +3228,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4072813974305549281, guid: c1202b28f24015f49ad6b0d11689699f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: SceneAR
+      value: ARMenu
       objectReference: {fileID: 0}
     - target: {fileID: 4072813974957227846, guid: c1202b28f24015f49ad6b0d11689699f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode

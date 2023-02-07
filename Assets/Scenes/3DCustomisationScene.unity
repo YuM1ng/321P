@@ -1634,7 +1634,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &816416384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1648,7 +1648,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _GameObjectFactory: {fileID: 11400000, guid: 410ee04fd5c55ed40b8ff8cf4a1d37cb, type: 2}
-  _SaveSceneSystem: {fileID: 11400000, guid: 3bf22243264ddc74195aa465f10b7105, type: 2}
 --- !u!4 &816416385
 Transform:
   m_ObjectHideFlags: 0

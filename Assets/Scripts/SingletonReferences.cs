@@ -7,6 +7,6 @@ public class SingletonReferences : MonoBehaviour
 
     [SerializeField]
     private GameObjectFactory _GameObjectFactory;
-    [SerializeField]
-    private SaveSceneSystem _SaveSceneSystem;
+    /*[SerializeField]
+    private SaveSceneSystem _SaveSceneSystem;*/
 }

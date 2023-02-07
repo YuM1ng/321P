@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 using Vuforia;
 
 public class CustomARScan : MonoBehaviour
@@ -15,14 +16,19 @@ public class CustomARScan : MonoBehaviour
     [Tooltip("The inputfield where user specify the customization ID")]
     TMP_InputField m_CustomizationIDInput;
     [SerializeField]
+    [Tooltip("The display text to show loading progress")]
     TextMeshProUGUI m_ResponseText;
     [SerializeField]
+    [Tooltip("Results panel to display the retrieved data")]
     GameObject m_ResultPanel;
 
     [Header("UI when scanning AR ")]
     [SerializeField]
     [Tooltip("UI panel for during scanning of AR")]
     GameObject m_ScanningPanel;
+    [SerializeField]
+    [Tooltip("Image target reference when scanning")]
+    RawImage m_duringScanImgPrompt;
 
     private ImageTargetBehaviour m_imgTarget;
 
@@ -62,7 +68,7 @@ public class CustomARScan : MonoBehaviour
             byte[] imgTarget /*= Convert.FromBase64String()*/;
             Texture2D tmpTexture = new Texture2D(2, 2);
             //tmpTexture.LoadImage(imgTarget);
-            m_imgTarget = VuforiaBehaviour.Instance.ObserverFactory.CreateImageTarget(tmpTexture, 0.115f, "CustomTarget");
+            m_imgTarget = VuforiaBehaviour.Instance.ObserverFactory.CreateImageTarget(tmpTexture, 0.148f, "CustomTarget");
 
         }
         else

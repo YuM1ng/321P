@@ -23,6 +23,7 @@ public abstract class MonoBehaviourSingleton<T> : ScriptableObject where T : Scr
                     return null;
                 }
                 _instance = results[0];
+                _instance.hideFlags = HideFlags.DontUnloadUnusedAsset;
             }
             return _instance;
         }

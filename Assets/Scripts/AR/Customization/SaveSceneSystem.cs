@@ -187,7 +187,7 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
         m_disp.texture = tex;*/
 
         string x64Img = Convert.ToBase64String(imgByte);
-        x64Img = "data:image/jpg;base64, " + x64Img;
+        x64Img = "data:image/jpg;base64," + x64Img;
         //Debug.Log($"img: {x64Img}");
         /*string filePath = Application.persistentDataPath + "/test.txt";
         Debug.Log(filePath);
@@ -294,7 +294,7 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
     // Start is called before the first frame update
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
     void Start()
     {
@@ -313,7 +313,12 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
     {
         
     }
-
+    /* Decompress Texture2D to enadle encoding to a format
+     *  Parameters:
+     *      -_FromTexture: the Texture to be decompressed
+     *  Return:
+     *      - Texture2D: a decompressed Texture2D
+     */
     private Texture2D DecompressTexture2D(Texture2D _fromTexture)
     {
         RenderTexture rdTexture = RenderTexture.GetTemporary(_fromTexture.width, _fromTexture.height, 0, RenderTextureFormat.Default, RenderTextureReadWrite.Linear);
@@ -327,7 +332,10 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
         RenderTexture.ReleaseTemporary(rdTexture);
         return copyTexture;
     }
-
+    /* Coroutine for uploading customization to server
+     *  Parameter:
+     *      -_custForm: the form created beforehand with necessary fields
+     */
     IEnumerator UploadToServer(WWWForm _custForm)
     {
         /*WWWForm form = new WWWForm();
@@ -340,36 +348,50 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
 
         UnityWebRequest www = UnityWebRequest.Post("https://lunar-byte-371808.et.r.appspot.com/api/insertCustomization/", _custForm);
         yield return www.SendWebRequest();
-        if(www.result != UnityWebRequest.Result.Success)
+        Debug.Log($"upload res {www.result}");
+        if(www.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log($"err: {www.error} | desc: {www.downloadHandler.text}");
+            Debug.Log($"Cust upload done \n{www.downloadHandler.text}");
         }
         else
         {
-            Debug.Log("Cust upload done");
+            Debug.Log($"err: {www.error} | desc: {www.downloadHandler.text}");
         }
     }
+    /* Coroutine for getting customization from server
+     */
     IEnumerator GetFromServer()
     {
+        //creates a form with userid
         WWWForm custForm = new WWWForm();
         custForm.AddField("userId", m_userID);
 
+        //post request to server to retrieve dustomization data
         UnityWebRequest www = UnityWebRequest.Post("https://lunar-byte-371808.et.r.appspot.com/api/getCustomizationbyUserId", custForm);
         yield return www.SendWebRequest();
 
+        //if request sends successfully
         if (www.result == UnityWebRequest.Result.Success)
         {
             //Debug.Log($"Get cust: {www.downloadHandler.text}"); 
             /*string filePath = Application.persistentDataPath + "/result.txt";
             Debug.Log(filePath);
             File.WriteAllText(filePath, www.downloadHandler.text);*/
+
+            //Convets responnse array to data format
             CustomisationResponseList resList = JsonUtility.FromJson<CustomisationResponseList>("{\"custList\":"+www.downloadHandler.text+"}");
+            //if converted data has customization data
             if (resList.custList.Count > 0)
             {
                 //Debug.Log($"Num of Cust: {resList.custList.Count}");
+
+                //Gets singular customization data
                 CustomisationResponse res1 = resList.custList[1];
+                //Process image string from server (disregard info up to first comma)
                 string x64ImgStr = res1.image.Split(",")[1];
+                //Creates a Vuforia ImageTargetBehaviour by calling function
                 ImageTargetBehaviour imgTarget = ImgTargetFromRawData(x64ImgStr);
+                //CAlls another funciton ot load customization information
                 //LoadCustJsonToTransform(res1.options, imgTarget.transform);
                 LoadCustJsonToTransform("{\"m_ObjectList\":[{\"_ObjectInstances\":[]},{\"_ObjectInstances\":[]},{\"_ObjectInstances\":[{\"_position\":[-0.015799999237060548,0.0,-0.021900000050663949],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]},{\"_position\":[-0.04050000011920929,0.0,0.0010000000474974514],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]},{\"_position\":[-0.020099999383091928,0.0,0.03420000150799751],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]},{\"_position\":[0.008999999612569809,0.0,-0.0430000014603138],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]}]},{\"_ObjectInstances\":[{\"_position\":[0.020500000566244127,0.0,-0.012400000356137753],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]},{\"_position\":[0.016499999910593034,0.0,0.023399999365210534],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]}]}]}", imgTarget.transform);
                 //imgTarget.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
@@ -381,26 +403,34 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
         }
 
     }
-
-
+    /* Coroutine to get current user's id using User's current sessionID
+     *  Parameters:
+     *      -_sess: the session ID of current user
+     */
     private IEnumerator GetUserID(string _sess)
     {
+        //Creates form with sesionId data
         WWWForm form = new WWWForm();
         form.AddField("session_id", _sess);
 
+        //post request to retrieve id
         UnityWebRequest www = UnityWebRequest.Post("https://lunar-byte-371808.et.r.appspot.com/api/fetchUserProfilebyId", form);
         yield return www.SendWebRequest();
+        //if request succeeds
         if (www.result == UnityWebRequest.Result.Success)
         {
+            //converts response json
             var userProfileResponses = JsonUtility.FromJson<UserProfileResponseList>("{\"users\":" + www.downloadHandler.text + "}");
-
+            //if there are data
             if (userProfileResponses.users.Count > 0)
             {
+                //gets first user's ID
                 m_userID = userProfileResponses.users[0].user_id;
             }
         }
-
     }
+    /* Deleting customization in server
+     */
     private IEnumerator DeleteSceneFromServer()
     {
         WWWForm deleteForm = new WWWForm();
