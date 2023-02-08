@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GreetingCardCanvas : MonoBehaviour
+public class ShoppingCartCanvas : MonoBehaviour
 {
-    public static GreetingCardCanvas Instance;
+    public static ShoppingCartCanvas Instance;
     
     void Awake()
     {
@@ -15,6 +15,7 @@ public class GreetingCardCanvas : MonoBehaviour
             Destroy(gameObject);
         }   
     }
+
 
     // Update is called once per frame
     void Update()

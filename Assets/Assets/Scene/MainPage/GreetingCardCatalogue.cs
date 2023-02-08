@@ -17,8 +17,12 @@ public class GreetingCardCatalogue : MonoBehaviour
     
     void Awake()
     {
-        Instance = this;
-        DontDestroyOnLoad(gameObject);        
+        if (Instance == null){
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }else{
+            Destroy(gameObject);
+        }   
     }
 
     // Start is called before the first frame update
