@@ -95,6 +95,10 @@ public class CustomARScan : MonoBehaviour
                     m_ScanningPanel.SetActive(true);
                 });
             }
+            else
+            {
+                m_ResponseText.text = "No customization found";
+            }
 
         }
         else
