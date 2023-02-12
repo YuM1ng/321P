@@ -14,7 +14,7 @@ public class OnSelectScene0 : MonoBehaviour
     {
         if (str == "Coffee")
         {          
-            SceneManager.LoadScene(11, LoadSceneMode.Additive);         
+            SceneManager.LoadScene("Customisation", LoadSceneMode.Additive);         
         }
          
         //if (str != "Coffee" && str != "Staffed Toybear" )
@@ -24,7 +24,7 @@ public class OnSelectScene0 : MonoBehaviour
 
         if (str == "Staffed Toybear")
         {
-            SceneManager.LoadScene(12);
+            SceneManager.LoadScene("Staffed");
         }
     }
 }
