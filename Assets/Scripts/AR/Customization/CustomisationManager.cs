@@ -51,7 +51,7 @@ public class CustomisationManager : DefaultObserverEventHandler
     {
         if(err == VuforiaInitError.NONE)
         {
-            //NativeGallery.GetImageFromGallery(ProcessIMG, "Select image to be tracked");
+            NativeGallery.GetImageFromGallery(ProcessIMG, "Select image to be tracked");
             /*ImgTarget =  VuforiaBehaviour.Instance.ObserverFactory.CreateImageTarget(dataSetPath, targetName);
             ImgTarget.OnTargetStatusChanged += TargetStatusChanged;*/
         }
@@ -100,16 +100,17 @@ public class CustomisationManager : DefaultObserverEventHandler
         {
             Destroy(m_goHolding);
         }
-        m_goHolding = Instantiate(GameObjectFactory.Instance.GetPrefab(_nameOfPrefab), m_MainCamera.transform);
+        m_goHolding = Instantiate(GameObjectFactory.Instance.GetPrefab(_nameOfPrefab), m_goPlot.transform);
         m_goHolding.transform.localPosition = new Vector3(0.0f, 0.0f, 0f);
-        Quaternion newRot = Quaternion.identity;
+
+        //Quaternion newRot = Quaternion.identity;
         //newRot.eulerAngles = new Vector3(0f, -90f, 0f);
-        m_goHolding.transform.rotation = newRot;
+        //m_goHolding.transform.rotation = newRot;
     }
     private void TargetStatusChanged(ObserverBehaviour _behaviour, TargetStatus _status)
     {
-        Debug.Log($"Img status: {_status.Status}");
-        /*switch (_status.Status)
+        /*Debug.Log($"Img status: {_status.Status}");
+        switch (_status.Status)
         {
             case Status.NO_POSE:
                 break;
@@ -160,6 +161,19 @@ public class CustomisationManager : DefaultObserverEventHandler
     // Update is called once per frame
     void Update()
     {
-        
+        if (m_bPlaceable && m_goHolding != null)
+        {
+            RaycastHit rayHit;
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out rayHit, 10f))
+            {
+                GameObject hitGO = rayHit.transform.gameObject;
+                if(hitGO == m_goPlot)
+                {
+                    Debug.Log(rayHit.transform.position);
+                    m_goHolding.transform.position = rayHit.transform.position;
+                }
+            }
+
+        }
     }
 }

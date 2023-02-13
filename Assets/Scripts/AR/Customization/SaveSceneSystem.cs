@@ -19,6 +19,8 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
         Flower,
         Lantern1,
         Mooncake,
+        Coffee,
+        StuffedBear,
         TotalType
     }
     #region Save file data
@@ -37,11 +39,11 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
 
         /* Converts important informations into arrays for saving
          */
-        public DataElement(Transform _transform)
+        public DataElement(Transform _transform, Vector3 _offset)
         {
-            _position= new float[] { _transform.localPosition.x, 
-                                    _transform.localPosition.y, 
-                                    _transform.localPosition.z };
+            _position= new float[] { _transform.localPosition.x - _offset.x, 
+                                    _transform.localPosition.y - _offset.y, 
+                                    _transform.localPosition.z - _offset.z };
 
             _scale = new float[] { _transform.localScale.x, 
                                     _transform.localScale.y, 
@@ -80,12 +82,12 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
          * Parameters:
          *      - _goInstances : All the instances of this object
          */
-        public DataObject(List<GameObject> _goInstances)
+        public DataObject(List<GameObject> _goInstances, Vector3 _offset)
         {
             _ObjectInstances = new List<DataElement>();
             foreach (GameObject go in _goInstances)
             {
-                _ObjectInstances.Add(new DataElement(go.transform));
+                _ObjectInstances.Add(new DataElement(go.transform, _offset));
             }
         }
     }
@@ -96,12 +98,12 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
     struct DataFile
     {
         public List<DataObject> m_ObjectList;
-        public DataFile(List<GameObject>[] _dataList)
+        public DataFile(List<GameObject>[] _dataList, Vector3 _offset)
         {
             m_ObjectList = new List<DataObject>();
             for(int i=0; i<_dataList.Length; ++i)
             {
-                m_ObjectList.Add(new DataObject(_dataList[i]));
+                m_ObjectList.Add(new DataObject(_dataList[i], _offset));
                 /*foreach (GameObject go in _dataList[i])
                 {
                     m_ObjectList[i].Add(new DataElement(go.transform));
@@ -118,6 +120,31 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
     //private int m_greetCardID;
     //private string m_greetCardImg;
     //public RawImage m_disp;
+
+    /*
+     */
+    public void ClearTrackings()
+    {
+        //if the list is not created yet
+        if (m_trackedObjects == null)
+        {
+            //initialise the list
+            m_trackedObjects = new List<GameObject>[(int)ObjectType.TotalType];
+            /*m_trackedObjects[0] = new List<GameObject>();
+            m_trackedObjects[1] = new List<GameObject>();*/
+
+            //for each objects defined in ObjectType, create a new list for it
+            for (int i = 0; i < (int)ObjectType.TotalType; ++i)
+            {
+                m_trackedObjects[i] = new List<GameObject>();
+            }
+            return;
+        }
+        for (int i = 0; i < (int)ObjectType.TotalType; ++i)
+        {
+            m_trackedObjects[i].Clear();
+        }
+    }
 
     /* When an object that is savable (has SceneObject.cs script on it) is placed, this function will be called to add it to tracking
      * Parameters:
@@ -156,13 +183,16 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
      *  Parameters:
      *      - _fileName: name of the scene to be saved
      */
-    public void SaveScene(string _fileName, Texture2D _texIMG, string _msg)
+    public void SaveScene(string _fileName, Texture2D _texIMG, string _msg, string _responseTxt, Vector3 _offset)
     {
         //Creates a new DataFile variable based on the objects list in m_trackedObjects
-        DataFile newSave = new DataFile(m_trackedObjects);
+        DataFile newSave = new DataFile(m_trackedObjects, _offset);
 
         //Converts it to Json string
         string rawJson = JsonUtility.ToJson(newSave/*, true*/);
+        string filePath = Application.persistentDataPath + "/" + _fileName + ".json";
+        Debug.Log(filePath);
+        File.WriteAllText(filePath, rawJson);
 
         /*RenderTexture rdTexture = RenderTexture.GetTemporary(_texIMG.width,_texIMG.height,0, RenderTextureFormat.Default, RenderTextureReadWrite.Linear);
         Graphics.Blit(_texIMG,rdTexture);
@@ -193,18 +223,11 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
         Debug.Log(filePath);
         File.WriteAllText(filePath, x64Img);*/
 
-        WWWForm custForm = new WWWForm();
-        custForm.AddField("userId", m_userID);
-        custForm.AddField("name", _fileName);
-        custForm.AddField("image", x64Img);
-        //custForm.AddField("greetingCardId", m_greetCardID);
-        custForm.AddField("textMessage", _msg);
-        custForm.AddField("options", rawJson);
 
-        StartCoroutine(UploadToServer(custForm));
+        StartCoroutine(UploadToServer(_fileName, x64Img, _msg, rawJson, _responseTxt));
 
-        /*//save to local path
-        string filePath = Application.persistentDataPath + "/" + _fileName + ".json";
+        //save to local path
+        /*string filePath = Application.persistentDataPath + "/" + _fileName + ".json";
         Debug.Log(filePath);
         File.WriteAllText(filePath, rawJson);*/
     }
@@ -248,6 +271,12 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
                     break;
                 case ObjectType.Mooncake:
                     thePrefab = GameObjectFactory.Instance.GetPrefab("Mooncake");
+                    break;
+                case ObjectType.Coffee:
+                    thePrefab = GameObjectFactory.Instance.GetPrefab("Coffee");
+                    break;
+                case ObjectType.StuffedBear:
+                    thePrefab = GameObjectFactory.Instance.GetPrefab("Staffed");
                     break;
                 default:
                     Debug.Log("No such object");
@@ -338,25 +367,28 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
      *  Parameter:
      *      -_custForm: the form created beforehand with necessary fields
      */
-    IEnumerator UploadToServer(WWWForm _custForm)
+    IEnumerator UploadToServer(string _fileName, string _base64Img, string _msg, string _rawJson, string _responseTxt)
     {
-        /*WWWForm form = new WWWForm();
-        form.AddField("userId", userId);
-        form.AddField("name", name);
-        form.AddField("image", image);
-        form.AddField("greetingCardId", greetingCardId);
-        form.AddField("textmessage", "");
-        form.AddField("options", _custJson);*/
 
-        UnityWebRequest www = UnityWebRequest.Post("https://lunar-byte-371808.et.r.appspot.com/api/insertCustomization/", _custForm);
+        WWWForm custForm = new WWWForm();
+        custForm.AddField("userId", m_userID);
+        custForm.AddField("name", _fileName);
+        custForm.AddField("image", _base64Img);
+        //custForm.AddField("greetingCardId", m_greetCardID);
+        custForm.AddField("textMessage", _msg);
+        custForm.AddField("options", _rawJson);
+
+        UnityWebRequest www = UnityWebRequest.Post("https://lunar-byte-371808.et.r.appspot.com/api/insertCustomization/", custForm);
         yield return www.SendWebRequest();
         Debug.Log($"upload res {www.result}");
         if(www.result == UnityWebRequest.Result.Success)
         {
+            _responseTxt = $"Customisation upload done \n{www.downloadHandler.text}";
             Debug.Log($"Cust upload done \n{www.downloadHandler.text}");
         }
         else
         {
+            _responseTxt = "Customisation save error";
             Debug.Log($"err: {www.error} | desc: {www.downloadHandler.text}");
         }
     }
