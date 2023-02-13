@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using TMPro;
 // get all cards from ShoppingCart and render them as list of OrderItem objects onto ShoppingCart scene
 
 public class ShoppingCartRenderer : MonoBehaviour
 {
     [SerializeField] public GameObject orderItemPrefab;
     public float yPosOffset = 0;
-
+    public TextMeshProUGUI priceDisplay;
     // Start is called before the first frame update
     void Start()
     {
@@ -58,7 +58,12 @@ public class ShoppingCartRenderer : MonoBehaviour
     {
         Debug.Log("Rendering order item"); 
         List<GreetingCard> cards = cart.getCards(); 
+        float totalPrice = 0; 
         for (int i=0; i < cards.Count; i ++){
+            // cal price
+            string priceStr = cards[i].priceObj.text.Replace("$", ""); 
+            float price = float.Parse(priceStr);
+            totalPrice += price; 
             // instantiate orderItem 
             Debug.Log("Instantiating OrderItem: " + cards[i].nameObj.text);
             Vector3 position = new Vector3(0, yPosOffset, 0);
@@ -69,6 +74,9 @@ public class ShoppingCartRenderer : MonoBehaviour
             Debug.Log(orderItem); 
             orderItem.setGreetingCardData(cards[i]); 
         }
+        Debug.Log("total price:" + totalPrice.ToString());
+        priceDisplay = GameObject.FindGameObjectsWithTag("totalPrice")[0].GetComponent<TMPro.TextMeshProUGUI>();
+        priceDisplay.text = totalPrice.ToString();
     }
 
 }

@@ -368,7 +368,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -480.0957, y: 645.2702}
+  m_AnchoredPosition: {x: -480.0957, y: 644.9703}
   m_SizeDelta: {x: 951.83, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &489984586
@@ -422,6 +422,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orderItemPrefab: {fileID: 3796067835654387913, guid: 10b94b0344e398e4c956031466974cf2, type: 3}
+  yPosOffset: 0
+  priceDisplay: {fileID: 0}
 --- !u!1001 &547079436
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1812,6 +1814,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 980391698}
+    - target: {fileID: 8563183456268009009, guid: e386feeb56c8edc46a87a33cd783a14a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8563183456268009009, guid: e386feeb56c8edc46a87a33cd783a14a, type: 3}
+      propertyPath: m_TagString
+      value: totalPrice
+      objectReference: {fileID: 0}
     - target: {fileID: 8563183456766643613, guid: e386feeb56c8edc46a87a33cd783a14a, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
