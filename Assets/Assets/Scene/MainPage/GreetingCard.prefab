@@ -551,6 +551,7 @@ MonoBehaviour:
   descriptionObj: {fileID: 7166573463945360494}
   imageObj: {fileID: 4059931200283889337}
   addButton: {fileID: 1967066856713796735}
+  popUpPrefab: {fileID: 2322161404138063224, guid: f76c7551749f0f4418abbf3138d4013a, type: 3}
 --- !u!1 &4059931200283889337
 GameObject:
   m_ObjectHideFlags: 0
