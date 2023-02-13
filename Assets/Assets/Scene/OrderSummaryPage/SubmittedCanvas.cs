@@ -11,5 +11,6 @@ public class SubmittedCanvas : MonoBehaviour
 
     public void onReturn(){
         SceneManager.LoadScene("MainPage");
+        gameObject.SetActive(false);
     }
 }

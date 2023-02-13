@@ -694,6 +694,7 @@ GameObject:
   - component: {fileID: 633597666}
   - component: {fileID: 633597665}
   - component: {fileID: 633597664}
+  - component: {fileID: 633597669}
   m_Layer: 5
   m_Name: SubmittedCanvas
   m_TagString: Untagged
@@ -796,6 +797,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!95 &633597669
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633597663}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e97e453d89f3fd14494e09c0548e8d7d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!224 &689338621 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3796067835654387912, guid: 10b94b0344e398e4c956031466974cf2, type: 3}
@@ -1642,7 +1663,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8152408141001181565, guid: c1202b28f24015f49ad6b0d11689699f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2686,6 +2707,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orderItemPrefab: {fileID: 3796067835654387913, guid: 10b94b0344e398e4c956031466974cf2, type: 3}
   yPosOffset: -550
+  priceDisplay: {fileID: 0}
 --- !u!114 &1450149476
 MonoBehaviour:
   m_ObjectHideFlags: 0

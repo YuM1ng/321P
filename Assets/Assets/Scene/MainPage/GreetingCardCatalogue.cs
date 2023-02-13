@@ -37,7 +37,7 @@ public class GreetingCardCatalogue : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         Debug.Log(session_id);
-        StartCoroutine(RetrieveProduct(session_id));            
+        StartCoroutine(RetrieveProduct());            
     }
     
     // function to ensure catalogue only visible in MainPage scene
@@ -54,7 +54,7 @@ public class GreetingCardCatalogue : MonoBehaviour
     }
 
     // Update is called once per frame
-     private IEnumerator RetrieveProduct(string session_id)
+     private IEnumerator RetrieveProduct()
     {
         UnityWebRequest www = UnityWebRequest.Get("https://lunar-byte-371808.et.r.appspot.com/api/getGreetingCards");
         yield return www.SendWebRequest();
