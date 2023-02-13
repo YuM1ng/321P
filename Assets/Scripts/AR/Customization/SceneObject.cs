@@ -10,7 +10,7 @@ public class SceneObject : MonoBehaviour
     //SaveSceneSystem _ssSystem;
     public void OnPlace()
     {
-        GameObject.Find("SaveSystem").GetComponent<SaveSceneSystem>().AddToTracking(m_type, this.gameObject);
+        GameObject.FindObjectOfType<SaveSceneSystem>().AddToTracking(m_type, this.gameObject);
     }
 
     // Start is called before the first frame update

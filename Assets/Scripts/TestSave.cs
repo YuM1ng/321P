@@ -30,11 +30,11 @@ public class TestSave : MonoBehaviour
 
     public void SaveBtn()
     {
-        ssSystem.SaveScene("Tooty", _texImg, "Mid-Autumn customisation");
+        //ssSystem.SaveScene("Tooty", _texImg, "Mid-Autumn customisation");
     }
     public void LoadBtn()
     {
-        ssSystem.LoadScene("MidAutumn23");
+        //ssSystem.LoadScene("MidAutumn23");
     }
     public void DeleteBtn()
     {

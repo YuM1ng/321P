@@ -47,7 +47,8 @@ public class ARTapToPlaceObject : MonoBehaviour
     }
         private void PlaceObject()
     {
-        Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
+        GameObject go = Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
+        go.GetComponent<SceneObject>().OnPlace();
     }
 
     private void UpdatePlacementIndicator()
