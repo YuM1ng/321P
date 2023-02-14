@@ -10,7 +10,7 @@ public class Navigator : MonoBehaviour
     }
 
     public void onClickCamera(){
-        SceneManager.LoadScene("CameraPage");
+        SceneManager.LoadScene("ARMenu");
     }
 
     public void onClickCart(){
