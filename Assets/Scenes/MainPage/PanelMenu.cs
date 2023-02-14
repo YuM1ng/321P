@@ -6,20 +6,23 @@ using UnityEngine.SceneManagement;
 public class PanelMenu : MonoBehaviour
 {
     public GameObject panel;
+    private bool open = false; 
  
      void Start () 
      { 
-         panel.SetActive( false); 
-     }
-         
-     public void PopUp (GameObject panel) 
-     { 
-         panel.SetActive (!panel.activeSelf); 
+        //  panel.SetActive( false); 
      }
 
      public void OnProfileClick() 
      { 
-        SceneManager.LoadScene("UserProfile");
+        Animator mAnimator = gameObject.GetComponent<Animator>(); 
+        if (open){
+            mAnimator.SetTrigger("close"); 
+            open = false; 
+        }else{
+            mAnimator.SetTrigger("open"); 
+            open = true; 
+        }
      }
     
     }

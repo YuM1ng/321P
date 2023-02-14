@@ -24,7 +24,10 @@ public class GetUserProfile : MonoBehaviour
     {   
         
         User user = GameObject.Find("UserManager").GetComponent<User>();
-        string session_id = user.session_id.ToString();
+        string session_id = "guest";
+        if (user !=null){
+            session_id = user.session_id.ToString();
+        }
         //User obj = GameObject.Find("UserManager").GetComponent<User>();
         // string serializedSessionId = JsonConvert.SerializeObject(Obj);
         Debug.Log(session_id);
