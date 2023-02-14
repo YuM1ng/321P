@@ -8,7 +8,7 @@ public class MoveScene : MonoBehaviour
     public void RegisterPage(int sceneID)
 
     {
-        SceneManager.LoadScene(sceneID);
+        SceneManager.LoadScene("RegisterMenu");
     }
 
 

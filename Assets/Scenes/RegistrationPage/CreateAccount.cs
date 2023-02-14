@@ -18,6 +18,7 @@ public class CreateAccount : MonoBehaviour
     [SerializeField] private TMP_InputField EmailInputField;
     [SerializeField] private TMP_InputField usernameInputField;
     [SerializeField] private TMP_InputField passwordInputField;
+    [SerializeField] private TMP_InputField confirmpasswordInputField;
     
     public void OnCreateClick()
     {
@@ -31,14 +32,30 @@ public class CreateAccount : MonoBehaviour
     {
         string username = usernameInputField.text;
         string password = passwordInputField.text;
+        string cpassword = confirmpasswordInputField.text;
         string email = EmailInputField.text;
-
+        
         if (username.Length < 3 || username.Length > 24)
         {
             alertText.text = "Invalid username";
             ActivateButtons(true);
             yield break;
         }
+        
+        // if (password.Length <3 || password.Length > 15 )
+        // {
+        //     alertText.text = "Invalid password length";
+        //     ActivateButtons(true);
+        //     yield break;
+        // }
+
+        // if(password != cpassword)
+        // {
+        //     alertText.text = "Your password is not the same as repeat password";
+        //     ActivateButtons(true);
+        //     yield break;
+        // }
+
         
         WWWForm form = new WWWForm();
         form.AddField("rUsername", username);

@@ -19,10 +19,15 @@ public class ShoppingCart : MonoBehaviour
 
 	public static ShoppingCart Instance;
 
-    private void Awake()
+    void Awake()
     {
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
+        if (Instance == null){
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }else if (Instance != null){
+            Debug.Log("destroying shoppingCart");
+            Destroy(gameObject);
+        }   
     }
 
 	public void add(GreetingCard item)
@@ -51,7 +56,7 @@ public class ShoppingCart : MonoBehaviour
         return cards;
     }
 
-    public void onClick(){
-        SceneManager.LoadScene("ShoppingCartPage");
+    public void onClickCheckOut(){
+        SceneManager.LoadScene("CheckoutPage");
     }
 }

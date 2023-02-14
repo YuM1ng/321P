@@ -18,6 +18,7 @@ public class GreetingCard : MonoBehaviour
     [SerializeField] public TextMeshProUGUI descriptionObj; 
     [SerializeField] public GameObject imageObj; 
     [SerializeField] public GameObject addButton; 
+    public GameObject popUpPrefab; 
     public static GreetingCard Instance;
 
     // Start is called before the first frame update
@@ -57,5 +58,8 @@ public class GreetingCard : MonoBehaviour
         Debug.Log("Add button clicked");
         ShoppingCart cart = GameObject.Find("ShoppingCart").GetComponent<ShoppingCart>();
         cart.add(this); 
+        GameObject popUp = Instantiate(popUpPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        Animator mAnimator = popUp.GetComponent<Animator>(); 
+        mAnimator.SetTrigger("onAddButton"); 
     }
 }
