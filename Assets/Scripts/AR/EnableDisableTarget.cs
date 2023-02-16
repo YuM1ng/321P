@@ -9,17 +9,22 @@ public class EnableDisableTarget : MonoBehaviour
 {
     [SerializeField]
     GameObject m_GOTarget;
+    [SerializeField]
+    private RawImage m_rawImg;
+    [SerializeField]
+    VariantToggle m_VariantToggle;
 
     private bool m_isEnabled = false;
-    private RawImage m_rawImg;
     // Start is called before the first frame update
     void Start()
     {
         if (!m_isEnabled)
         {
-            m_rawImg = GetComponent<RawImage>();
             m_rawImg.color = new Color(1f, 1f, 1f, 0.5f);
-            m_GOTarget.SetActive(false);
+            if(m_VariantToggle!= null )
+                m_VariantToggle.gameObject.SetActive(false);
+            //else
+                m_GOTarget.SetActive(false);
         }
         EventTrigger uiImgTap = transform.AddComponent<EventTrigger>();
         EventTrigger.Entry tapEvent = new EventTrigger.Entry();
@@ -35,13 +40,19 @@ public class EnableDisableTarget : MonoBehaviour
     public void TargetEnable() 
     {
         m_isEnabled = true;
-        m_GOTarget.SetActive(true);
+        if (m_VariantToggle != null)
+            m_VariantToggle.gameObject.SetActive(true);
+        //else
+            m_GOTarget.SetActive(true);
         m_rawImg.color = new Color(1f, 1f, 1f, 1f);
     }
     public void TargetDisable()
     {
         m_isEnabled = false;
-        m_GOTarget.SetActive(false);
+        if (m_VariantToggle != null)
+            m_VariantToggle.gameObject.SetActive(false);
+        //else
+            m_GOTarget.SetActive(false);
         m_rawImg.color = new Color(1f, 1f, 1f, 0.5f);
     }
 
