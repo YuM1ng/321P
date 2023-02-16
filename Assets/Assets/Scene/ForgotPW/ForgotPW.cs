@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MoveAgain : MonoBehaviour
+public class ForgotPW : MonoBehaviour
 {
-    public void onClick()
+   
+
+     public void BackButtonClick()
+
     {
-        SceneManager.LoadScene("UserProfile");
+        SceneManager.LoadScene("LoginPage");
     }
 }

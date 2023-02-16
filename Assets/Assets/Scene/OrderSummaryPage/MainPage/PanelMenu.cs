@@ -24,6 +24,11 @@ public class PanelMenu : MonoBehaviour
             open = true; 
         }
      }
+
+     public void OnProfilePicClick()
+     {
+        SceneManager.LoadScene("UserProfile");
+     }
     
     }
 
