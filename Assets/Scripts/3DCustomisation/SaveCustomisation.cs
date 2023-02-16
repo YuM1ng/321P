@@ -47,7 +47,7 @@ public class SaveCustomisation : MonoBehaviour
     {
         /*XROrigin orig = GameObject.FindObjectOfType<XROrigin>();
         Debug.Log("XR orig:" + orig.Origin.transform.position + "|Camera Offset:"+orig.CameraFloorOffsetObject.transform.position + "|Camera Pos:" + orig.Camera.transform.localPosition+ ", " + orig.Camera.transform.rotation.eulerAngles);*/
-        _saveSceneSys.SaveScene(m_NameOfCust.text, m_ImgTargetDropdown.options[m_ImgTargetDropdown.value].image.texture, "My customisation", m_responseTxt.text, m_objOffset);
+        _saveSceneSys.SaveScene(m_NameOfCust.text, m_ImgTargetDropdown.options[m_ImgTargetDropdown.value].image.texture, "My customisation", m_responseTxt, m_objOffset);
     }
 
     // Update is called once per frame

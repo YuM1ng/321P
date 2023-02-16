@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -183,7 +184,7 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
      *  Parameters:
      *      - _fileName: name of the scene to be saved
      */
-    public void SaveScene(string _fileName, Texture2D _texIMG, string _msg, string _responseTxt, Vector3 _offset)
+    public void SaveScene(string _fileName, Texture2D _texIMG, string _msg, TMP_Text _responseTxt, Vector3 _offset)
     {
         //Creates a new DataFile variable based on the objects list in m_trackedObjects
         DataFile newSave = new DataFile(m_trackedObjects, _offset);
@@ -372,7 +373,7 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
      *  Parameter:
      *      -_custForm: the form created beforehand with necessary fields
      */
-    IEnumerator UploadToServer(string _fileName, string _base64Img, string _msg, string _rawJson, string _responseTxt)
+    IEnumerator UploadToServer(string _fileName, string _base64Img, string _msg, string _rawJson, TMP_Text _responseTxt)
     {
 
         WWWForm custForm = new WWWForm();
@@ -388,12 +389,12 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
         Debug.Log($"upload res {www.result}");
         if(www.result == UnityWebRequest.Result.Success)
         {
-            _responseTxt = $"Customisation upload done \n{www.downloadHandler.text}";
+            _responseTxt.text = $"Customisation upload done";
             Debug.Log($"Cust upload done \n{www.downloadHandler.text}");
         }
         else
         {
-            _responseTxt = "Customisation save error";
+            _responseTxt.text = "Customisation save error";
             Debug.Log($"err: {www.error} | desc: {www.downloadHandler.text}");
         }
     }
