@@ -74,7 +74,7 @@ public class ShoppingCartRenderer : MonoBehaviour
             Debug.Log(orderItem); 
             orderItem.setGreetingCardData(cards[i]); 
         }
-        Debug.Log("total price:" + totalPrice.ToString());
+        Debug.Log("total price: $" + totalPrice.ToString());
         priceDisplay = GameObject.FindGameObjectsWithTag("totalPrice")[0].GetComponent<TMPro.TextMeshProUGUI>();
         priceDisplay.text = totalPrice.ToString();
     }

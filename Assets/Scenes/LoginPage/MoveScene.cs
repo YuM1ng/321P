@@ -29,4 +29,9 @@ public class MoveScene : MonoBehaviour
         SceneManager.LoadScene(sceneID);
     }        
 
+    public void ForgotPWclick()
+    {
+        SceneManager.LoadScene("ForgotPW");
+    }
+
 }

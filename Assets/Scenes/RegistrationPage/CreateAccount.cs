@@ -86,7 +86,7 @@ public class CreateAccount : MonoBehaviour
    public void BackToMainMenu(int sceneID)
 
     {
-        SceneManager.LoadScene(sceneID);
+        SceneManager.LoadScene("LoginPage");
     }
 
 }
