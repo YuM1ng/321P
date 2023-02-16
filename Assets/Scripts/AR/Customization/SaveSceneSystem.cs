@@ -301,7 +301,7 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
      *  Returns:
      *      ImageTargetBehaviour: An instance of Vuforia's Image Target
      */
-    public static ImageTargetBehaviour ImgTargetFromRawData(string _x64Img)
+    public static ImageTargetBehaviour ImgTargetFromRawData(string _x64Img, float _imgTargetSize)
     {
         // Converts base 64 img string back to bytes
         byte[] imgData = Convert.FromBase64String( _x64Img );
@@ -310,16 +310,21 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
         //attempts to load data onto texture
         if (imgTexture.LoadImage(imgData))
         {
-            //if success creates a new image target instance using VuforiaBehaviour
-            ImageTargetBehaviour imgTarg = VuforiaBehaviour.Instance.ObserverFactory.CreateImageTarget(imgTexture, 0.148f, "ImgTarget");
-            imgTarg.gameObject.AddComponent<DefaultObserverEventHandler>();
-            return imgTarg;
+            return ImgTargetFromTexture(imgTexture, _imgTargetSize, "ImgTarg");
         }
         else
         {
             return null;
         }
 
+    }
+    public static ImageTargetBehaviour ImgTargetFromTexture(Texture2D _texture2D, float _imgTargetSize, string _name)
+    {
+        //if success creates a new image target instance using VuforiaBehaviour
+        ImageTargetBehaviour imgTarg = VuforiaBehaviour.Instance.ObserverFactory.CreateImageTarget(_texture2D, _imgTargetSize, _name);
+        DefaultObserverEventHandler doeh = imgTarg.gameObject.AddComponent<DefaultObserverEventHandler>();
+        doeh.StatusFilter = DefaultObserverEventHandler.TrackingStatusFilter.Tracked_ExtendedTracked;
+        return imgTarg;
     }
     #endregion
     // Start is called before the first frame update
@@ -424,7 +429,7 @@ public class SaveSceneSystem : MonoBehaviour //MonoBehaviourSingleton<SaveSceneS
                 //Process image string from server (disregard info up to first comma)
                 string x64ImgStr = res1.image.Split(",")[1];
                 //Creates a Vuforia ImageTargetBehaviour by calling function
-                ImageTargetBehaviour imgTarget = ImgTargetFromRawData(x64ImgStr);
+                ImageTargetBehaviour imgTarget = ImgTargetFromRawData(x64ImgStr, 0);
                 //CAlls another funciton ot load customization information
                 LoadCustJsonToTransform(res1.options, imgTarget.transform);
                 //LoadCustJsonToTransform("{\"m_ObjectList\":[{\"_ObjectInstances\":[]},{\"_ObjectInstances\":[]},{\"_ObjectInstances\":[{\"_position\":[-0.015799999237060548,0.0,-0.021900000050663949],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]},{\"_position\":[-0.04050000011920929,0.0,0.0010000000474974514],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]},{\"_position\":[-0.020099999383091928,0.0,0.03420000150799751],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]},{\"_position\":[0.008999999612569809,0.0,-0.0430000014603138],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]}]},{\"_ObjectInstances\":[{\"_position\":[0.020500000566244127,0.0,-0.012400000356137753],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]},{\"_position\":[0.016499999910593034,0.0,0.023399999365210534],\"_scale\":[1.0,1.0,1.0],\"_rotation\":[-0.7071068286895752,-5.760116295050466e-8,-5.760116295050466e-8,0.7071068286895752]}]}]}", imgTarget.transform);
