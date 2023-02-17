@@ -63,6 +63,21 @@ public class CreateAccount : MonoBehaviour
         }
     
         
+        // if (password.Length <3 || password.Length > 15 )
+        // {
+        //     alertText.text = "Invalid password length";
+        //     ActivateButtons(true);
+        //     yield break;
+        // }
+
+        // if(password != cpassword)
+        // {
+        //     alertText.text = "Your password is not the same as repeat password";
+        //     ActivateButtons(true);
+        //     yield break;
+        // }
+
+        
         WWWForm form = new WWWForm();
         form.AddField("rUsername", username);
         form.AddField("rPassword", password);

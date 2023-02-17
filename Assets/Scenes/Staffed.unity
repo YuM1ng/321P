@@ -6077,6 +6077,8 @@ MonoBehaviour:
   Spawn: {fileID: 1845132462}
   Indicator: {fileID: 265927960}
   Guide: {fileID: 1713011}
+  Back: {fileID: 0}
+  Save: {fileID: 0}
 --- !u!1 &1840589082
 GameObject:
   m_ObjectHideFlags: 0
@@ -6814,6 +6816,8 @@ MonoBehaviour:
   Spawn: {fileID: 1845132462}
   Indicator: {fileID: 265927960}
   Guide: {fileID: 1713011}
+  Back: {fileID: 1221331834}
+  Save: {fileID: 1018765559}
 --- !u!1 &1978872075
 GameObject:
   m_ObjectHideFlags: 0

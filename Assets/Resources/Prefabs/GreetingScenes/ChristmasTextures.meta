@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Resources/Prefabs/GreetingScenes/ChristmasTextures.meta
 guid: d6186c7b26e9c15499442b3cfd4d9b54
+========
+guid: 2fa0db24db80aa84d8149ed13a52553b
+>>>>>>>> kaisong:Assets/Scenes/OrderSummaryPage.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

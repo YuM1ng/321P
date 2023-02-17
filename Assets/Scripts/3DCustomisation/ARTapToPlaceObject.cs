@@ -32,7 +32,7 @@ public class ARTapToPlaceObject : MonoBehaviour
         {
             //PlaceObject();
         }
-        if (Application.platform == RuntimePlatform.Android)
+     /*    if (Application.platform == RuntimePlatform.Android)
         {
             if (Input.GetKey(KeyCode.Escape))
             {
@@ -41,7 +41,7 @@ public class ARTapToPlaceObject : MonoBehaviour
                 return;
             }
 
-        }
+        } */
         
 
     }
