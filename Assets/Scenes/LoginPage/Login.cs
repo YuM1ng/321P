@@ -18,6 +18,7 @@ public class Login : MonoBehaviour
     [SerializeField] private string loginEndpoint = "https://lunar-byte-371808.et.r.appspot.com/api/userlogin/";
     [SerializeField] private TextMeshProUGUI alertText;
     [SerializeField] private Button loginButton;
+
     
     public void OnLoginClick()
     {
@@ -111,6 +112,11 @@ public class Login : MonoBehaviour
         User user = GameObject.Find("UserManager").GetComponent<User>();
         user.setUser("Guest", "");
         user.setSessionId("guest_session");
+    }
+
+    private void onCreateClick()
+    {
+        SceneManager.LoadScene("RegisterMenu");
     }
 
     private void ActivateButtons(bool toggle)

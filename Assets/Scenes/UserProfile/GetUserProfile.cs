@@ -24,7 +24,10 @@ public class GetUserProfile : MonoBehaviour
     {   
         
         User user = GameObject.Find("UserManager").GetComponent<User>();
-        string session_id = user.session_id.ToString();
+        string session_id = "guest";
+        if (user !=null){
+            session_id = user.session_id.ToString();
+        }
         //User obj = GameObject.Find("UserManager").GetComponent<User>();
         // string serializedSessionId = JsonConvert.SerializeObject(Obj);
         Debug.Log(session_id);
@@ -53,8 +56,7 @@ public class GetUserProfile : MonoBehaviour
             var userProfileResponses = JsonUtility.FromJson<UserProfileResponseList>("{\"users\":" + www.downloadHandler.text + "}");   
             
             Debug.Log(userProfileResponses.users);
-            if (userProfileResponses.users.Count > 0){
-                Debug.Log("userProfileResponse.list[0].gender: " + userProfileResponses.users[0].gender);
+        
 
                 user_id.text = userProfileResponses.users[0].user_id;
                 first_name.text = userProfileResponses.users[0].first_Name;
@@ -64,11 +66,19 @@ public class GetUserProfile : MonoBehaviour
                 date_of_birth.text = userProfileResponses.users[0].date_of_birth;
                 gender.text = userProfileResponses.users[0].gender;
 
-            }
+            
 
         }
+        
 
 
 }
+
+
+ public void BackToMainMenu(int sceneID)
+
+    {
+        SceneManager.LoadScene("MainPage");
+    }
 }
 

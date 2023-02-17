@@ -10,6 +10,8 @@ public class DisableOrEnable1 : MonoBehaviour
     public GameObject Spawn;
     public GameObject Indicator;
     public GameObject Guide;
+	public GameObject Back;
+	public GameObject Save;
 
     public void whenButtonClicked()
     {
@@ -36,6 +38,15 @@ public class DisableOrEnable1 : MonoBehaviour
             Guide.SetActive(false);
         else
             Guide.SetActive(true);
+		if (Back.activeInHierarchy == true)
+            Back.SetActive(false);
+        else
+            Back.SetActive(true);
+		
+		if (Save.activeInHierarchy == true)
+            Save.SetActive(false);
+        else
+            Save.SetActive(true);
 
     }
 }

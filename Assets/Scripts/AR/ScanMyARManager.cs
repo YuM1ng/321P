@@ -233,7 +233,7 @@ public class ScanMyARManager : MonoBehaviour
         m_goDuringScan.SetActive(true);
         //assign texture to display prompt
         m_duringScanImgPrompt.texture = _img;
-        ImageTargetBehaviour imgTar = VuforiaBehaviour.Instance.ObserverFactory.CreateImageTarget(_img, 0.148f, "ImgTarget");
+        ImageTargetBehaviour imgTar = /*VuforiaBehaviour.Instance.ObserverFactory.CreateImageTarget(_img, 0.148f, "ImgTarget")*/SaveSceneSystem.ImgTargetFromTexture(_img, 0.148f, "ImgTarget");
         imgTar.gameObject.AddComponent<DefaultObserverEventHandler>();
         //Loads customization json string onto image target transform
         SaveSceneSystem.LoadCustJsonToTransform(_rawCust, imgTar.transform);

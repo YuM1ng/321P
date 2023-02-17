@@ -8,7 +8,7 @@ public class MoveScene : MonoBehaviour
     public void RegisterPage(int sceneID)
 
     {
-        SceneManager.LoadScene(sceneID);
+        SceneManager.LoadScene("RegisterMenu");
     }
 
 
@@ -28,5 +28,10 @@ public class MoveScene : MonoBehaviour
     {
         SceneManager.LoadScene(sceneID);
     }        
+
+    public void ForgotPWclick()
+    {
+        SceneManager.LoadScene("ForgotPW");
+    }
 
 }

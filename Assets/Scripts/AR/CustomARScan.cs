@@ -86,7 +86,7 @@ public class CustomARScan : MonoBehaviour
                     //disable pre-scanning ui
                     m_PreScanPanel.SetActive(false);
                     //Create image target
-                    m_imgTarget = VuforiaBehaviour.Instance.ObserverFactory.CreateImageTarget(tmpTexture, 0.148f, "CustomTarget");
+                    m_imgTarget = /*VuforiaBehaviour.Instance.ObserverFactory.CreateImageTarget(tmpTexture, 0.148f, "CustomTarget")*/ SaveSceneSystem.ImgTargetFromTexture(tmpTexture, 0.148f, "CustomTarget");
                     //Load customisation onto image target
                     SaveSceneSystem.LoadCustJsonToTransform(resCust.sccrList[0].options, m_imgTarget.transform);
                     //sets during scanning ui's image reference
@@ -94,6 +94,10 @@ public class CustomARScan : MonoBehaviour
                     //enable during-scanning's ui
                     m_ScanningPanel.SetActive(true);
                 });
+            }
+            else
+            {
+                m_ResponseText.text = "No customization found";
             }
 
         }

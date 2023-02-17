@@ -46,7 +46,7 @@ public class OrderItem : MonoBehaviour
     }
 
     public void onRemoveButtonClick(){
-        Debug.Log("Remove bbutton clicked");
+        Debug.Log("Remove button clicked");
         ShoppingCart cart = GameObject.Find("ShoppingCart").GetComponent<ShoppingCart>();
         cart.remove(this.gcObj); 
         cart.getCards();

@@ -32,7 +32,7 @@ public class ARTapToPlaceObject : MonoBehaviour
         {
             //PlaceObject();
         }
-        if (Application.platform == RuntimePlatform.Android)
+     /*    if (Application.platform == RuntimePlatform.Android)
         {
             if (Input.GetKey(KeyCode.Escape))
             {
@@ -41,13 +41,14 @@ public class ARTapToPlaceObject : MonoBehaviour
                 return;
             }
 
-        }
+        } */
         
 
     }
         private void PlaceObject()
     {
-        Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
+        GameObject go = Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
+        go.GetComponent<SceneObject>().OnPlace();
     }
 
     private void UpdatePlacementIndicator()
