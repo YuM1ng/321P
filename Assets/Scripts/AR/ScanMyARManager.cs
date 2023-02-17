@@ -164,8 +164,10 @@ public class ScanMyARManager : MonoBehaviour
             else
             {
                 //if no customisations found set display text to let ueser know
-                m_displayText.text = "No customizatioon's found";
+                m_displayText.text = "No customization's found";
             }
+            yield return new WaitForSeconds(2);
+            m_displayText.text = "";
         }
         else
         {
@@ -200,6 +202,11 @@ public class ScanMyARManager : MonoBehaviour
         else
         {
             Debug.Log($"err:{www.error}");
+            _buttonColor.color = Color.red;
+            _btnText.text = "error";
+            yield return new WaitForSeconds(2);
+            _btnText.text = "Get share code";
+            _buttonColor.color = Color.white;
         }
     }
     /* Deleting customization in server
@@ -214,10 +221,16 @@ public class ScanMyARManager : MonoBehaviour
         if (www.result == UnityWebRequest.Result.Success)
         {
             _go.SetActive(false);
-            Debug.Log($"done");
+            m_displayText.text = "Delete successful";
+            yield return new WaitForSeconds(2);
+            m_displayText.text = "";
+            //Debug.Log($"done");
         }
         else
         {
+            m_displayText.text = "Delete unsuccessful";
+            yield return new WaitForSeconds(2);
+            m_displayText.text = "";
             Debug.Log($"err:{www.error}| desc:\n{www.downloadHandler.text}");
         }
     }
