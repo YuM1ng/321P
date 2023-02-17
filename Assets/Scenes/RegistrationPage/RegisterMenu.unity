@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
+  m_IndirectSpecularColor: {r: 0.44402185, g: 0.49316472, b: 0.57223153, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -316,7 +316,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f3291274587e0984098e350c5e3ebe8c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e76976bd040d00a458f2765306dc21c4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -867,7 +867,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ba07e21dd18ad744693d38ba17a1ab5e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7e49f40da1aecd14ca01db8db949582b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2048,10 +2048,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8944c61c879064faeb3b70e551715d, type: 3}
+  m_Script: {fileID: 11500000, guid: 49f4eb444de11694d95304932420176f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  registerEndpoint: https://lunar-byte-371808.et.r.appspot.com/api/insertUser/
+  registerEndpoint: https://lunar-byte-371808.et.r.appspot.com/api/insertUser
   alertText: {fileID: 1102518198}
   createButton: {fileID: 1647505293}
   EmailInputField: {fileID: 592178891}
@@ -3779,7 +3779,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 963194229}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CreateAccount, Assembly-CSharp
         m_MethodName: OnCreateClick
         m_Mode: 1
@@ -3811,7 +3811,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 9fe7cbb2eb27aff46a96171dbbc316e8, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
