@@ -1,4 +1,4 @@
-using UnityEngine;
+    using UnityEngine;
 using TMPro;
 using System.Collections;
 using UnityEngine.Networking;
@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 
 public class GetUserProfile : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI user_id;
+
     [SerializeField] private TextMeshProUGUI first_name;
     [SerializeField] private TextMeshProUGUI last_name;
     [SerializeField] private TextMeshProUGUI phone_number;
@@ -58,7 +58,6 @@ public class GetUserProfile : MonoBehaviour
             Debug.Log(userProfileResponses.users);
         
 
-                user_id.text = userProfileResponses.users[0].user_id;
                 first_name.text = userProfileResponses.users[0].first_Name;
                 last_name.text = userProfileResponses.users[0].last_name;
                 phone_number.text = userProfileResponses.users[0].phone_number;
