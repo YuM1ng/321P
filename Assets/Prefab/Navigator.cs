@@ -3,11 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
+using UnityEditor;
 
 public class Navigator : MonoBehaviour
 {
 
     [SerializeField] private string OrderEndPoint = "https://lunar-byte-371808.et.r.appspot.com/api/insertOrder/";
+
+    public void OnClickLogout()
+    {
+
+        User user = GameObject.Find("UserManager").GetComponent<User>();
+        Destroy(user.gameObject);
+        
+        SceneManager.LoadScene("LoginPage");
+        
+
+        }
     public void onClickHome(){
         SceneManager.LoadScene("MainPage");
     }
