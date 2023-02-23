@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44402185, g: 0.49316472, b: 0.57223153, a: 1}
+  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7456,6 +7456,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2938779950745891393, guid: 99732902782527d49805886824b80c96, type: 3}
   m_PrefabInstance: {fileID: 559835509}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &559835511 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4277974796467816768, guid: 99732902782527d49805886824b80c96, type: 3}
+  m_PrefabInstance: {fileID: 559835509}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &575404652
 GameObject:
   m_ObjectHideFlags: 0
@@ -7606,10 +7611,34 @@ MonoBehaviour:
     m_RotationOrder: 4
   OnTargetFound:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 559835511}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnTargetLost:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 559835511}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Stop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &591903905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9567,6 +9596,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4606217962594965696, guid: cf6f181c8fee1fd45a6c8ca863bb1892, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4606217964320960410, guid: cf6f181c8fee1fd45a6c8ca863bb1892, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4606217964423951823, guid: cf6f181c8fee1fd45a6c8ca863bb1892, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9580,6 +9621,11 @@ Transform:
 --- !u!1 &1093729608 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3486887243440639335, guid: cf6f181c8fee1fd45a6c8ca863bb1892, type: 3}
+  m_PrefabInstance: {fileID: 1093729606}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1093729609 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4606217964320960410, guid: cf6f181c8fee1fd45a6c8ca863bb1892, type: 3}
   m_PrefabInstance: {fileID: 1093729606}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1125433306
@@ -9658,6 +9704,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6665927936721422058, guid: 41fae6299a9dd3347a6653be7d8edb42, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6665927937601640572, guid: 41fae6299a9dd3347a6653be7d8edb42, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9666,6 +9720,11 @@ PrefabInstance:
 --- !u!4 &1125433307 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4581081798526776860, guid: 41fae6299a9dd3347a6653be7d8edb42, type: 3}
+  m_PrefabInstance: {fileID: 1125433306}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1125433308 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 6665927937601640572, guid: 41fae6299a9dd3347a6653be7d8edb42, type: 3}
   m_PrefabInstance: {fileID: 1125433306}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1128371093
@@ -16666,10 +16725,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1093729609}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnTargetLost:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1765358317}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Stop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1093729609}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Stop
         m_Mode: 1
@@ -17869,11 +17952,35 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1125433308}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnTargetLost:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2139338504}
         m_TargetAssemblyTypeName: UnityEngine.Video.VideoPlayer, UnityEngine
+        m_MethodName: Stop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1125433308}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Stop
         m_Mode: 1
         m_Arguments:

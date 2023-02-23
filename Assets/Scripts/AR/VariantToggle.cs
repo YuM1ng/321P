@@ -24,6 +24,7 @@ public class VariantToggle : MonoBehaviour
             variant.SetActive(false);
         }
         m_VariantDropdown.onValueChanged.AddListener(ChangeActiveTarget);
+        ChangeActiveTarget(m_VariantDropdown.value);
     }
     /* When dropdown value change, change active AR variant
      */
