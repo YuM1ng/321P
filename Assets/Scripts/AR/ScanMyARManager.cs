@@ -40,10 +40,10 @@ public class ScanMyARManager : MonoBehaviour
         m_goBeforeScan.SetActive(true);
         m_goDuringScan.SetActive(false);
         m_displayText.text = "Loading all Customization...";
-        User curruser = GameObject.Find("UserManager").GetComponent<User>();
+        User curruser = FindObjectOfType<User>();
         if (curruser != null)
         {
-            StartCoroutine(GetUserID(curruser.session_id));
+            StartCoroutine(GetUserID(curruser.session_id.ToString()));
         }
         //StartCoroutine(GetMyCustomizations(m_userID));
     }
@@ -77,8 +77,17 @@ public class ScanMyARManager : MonoBehaviour
             {
                 //gets first user's ID
                 //m_userID = userProfileResponses.users[0].user_id;
+                Debug.Log(userProfileResponses.users[0].user_id);
                 StartCoroutine(GetMyCustomizations(userProfileResponses.users[0].user_id));
             }
+            else
+            {
+                m_displayText.text = "Error retrieving customisation";
+            }
+        }
+        else
+        {
+            m_displayText.text = "Error retriving customisation";
         }
     }
 
@@ -166,8 +175,8 @@ public class ScanMyARManager : MonoBehaviour
                 //if no customisations found set display text to let ueser know
                 m_displayText.text = "No customization's found";
             }
-            yield return new WaitForSeconds(2);
-            m_displayText.text = "";
+            /*yield return new WaitForSeconds(2);
+            m_displayText.text = "";*/
         }
         else
         {

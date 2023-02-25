@@ -43,11 +43,11 @@ public class CreateAccount : MonoBehaviour
             ActivateButtons(true);
             yield break;
         }
-        if (emailRegex.IsMatch(email))
+        /*if (emailRegex.IsMatch(email))
         {
             alertText.text = "Please enter your email in the correct format";
             yield break;
-        }
+        }*/
         if (password.Length <3 || password.Length > 15 )
         {
             alertText.text = "Invalid password length";
@@ -90,12 +90,15 @@ public class CreateAccount : MonoBehaviour
         if (www.result != UnityWebRequest.Result.Success)
         {
             Debug.Log(www.error);
+            alertText.text = "Server Error";
         }
         else
         {
             Debug.Log(form);
             Debug.Log("Form upload complete!");
-            
+            alertText.text = "Registration Complete";
+
+
         }
     } 
 
